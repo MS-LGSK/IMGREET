@@ -4,18 +4,25 @@ body, html {
     font-family: Arial, sans-serif;
 }
 
-/* navbar */
+button {
+    cursor: pointer;
+    padding: 0;
+}
+
 .navbar {
+    width: 100%;
     display: flex;
+    position: fixed;
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
-    padding: 10px 20px;
     color: #333;
 }
 
 .navbar a {
+    color: #333;
     text-decoration: none;
+
 }
 
 .navbar a:hover {
@@ -27,32 +34,151 @@ body, html {
     align-items: center;
 }
 
-.navbar-left a {
-    color: #333;
-    margin-left: 15px;
+.navbar-left {
+    flex: 1;
+    padding-left: 20px;
+
+    a {
+        padding-right: 20px;
+    }
 }
 
 .navbar-center {
     flex: 1;
     justify-content: center;
+    display: flex;
 }
 
-.navbar-right a {
-    color: #333;
-    margin-right: 15px;
+.navbar-right {
+    flex: 1;
+    padding-right: 20px;
+    justify-content: flex-end;
 
+    a {
+        padding-right: 20px;
+    }
 }
 
 .logo {
+    width: 70%;
     font-size: 24px;
     font-weight: bold;
 }
 
-.btn {
-    text-decoration: none;
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+
+.hamburger-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 70px;
+    cursor: pointer;
+    color: #FF9000;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 104px;
+    right: 0;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.dropdown-menu.show {
+    max-height: 500px; /* 슬라이드가 끝났을 때의 최대 높이 설정 */
+}
+
+.dropdown-menu a {
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #333333;
+}
+
+.dropdown-menu .btn {
+    margin: 15px 0;
+    font-size: 18px;
+}
+
+/* 모바일 사이즈 */
+@media screen and (max-width: 1178px) {
+    .logo {
+        width: 100%;
+    }
+
+    .navbar-right .navbar-link {
+        visibility: hidden;
+    }
+
+    .category-link {
+        visibility: hidden;
+    }
+
+    .hamburger-btn {
+        padding: 0;
+        display: flex; /* Adjusted display */
+        font-size: 86px; /* Adjust as needed */
+    }
+
+    .dropdown-menu {
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+        top: 104px;
+        right: 0;
+        background-color: #fff;
+        z-index: 1;
+        width: 100%;
+    }
+
+    .dropdown-menu.show {
+        width: 100%;
+        display: flex;
+
+        a {
+            padding: 15px 0;
+            font-size: 30px;
+        }
+
+        .yellow-btn {
+            width: 95%;
+            padding: 15px 0;
+        }
+
+    }
+}
+
+/* 데스크탑 사이즈 */
+@media screen and (min-width: 1179px) {
+    .navbar-right .navbar-link {
+        /*margin-right: 15px;*/
+        display: flex;
+
+    }
+
+    .category-link {
+        /*margin-right: 15px;*/
+        display: flex;
+    }
+
+    .hamburger-btn {
+        display: none;
+    }
+
+    .dropdown-menu {
+        display: none;
+    }
 }
 
 .yellow-btn {
+    text-decoration: none;
     background: #FF9000;
     color: #fff !important;
     padding: 10px 20px;
@@ -60,17 +186,25 @@ body, html {
     border: none;
     cursor: pointer;
     border-radius: 10px;
+    font-size: 20px;
+}
 
-    .yellow-btn:hover {
-        text-underline: #ffffff;
-    }
+.yellow-btn:hover {
+    background-color: #e68a00;
 }
 
 .light-yellow-btn {
+    text-decoration: none;
     background: #FFEACF;
     color: #FF9000;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
     border-radius: 10px;
+    font-size: 20px;
+
+}
+
+.light-yellow-btn:hover {
+    background-color: #ffd9b3;
 }
