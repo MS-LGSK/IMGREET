@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <title th:text="${title}">Greet</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" th:href="@{/css/createGreet.css}" href="/static/css/createGreet.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+  <link rel="stylesheet" th:href="@{/css/starter-template.css}" />
+
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+  <a class="navbar-brand" href="#">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#" id="undoButton">실행 취소하기</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" id="redoButton">되돌리기</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" id="shareButton">공유하기</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="fixed-sidebar">
+  <button id="text" type="button">
+    <img width="30" height="30" src="https://img.icons8.com/ios/50/000000/text.png" alt="text"/>
+  </button>
+  <button id="shape" type="button">
+    <img width="30" height="30" src="https://img.icons8.com/fluency-systems-regular/48/000000/shape--v1.png" alt="shape"/>
+  </button>
+  <button id="image" type="button">
+    <img width="30" height="30" src="https://img.icons8.com/fluency-systems-regular/48/000000/image--v1.png" alt="image"/>
+  </button>
+</div>
+
+<div class="sidebar-nav" id="sidebar">
+  <button class="sidebar-close-btn" id="sidebarCloseBtn">&times;</button>
+  <ul class="navbar-nav" id="sidebarContent">
+  </ul>
+</div>
+
+<div class="main-content">
+</div>
+
+<script>
+  // 사이드바 열기
+  function openSidebar(items) {
+    const sidebarContent = document.getElementById('sidebarContent');
+    sidebarContent.innerHTML = '';
+
+    items.forEach(item => {
+      const li = document.createElement('li');
+      li.className = 'nav-item';
+      const a = document.createElement('a');
+      a.className = 'nav-link';
+      a.href = '#';
+      a.textContent = item;
+      li.appendChild(a);
+      sidebarContent.appendChild(li);
+    });
+
+    document.getElementById('sidebar').classList.add('open');
+  }
+
+  document.getElementById('text').addEventListener('click', function () {
+    openSidebar(['가로 텍스트', '세로 텍스트']);
+  });
+
+  document.getElementById('shape').addEventListener('click', function () {
+    openSidebar(['원', '사각형', '삼각형']);
+  });
+
+  document.getElementById('image').addEventListener('click', function () {
+    openSidebar(['이미지 업로드']);
+  });
+
+  // 사이드바 외부 클릭 시 닫기
+  document.addEventListener('click', function(event) {
+    if (!event.target.closest('.fixed-sidebar') && !event.target.closest('.sidebar-nav')) {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+  });
+
+  // 사이드바 닫기 버튼 클릭 시 닫기
+  document.getElementById('sidebarCloseBtn').addEventListener('click', function() {
+    document.getElementById('sidebar').classList.remove('open');
+  });
+</script>
+</body>
+</html>
