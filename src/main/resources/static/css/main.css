@@ -80,8 +80,26 @@ h2 {
 /* template item */
 .template-item {
     font-size: 18px; /* 기본 폰트 사이즈 */
+
+    .btn {
+        text-decoration: none;
+        color: #FF9000;
+
+    }
 }
 
+.all-templates {
+    font-size: 20px;
+    .btn {
+        text-decoration: none;
+        color: #FF9000;
+
+    }
+}
+
+.btn:hover {
+    text-decoration: underline;
+}
 
 /* 모바일 사이즈 */
 @media screen and (max-width: 1178px) {
@@ -93,13 +111,9 @@ h2 {
     .template-item h3 {
         font-size: 35px;
     }
-    .template-item .btn, .all-templates .btn{
+
+    .template-item .btn, .all-templates .btn {
         font-size: 30px;
-        text-decoration: none;
-        color: #FF9000;
-    }
-    .btn:hover {
-        text-decoration: underline;
     }
 
     p {
