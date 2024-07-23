@@ -1,28 +1,28 @@
 <nav th:fragment="navbarFragment" class="navbar">
-	<link rel="stylesheet" th:href="@{/css/navbar.css}"/>
-	<div class="navbar-left">
-		<a th:href="@{/}" class="category-link">HOME</a>
-		<a th:href="@{/about}" class="category-link">ABOUT</a>
-		<a th:href="@{/service}" class="category-link">SERVICE</a>
-		<!-- Empty for alignment -->
-	</div>
-	<div class="navbar-center">
-		<a th:href="@{/}" class="logo-link">
-			<img th:src="@{/images/logo-removebg.png}" alt="ImGreet Logo" class="logo"/>
-		</a>
-	</div>
-	<div class="navbar-right">
-		<a th:href="@{/login}" class="navbar-link">로그인</a>
-		<a th:href="@{/signup}" class="btn yellow-btn navbar-link">5초 회원가입</a>
-		<button class="hamburger-btn" onclick="toggleMenu()">&#9776;</button>
-	</div>
-	<div class="dropdown-menu" id="dropdownMenu">
-		<a th:href="@{/}">HOME</a>
-		<a th:href="@{/about}">ABOUT</a>
-		<a th:href="@{/service}">SERVICE</a>
-		<a th:href="@{/login}">로그인</a>
-		<a th:href="@{/signup}" class="btn yellow-btn">5초 회원가입</a>
-	</div>
-	<script th:src="@{/js/navbar.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <div class="navbar-left">
+        <a th:href="@{/}" class="category-link">HOME</a>
+        <a th:href="@{/about}" class="category-link">ABOUT</a>
+        <a th:href="@{/service}" class="category-link">SERVICE</a>
+        <!-- Empty for alignment -->
+    </div>
+    <div class="navbar-center">
+        <a th:href="@{/}" class="logo-link">
+            <img th:src="@{/images/logo-removebg.png}" alt="ImGreet Logo" class="logo" />
+        </a>
+    </div>
+    <div class="navbar-right">
+        <a th:href="@{/login}" class="navbar-link">로그인</a>
+        <a th:href="@{/signup}" class="btn yellow-btn navbar-link">5초 회원가입</a>
+        <button class="hamburger-btn" onclick="toggleMenu()">&#9776;</button>
+    </div>
+    <div class="dropdown-menu" id="dropdownMenu">
+        <a th:href="@{/}">HOME</a>
+        <a th:href="@{/about}">ABOUT</a>
+        <a th:href="@{/service}">SERVICE</a>
+        <a th:href="@{/login}">로그인</a>
+        <a th:href="@{/signup}" class="btn yellow-btn">5초 회원가입</a>
+    </div>
+    <script th:src="@{/js/navbar.js}"></script>
 </nav>
-<br class="br">
+<br class="br" />
