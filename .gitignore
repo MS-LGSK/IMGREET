@@ -393,4 +393,7 @@ gradle-app.setting
 ## custom ##
 application-secret.properties
 
+## images
+**/main/resources/images
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,git,java,maven,eclipse,intellij,gradle,netbeans,visualstudiocode
