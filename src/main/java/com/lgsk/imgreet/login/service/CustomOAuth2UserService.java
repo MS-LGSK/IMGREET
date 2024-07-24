@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -39,20 +38,20 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         String OAuthId = oAuth2Response.getProvider() + "_" + oAuth2Response.getProviderId();
-        User existData = userRepository.findByNickname(OAuthId);
+        User existData = userRepository.findByOauthId(OAuthId);
 
         if (existData == null) {
 
             User user = User.builder()
-                    .nickname(OAuthId)                                       // 식별 ID
+                    .oauthId(OAuthId)
+                    .nickname(oAuth2Response.getNickname())
                     .role(Role.FREE_USER)
-                    .password(oAuth2Response.getNickname())                  // 서비스에서 받아온 닉네임 값
                     .build();
 
             userRepository.save(user);
 
             UserDTO userDTO = UserDTO.builder()
-                    .oAuthId(OAuthId)
+                    .oauthId(OAuthId)
                     .nickname(oAuth2Response.getNickname())
                     .role(Role.FREE_USER.toString())
                     .build();
@@ -61,7 +60,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         } else {
 
             UserDTO userDTO = UserDTO.builder()
-                    .oAuthId(existData.getNickname())
+                    .oauthId(existData.getOauthId())
                     .nickname(oAuth2Response.getNickname())
                     .role(Role.FREE_USER.toString())
                     .build();

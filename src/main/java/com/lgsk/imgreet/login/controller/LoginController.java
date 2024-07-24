@@ -1,31 +1,30 @@
 package com.lgsk.imgreet.login.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LoginController {
 
-    @GetMapping("/")
-    @ResponseBody()
-    public String mainPage() {
-        return "main";
+    @GetMapping("/login")
+    public String loginPage(){
+        return "redirect:/oauth2/authorization/kakao";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "redirct:/kauth.kakao.com/oauth/logout";
     }
 
     @GetMapping("/open")
-    @ResponseBody
-    public String openPage() {
+    public String openPage(){
         return "open";
     }
 
     @GetMapping("/close")
-    public String closePage() {
+    @PreAuthorize("isAuthenticated()")
+    public String closePage(){
         return "close";
-    }
-
-    @GetMapping("/login")
-    public String loginPage(){
-        return "redirect:oauth2/authorization/kakao";
     }
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class UserDTO {
-    private String oAuthId;
+    private String oauthId;
     private String nickname;
     private String role;
 }
