@@ -31,8 +31,8 @@ public class Component {
     private float rotation;
 
     @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID", nullable = false)
-    private Category category;
+    @JoinColumn(name = "CATEGORY_DETAIL_ID", nullable = false)
+    private CategoryDetail categoryDetail;
 
     @ManyToOne
     @JoinColumn(name = "GREET_ID")
