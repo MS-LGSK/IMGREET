@@ -32,4 +32,5 @@ public class Category {
 
     @NotNull
     private boolean free;
+
 }
