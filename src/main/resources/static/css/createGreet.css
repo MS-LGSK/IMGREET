@@ -1,5 +1,10 @@
-body {
-    background-color: #f0f0f0;
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+#nav {
+    position: fixed;
 }
 
 .fixed-sidebar {
@@ -53,11 +58,39 @@ body {
     font-size: 24px;
 }
 
-.main-content {
-    margin-left: 250px;
-    transition: margin-left 0.3s ease;
-}
-
 .navbar {
     z-index: 1051;
 }
+
+.nav-button {
+    background-color: transparent;
+    border: none;
+    margin-top: 10%;
+}
+
+.main-content {
+    background-color: #EEEEEE;
+    height: 100vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+}
+
+.myCanvasContainer {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.myCanvas {
+    width: 50vw;
+    height: 70vh;
+    background-color: white;
+    margin-top: 5%;
+    justify-content: center;
+    align-items: center;
+}
+
