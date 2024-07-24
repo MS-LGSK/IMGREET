@@ -5,10 +5,7 @@ import com.lgsk.imgreet.category.model.CategoryDTO;
 import com.lgsk.imgreet.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +24,11 @@ public class CategoryController {
     @GetMapping
     public List<Long> getAllCategoryId() {
         return categoryService.getAllCategoryId();
+    }
+
+    @GetMapping("/{type}/subType")
+    public List<String> getSubType(@PathVariable("type") String type) {
+        return categoryService.getSubType(type);
     }
 
 }

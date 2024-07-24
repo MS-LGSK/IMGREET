@@ -12,4 +12,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query("SELECT c.id FROM Category c")
     List<Long> findAllCategoryId();
+
+    @Query("SELECT c.subType FROM Category c WHERE c.type = :type")
+    List<String> findSubTypeByType(String type);
 }

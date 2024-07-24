@@ -23,4 +23,8 @@ public class CategoryService {
     public List<Long> getAllCategoryId() {
         return categoryRepository.findAllCategoryId();
     }
+
+    public List<String> getSubType(String type) {
+        return categoryRepository.findSubTypeByType(type);
+    }
 }
