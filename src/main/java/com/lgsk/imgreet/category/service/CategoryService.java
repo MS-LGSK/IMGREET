@@ -17,8 +17,12 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public void saveCategory(CategoryDTO categoryDTO) {
-        Category category = Category.category(categoryDTO.getType(), categoryDTO.isFree());
+    public void saveCategory(CategoryDTO dto) {
+        Category category = Category.builder()
+                .type(dto.getType())
+                .free(dto.isFree())
+                .build();
+
         categoryRepository.save(category);
     }
 

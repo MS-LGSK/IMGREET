@@ -33,11 +33,4 @@ public class Category {
     @NotNull
     private boolean free;
 
-    public static Category category(String type, boolean free) {
-        Category category = new Category();
-        category.type = type;
-        category.free = free;
-
-        return category;
-    }
 }

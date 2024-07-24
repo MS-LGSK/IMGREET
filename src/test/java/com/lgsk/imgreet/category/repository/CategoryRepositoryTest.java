@@ -22,7 +22,11 @@ class CategoryRepositoryTest {
     @Transactional
     @DisplayName("카테고리 생성")
     void save() {
-        Category category = Category.category("Text", true);
+        Category category = Category.builder()
+                .type("TEXT")
+                .free(true)
+                .build();
+
         categoryRepository.save(category);
     }
 
@@ -31,8 +35,15 @@ class CategoryRepositoryTest {
     @DisplayName("모든 카테고리 아이디 가져오기")
     void getAllCategoryId() {
         // given
-        Category category_text = Category.category("Text", true);
-        Category category_shape = Category.category("Shape", true);
+        Category category_text = Category.builder()
+                .type("TEXT")
+                .free(true)
+                .build();
+
+        Category category_shape = Category.builder()
+                .type("SHAPE")
+                .free(true)
+                .build();
 
         categoryRepository.save(category_text);
         categoryRepository.save(category_shape);

@@ -1,8 +1,8 @@
 package com.lgsk.imgreet.category.model;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class CategoryDTO {
 
     private String type;
