@@ -20,4 +20,13 @@ public class Category {
 
     @Column(nullable = false)
     private boolean free;
+
+    public static Category category(String type, String subType, boolean free) {
+        Category category = new Category();
+        category.type = type;
+        category.subType = subType;
+        category.free = free;
+
+        return category;
+    }
 }
