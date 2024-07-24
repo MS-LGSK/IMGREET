@@ -106,10 +106,25 @@ document.addEventListener('DOMContentLoaded', () => {
             // }
         });
 
-        // element 클릭 시 테두리 굵게 표시하기 위해 active 추가
-        editorContainer.addEventListener('click', function() {
+        function handleDeleteKeyDown(e) {
+            const activeElement = document.activeElement;
+            const isTextInput = activeElement.tagName === 'INPUT' ||
+                activeElement.tagName === 'TEXTAREA' ||
+                activeElement.isContentEditable;
+
+            if (e.key === 'Backspace' && !isTextInput) {
+                editorContainer.remove();
+            }
+        }
+
+        // 클릭 이벤트 핸들러 함수
+        function handleClick() {
             editorContainer.classList.add('active');
-        })
+        }
+
+        // 이벤트 리스너 등록
+        editorContainer.addEventListener('click', handleClick);
+        document.addEventListener('keydown', handleDeleteKeyDown);
 
         document.addEventListener('mousemove', function (e) {
             if (isDragging) {
