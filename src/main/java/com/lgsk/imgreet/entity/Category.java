@@ -15,16 +15,12 @@ public class Category {
     @Column(length = 50, nullable = false)
     private String type;
 
-    @Column(length = 255, nullable = false)
-    private String subType;
-
     @Column(nullable = false)
     private boolean free;
 
-    public static Category category(String type, String subType, boolean free) {
+    public static Category category(String type, boolean free) {
         Category category = new Category();
         category.type = type;
-        category.subType = subType;
         category.free = free;
 
         return category;

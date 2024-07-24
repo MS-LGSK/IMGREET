@@ -6,6 +6,7 @@ import com.lgsk.imgreet.category.repository.CategoryRepository;
 import com.lgsk.imgreet.entity.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,8 +16,9 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
+    @Transactional
     public void saveCategory(CategoryDTO categoryDTO) {
-        Category category = Category.category(categoryDTO.getType(), categoryDTO.getSubType(), categoryDTO.isFree());
+        Category category = Category.category(categoryDTO.getType(), categoryDTO.isFree());
         categoryRepository.save(category);
     }
 
@@ -24,7 +26,4 @@ public class CategoryService {
         return categoryRepository.findAllCategoryId();
     }
 
-    public List<String> getSubType(String type) {
-        return categoryRepository.findSubTypeByType(type);
-    }
 }

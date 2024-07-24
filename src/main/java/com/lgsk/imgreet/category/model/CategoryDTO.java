@@ -7,7 +7,5 @@ public class CategoryDTO {
 
     private String type;
 
-    private String subType;
-
     private boolean free;
 }

@@ -25,10 +25,4 @@ public class CategoryController {
     public List<Long> getAllCategoryId() {
         return categoryService.getAllCategoryId();
     }
-
-    @GetMapping("/{type}/subType")
-    public List<String> getSubType(@PathVariable("type") String type) {
-        return categoryService.getSubType(type);
-    }
-
 }
