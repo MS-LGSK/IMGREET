@@ -27,9 +27,6 @@ public class Category {
     @Column(length = 50, nullable = false)
     private String type;
 
-    @Column(length = 255, nullable = false)
-    private String subType;
-
     @NotNull
     private boolean free;
 
