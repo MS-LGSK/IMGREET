@@ -22,7 +22,7 @@ class CategoryRepositoryTest {
     @Transactional
     @DisplayName("카테고리 생성")
     void save() {
-        Category category = Category.category("Text", "가로 텍스트", true);
+        Category category = Category.category("Text", true);
         categoryRepository.save(category);
     }
 
@@ -31,8 +31,8 @@ class CategoryRepositoryTest {
     @DisplayName("모든 카테고리 아이디 가져오기")
     void getAllCategoryId() {
         // given
-        Category category_text = Category.category("Text", "가로 텍스트", true);
-        Category category_shape = Category.category("Shape", "원", true);
+        Category category_text = Category.category("Text", true);
+        Category category_shape = Category.category("Shape", true);
 
         categoryRepository.save(category_text);
         categoryRepository.save(category_shape);
@@ -43,29 +43,4 @@ class CategoryRepositoryTest {
         // then
         assertThat(categoryIdList.size()).isEqualTo(2);
     }
-
-    @Test
-    @Transactional
-    @DisplayName("카테고리 별 subType 가져오기")
-    void getSubType() {
-        // given
-        Category category_text = Category.category("Text", "가로 텍스트", true);
-        Category category_shape1 = Category.category("Shape", "원", true);
-        Category category_shape2 = Category.category("Shape", "삼각형", true);
-        Category category_shape3 = Category.category("Shape", "사각형", true);
-
-        categoryRepository.save(category_text);
-        categoryRepository.save(category_shape1);
-        categoryRepository.save(category_shape2);
-        categoryRepository.save(category_shape3);
-
-        // when
-        List<String> response = categoryRepository.findSubTypeByType("Shape");
-
-        for(String r : response) System.out.println("r = " + r);
-
-        // then
-        assertThat(response.size()).isEqualTo(3);
-    }
-
 }
