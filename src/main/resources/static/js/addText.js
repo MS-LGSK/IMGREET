@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('myCanvas');
     const container = document.getElementById('container');
 
     // 사이드바 열기
@@ -55,23 +54,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 버튼 클릭 시 동작을 처리하는 함수 -> command 패턴으로 변경 예정
     function handleSidebarButtonClick(item) {
+        const text = document.createElement('textarea');
         if (item === '가로 텍스트') {
-            initializeTextEditor();
+            text.className = 'horizontal-text';
+            text.placeholder = '텍스트를 입력하세요.';
         } else if (item === '세로 텍스트') {
-            alert('세로 텍스트 버튼 클릭됨');
+            text.className = 'vertical-text';
+            text.placeholder = '텍스트를 입력하세요.';
         }
+
+        initializeTextEditor(text);
     }
 
     // 가로 텍스트 버튼을 클릭 시 호출될 함수
-    function initializeTextEditor() {
+    function initializeTextEditor(text) {
         const editorContainer = document.createElement('div');
         editorContainer.className = 'editor-container';
 
-        const horizontalText = document.createElement('textarea');
-        horizontalText.className = 'horizontal-text';
-        horizontalText.placeholder = '텍스트를 입력하세요.';
-
-        editorContainer.appendChild(horizontalText);
+        editorContainer.appendChild(text);
         container.appendChild(editorContainer);
 
         const handlePositions = ['br', 'tr', 'bl', 'tl', 'top', 'bottom', 'left', 'right'];
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let resizeHandle;
 
         editorContainer.addEventListener('mousedown', function (e) {
-            if (e.target === horizontalText) {
+            if (e.target === text) {
                 isDragging = true;
                 offsetX = e.clientX - editorContainer.getBoundingClientRect().left;
                 offsetY = e.clientY - editorContainer.getBoundingClientRect().top;
