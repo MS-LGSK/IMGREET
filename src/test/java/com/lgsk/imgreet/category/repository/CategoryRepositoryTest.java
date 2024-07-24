@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
+
 @SpringBootTest
 class CategoryRepositoryTest {
 
@@ -39,6 +41,31 @@ class CategoryRepositoryTest {
         List<Long> categoryIdList = categoryRepository.findAllCategoryId();
 
         // then
-        Assertions.assertThat(categoryIdList.size()).isEqualTo(2);
+        assertThat(categoryIdList.size()).isEqualTo(2);
     }
+
+    @Test
+    @Transactional
+    @DisplayName("카테고리 별 subType 가져오기")
+    void getSubType() {
+        // given
+        Category category_text = Category.category("Text", "가로 텍스트", true);
+        Category category_shape1 = Category.category("Shape", "원", true);
+        Category category_shape2 = Category.category("Shape", "삼각형", true);
+        Category category_shape3 = Category.category("Shape", "사각형", true);
+
+        categoryRepository.save(category_text);
+        categoryRepository.save(category_shape1);
+        categoryRepository.save(category_shape2);
+        categoryRepository.save(category_shape3);
+
+        // when
+        List<String> response = categoryRepository.findSubTypeByType("Shape");
+
+        for(String r : response) System.out.println("r = " + r);
+
+        // then
+        assertThat(response.size()).isEqualTo(3);
+    }
+
 }
