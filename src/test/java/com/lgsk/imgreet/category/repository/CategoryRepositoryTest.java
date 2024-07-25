@@ -49,7 +49,7 @@ class CategoryRepositoryTest {
         categoryRepository.save(category_shape);
 
         // when
-        List<Long> categoryIdList = categoryRepository.findAllCategoryId();
+        List<Category> categoryIdList = categoryRepository.findAll();
 
         // then
         assertThat(categoryIdList.size()).isEqualTo(2);
