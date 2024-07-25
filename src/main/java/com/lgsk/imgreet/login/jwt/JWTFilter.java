@@ -25,12 +25,24 @@ public class JWTFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+
+        String requestUri = request.getRequestURI();
+        if (requestUri.matches("^\\/login(?:\\/.*)?$")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if (requestUri.matches("^\\/oauth2(?:\\/.*)?$")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         //cookie들을 불러온 뒤 Authorization Key에 담긴 쿠키를 찾음
         String authorization = null;
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
 
-            System.out.println("cookie.getName() ::::::::::"+ cookie.getName());
             if (cookie.getName().equals("Authorization")) {
 
                 authorization = cookie.getValue();
@@ -66,7 +78,6 @@ public class JWTFilter extends OncePerRequestFilter {
                 .role(role)
                 .build();
 
-
         //UserDetails에 회원 정보 객체 담기
         CustomOAuth2User customOAuth2User = new CustomOAuth2User(userDTO);
 
@@ -77,17 +88,5 @@ public class JWTFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
 
-
-        String requestUri = request.getRequestURI();
-        if (requestUri.matches("^\\/login(?:\\/.*)?$")) {
-
-            filterChain.doFilter(request, response);
-            return;
-        }
-        if (requestUri.matches("^\\/oauth2(?:\\/.*)?$")) {
-
-            filterChain.doFilter(request, response);
-            return;
-        }
     }
 }

@@ -18,7 +18,6 @@ public class JWTUtil {
     }
 
     public String getUsername(String token) {
-        System.out.println(token);          // 확인용 -> ?
 
         return Jwts.parser()
                 .verifyWith(secretKey)
