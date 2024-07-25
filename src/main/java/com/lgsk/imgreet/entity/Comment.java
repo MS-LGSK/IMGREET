@@ -1,14 +1,23 @@
 package com.lgsk.imgreet.entity;
 
 import com.lgsk.imgreet.base.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
-@Table(name ="COMMENTS")
+@Table(name = "COMMENTS")
+@NoArgsConstructor
+@SuperBuilder(toBuilder = true)
 public class Comment extends BaseEntity {
 
     @Id

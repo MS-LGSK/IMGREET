@@ -1,15 +1,25 @@
 package com.lgsk.imgreet.entity;
 
 import com.lgsk.imgreet.base.entity.BaseEntity;
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @Table(name = "GREETS")
+@SuperBuilder(toBuilder = true)
 public class Greet extends BaseEntity {
 
     @Id
@@ -20,15 +30,15 @@ public class Greet extends BaseEntity {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-    @Column(nullable = false)
+    @NotNull
     private String title;
 
     private String url;
 
-    @Column(nullable = false)
-    private LocalDateTime expiredDate;
+    @NotNull
+    private LocalDateTime expireDate;
 
-    @Column(nullable = false)
+    @NotNull
     private boolean allowComments;
 
 }
