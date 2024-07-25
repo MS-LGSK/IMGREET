@@ -1,13 +1,18 @@
 package com.lgsk.imgreet.entity;
 
-import com.lgsk.imgreet.base.entity.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder(toBuilder = true)
 @Table(name = "CATEGORY_DETAILS")
-public class CategoryDetail extends BaseEntity {
+public class CategoryDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
