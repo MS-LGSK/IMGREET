@@ -48,6 +48,10 @@ body, html {
     font-weight: bold;
 }
 
+.log-link {
+    justify-content: center;
+}
+
 .btn {
     text-decoration: none;
 }
