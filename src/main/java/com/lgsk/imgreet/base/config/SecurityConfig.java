@@ -1,8 +1,7 @@
 package com.lgsk.imgreet.base.config;
 
-import com.lgsk.imgreet.login.controller.CustomSuccessHandler;
-import com.lgsk.imgreet.login.jwt.JWTFilter;
 import com.lgsk.imgreet.login.jwt.JWTUtil;
+import com.lgsk.imgreet.login.oauth2.CustomSuccessHandler;
 import com.lgsk.imgreet.login.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -13,9 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationCodeGrantFilter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -47,19 +44,18 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
 
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/oauth2/authorization/kakao")
+//                        .loginPage("/oauth2/authorization/kakao")
+                        .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpointConfig ->
                                 userInfoEndpointConfig.userService(customOAuth2UserService))
                         .successHandler(customSuccessHandler))
 
                 .logout( logout ->
-//                        logout.logoutUrl("/api/users/logout") )
                         logout.logoutUrl("/logout"))
-//                        logout.logoutUrl("/kauth.kakao.com/oauth/logout"))
 
-                // JWTFilter 추가
-                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(new JWTFilter(jwtUtil), OAuth2AuthorizationCodeGrantFilter.class)
+//                // JWTFilter 추가
+//                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterAfter(new JWTFilter(jwtUtil), OAuth2AuthorizationCodeGrantFilter.class)
 
                 // 세션 설정 : Stateless
                 .sessionManagement( session -> session
