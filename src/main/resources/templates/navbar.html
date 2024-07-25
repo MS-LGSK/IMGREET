@@ -9,9 +9,7 @@
 		<img th:src="@{/images/logo-removebg.png}" alt="ImGreet Logo"/>
 	</div>
 	<div class="navbar-right">
-		<span th:text="${session.user.nickname}" />
 		<a href="#" th:href="@{/login}">로그인</a>
-		<a href="#" th:href="@{/user/logout}">로그아웃</a>
 		<a href="#" th:href="@{/signup}" class="btn yellow-btn">5초 회원가입</a>
 	</div>
 </nav>
