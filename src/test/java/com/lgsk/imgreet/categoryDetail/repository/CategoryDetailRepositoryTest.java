@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,6 +46,44 @@ class CategoryDetailRepositoryTest {
 
         // then
         assertThat(saveCategoryDetail).isSameAs(horizontal_text);
+    }
+
+    @Test
+    @DisplayName("서브 타입에 속해있는 카테고리 아이디 가져오기")
+    @Transactional
+    void getSubType() {
+        // given
+        Category shape = Category.builder()
+                .type("SHAPE")
+                .free(true)
+                .build();
+
+        Category saveCategory = categoryRepository.save(shape);
+
+        categoryDetailRepository.save(
+                CategoryDetail.builder()
+                        .subType("원")
+                        .category(saveCategory)
+                        .build());
+
+        categoryDetailRepository.save(
+                CategoryDetail.builder()
+                        .subType("삼각형")
+                        .category(saveCategory)
+                        .build());
+
+        categoryDetailRepository.save(
+                CategoryDetail.builder()
+                        .subType("사각형")
+                        .category(saveCategory)
+                        .build());
+
+        // when
+        List<CategoryDetail> response = categoryDetailRepository.findAllByCategoryId(saveCategory.getId());
+
+        // then
+        assertThat(response.size()).isEqualTo(3);
+
     }
 
 }
