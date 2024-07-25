@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -24,20 +25,25 @@ public class Comment extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "GREET_ID", nullable = false)
+    @JoinColumn(name = "GREET_ID")
     private Greet greet;
 
-    @Column(length = 45, nullable = false)
+    @NotNull
+    @Column(length = 45)
     private String ipAddress;
 
-    @Column(length = 255, nullable = false)
+    @NotNull
+    @Column(length = 255)
     private String nickname;
 
-    @Column(length = 255, nullable = false)
+    @NotNull
+    @Column(length = 255)
     private String password;
 
-    @Column(length = 2000, nullable = false)
+    @NotNull
+    @Column(length = 2000)
     private String content;
 
 }
