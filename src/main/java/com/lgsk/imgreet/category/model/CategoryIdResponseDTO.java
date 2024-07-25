@@ -5,9 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CategoryDTO {
+public class CategoryIdResponseDTO {
 
-    private String type;
-
-    private boolean free;
+    private Long id;
 }
