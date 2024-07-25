@@ -1,4 +1,4 @@
-package com.lgsk.imgreet.login.controller;
+package com.lgsk.imgreet.login.oauth2;
 
 import com.lgsk.imgreet.login.dto.CustomOAuth2User;
 import com.lgsk.imgreet.login.jwt.JWTUtil;
@@ -27,10 +27,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        //OAuth2User
         CustomOAuth2User customUserDetails = (CustomOAuth2User) authentication.getPrincipal();
 
-        String oauthId = customUserDetails.getName();
+        String oauthId = customUserDetails.getOauthId();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
