@@ -1,8 +1,6 @@
 package com.lgsk.imgreet.base.config;
 
-import com.lgsk.imgreet.login.jwt.JWTUtil;
-import com.lgsk.imgreet.login.oauth2.CustomSuccessHandler;
-import com.lgsk.imgreet.login.service.CustomOAuth2UserService;
+import com.lgsk.imgreet.login.service.OAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -19,10 +16,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CorsConfig corsConfig;
-    private final CustomOAuth2UserService customOAuth2UserService;
-    private final CustomSuccessHandler customSuccessHandler;
-    private final JWTUtil jwtUtil;
+//    private final CorsConfig corsConfig;
+    //    private final CustomOAuth2UserService customOAuth2UserService;
+//    private final CustomSuccessHandler customSuccessHandler;
+//    private final JWTUtil jwtUtil;
+    private final OAuthService oAuthService;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -33,7 +31,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
+//                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -47,19 +45,19 @@ public class SecurityConfig {
 //                        .loginPage("/oauth2/authorization/kakao")
                         .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpointConfig ->
-                                userInfoEndpointConfig.userService(customOAuth2UserService))
-                        .successHandler(customSuccessHandler))
+                                userInfoEndpointConfig.userService(oAuthService)));
+//                        .successHandler(customSuccessHandler))
 
-                .logout( logout ->
-                        logout.logoutUrl("/logout"))
+//                .logout( logout ->
+//                        logout.logoutUrl("/logout"))
 
 //                // JWTFilter 추가
 //                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
 //                .addFilterAfter(new JWTFilter(jwtUtil), OAuth2AuthorizationCodeGrantFilter.class)
 
                 // 세션 설정 : Stateless
-                .sessionManagement( session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//                .sessionManagement( session -> session
+//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
