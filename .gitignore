@@ -395,6 +395,11 @@ application-secret.properties
 
 #img
 *.png
+*.jpg
+*.gif
+*.svg
+*.ico
+*.bmp
 *.jpeg
 *.webp
 

@@ -24,11 +24,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50, nullable = false)
+    @NotNull
+    @Column(length = 50)
     private String type;
-
-    @Column(length = 255, nullable = false)
-    private String subType;
 
     @NotNull
     private boolean free;

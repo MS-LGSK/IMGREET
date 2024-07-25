@@ -35,10 +35,11 @@ public class Greet extends BaseEntity {
 
     private String url;
 
+    private String imageUrl;
+
     @NotNull
     private LocalDateTime expireDate;
 
     @NotNull
     private boolean allowComments;
-
 }
