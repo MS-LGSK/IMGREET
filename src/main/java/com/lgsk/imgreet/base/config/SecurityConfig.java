@@ -16,10 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-//    private final CorsConfig corsConfig;
-    //    private final CustomOAuth2UserService customOAuth2UserService;
-//    private final CustomSuccessHandler customSuccessHandler;
-//    private final JWTUtil jwtUtil;
+    private final CorsConfig corsConfig;
     private final OAuthService oAuthService;
 
     @Bean
@@ -31,7 +28,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-//                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -42,22 +39,12 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
 
                 .oauth2Login(oauth2 -> oauth2
-//                        .loginPage("/oauth2/authorization/kakao")
                         .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpointConfig ->
-                                userInfoEndpointConfig.userService(oAuthService)));
-//                        .successHandler(customSuccessHandler))
+                                userInfoEndpointConfig.userService(oAuthService)))
 
-//                .logout( logout ->
-//                        logout.logoutUrl("/logout"))
-
-//                // JWTFilter 추가
-//                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
-//                .addFilterAfter(new JWTFilter(jwtUtil), OAuth2AuthorizationCodeGrantFilter.class)
-
-                // 세션 설정 : Stateless
-//                .sessionManagement( session -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .logout( logout ->
+                        logout.logoutUrl("/logout"));
 
         return http.build();
     }

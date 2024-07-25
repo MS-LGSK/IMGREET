@@ -27,25 +27,3 @@ public final class SocialClientRegistration {
 
     }
 }
-//        private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
-//        private String registrationId;
-//        private String clientId;
-//        private String clientSecret;
-//        private ClientAuthenticationMethod clientAuthenticationMethod;
-//        private AuthorizationGrantType authorizationGrantType;
-//        private String redirectUri;
-//        private Set<String> scopes = Collections.emptySet();
-//        private String clientName;
-//        private ProviderDetails providerDetails = new ProviderDetails();
-//
-//        public class ProviderDetails implements Serializable {
-//            private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
-//            private String authorizationUri;
-//            private String tokenUri;
-//            private UserInfoEndpoint userInfoEndpoint = new UserInfoEndpoint();
-//            private String jwkSetUri;
-//            private String issuerUri;
-//            private Map<String, Object> configurationMetadata = Collections.emptyMap();
-//        }
-//    }
-//}
