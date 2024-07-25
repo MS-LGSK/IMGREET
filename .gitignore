@@ -396,4 +396,15 @@ application-secret.properties
 ## images
 **/main/resources/images
 
+#img
+*.png
+*.jpg
+*.gif
+*.svg
+*.ico
+*.bmp
+*.jpeg
+*.webp
+
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,git,java,maven,eclipse,intellij,gradle,netbeans,visualstudiocode

@@ -1,0 +1,144 @@
+/* main */
+.main {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p {
+    font-size: 22px;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+/* intro */
+.intro {
+    width: 100%;
+    padding-top: 200px;
+    text-align: center;
+}
+
+.intro-h1 {
+    font-size: 50px;
+    margin-top: 50px;
+}
+
+.intro-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.yellow-btn {
+    background: #FF9000;
+    color: #fff !important;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.yellow-btn:hover {
+    text-decoration: underline;
+}
+
+.light-yellow-btn {
+    background: #FFEACF;
+    color: #FF9000;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.light-yellow-btn:hover {
+    text-decoration: underline;
+}
+
+/* templates-section */
+.templates-section {
+    width: 100%;
+    height: 100%;
+    padding: 120px 50px;
+    gap: 64px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* template */
+.template {
+    display: grid;
+    gap: 40px 40px;
+}
+
+/* template item */
+.template-item {
+    font-size: 18px; /* 기본 폰트 사이즈 */
+
+    .btn {
+        text-decoration: none;
+        color: #FF9000;
+
+    }
+}
+
+.all-templates {
+    font-size: 20px;
+    .btn {
+        text-decoration: none;
+        color: #FF9000;
+
+    }
+}
+
+.btn:hover {
+    text-decoration: underline;
+}
+
+/* 모바일 사이즈 */
+@media screen and (max-width: 1178px) {
+    .template {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 40px;
+    }
+
+    .template-item h3 {
+        font-size: 35px;
+    }
+
+    .template-item .btn, .all-templates .btn {
+        font-size: 30px;
+    }
+
+    p {
+        font-size: 30px;
+    }
+
+    .yellow-btn, .light-yellow-btn {
+        font-size: 30px;
+    }
+}
+
+/* 데스크탑 사이즈 */
+@media screen and (min-width: 1179px) {
+    .template {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 80px 40px;
+    }
+
+    .template-item {
+        font-size: 18px; /* 데스크탑 폰트 사이즈 */
+    }
+
+}
+
+.template-item img {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+}
