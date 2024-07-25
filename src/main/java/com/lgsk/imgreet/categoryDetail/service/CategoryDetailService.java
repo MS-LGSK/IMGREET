@@ -16,12 +16,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CategoryDetailService {
 
     private final CategoryDetailRepository categoryDetailRepository;
     private final CategoryRepository categoryRepository;
 
-    @Transactional
     public void saveSubType(Long categoryId, SubTypeDTO dto) {
 
         Category category = checkCategoryId(categoryId);
@@ -34,6 +34,7 @@ public class CategoryDetailService {
         categoryDetailRepository.save(categoryDetail);
     }
 
+    @Transactional(readOnly = true)
     public List<SubTypeResponseDTO> getSubType(Long categoryId) {
         checkCategoryId(categoryId);
 
@@ -52,6 +53,7 @@ public class CategoryDetailService {
         return response;
     }
 
+    @Transactional(readOnly = true)
     private Category checkCategoryId(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 카테고리입니다."));
