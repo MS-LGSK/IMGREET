@@ -35,8 +35,9 @@ public class SecurityConfig {
 
                 // 경로별 인가 작업
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/open", "/oauth2/**", "/login/**").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/**").permitAll())
+//                        .requestMatchers("/", "/oauth2/**", "/login/**").permitAll()
+//                        .anyRequest().authenticated())
 
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
