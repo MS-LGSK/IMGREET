@@ -1,0 +1,362 @@
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.shareContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+.shareContent {
+    max-width: 560px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 16px;
+    transform: translate(-50%, -50%);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 8px;
+}
+
+/* 닫기 버튼 */
+.shareHeader {
+    box-sizing: inherit;
+    padding: 16px 16px 8px;
+    height: 56px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.shareHeader .closeBtn {
+    padding: 0;
+    border: none;
+    background: none;
+    width: 32px;
+    height: 32px;
+    position: relative;
+    border-radius: 8px;
+    display: block;
+}
+
+.closeBtn-icon {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+/* 인트로 */
+.intro {
+    text-align: center;
+    color: rgb(22, 24, 29);
+    font: 600 1.25rem / 1.42 "Pretendard Variable", Figtree, "IBM Plex Sans JP", "Pretendard JP Variable";
+}
+
+/* 웹 게시 */
+
+.shareTag {
+    display: grid;
+    justify-content: center;
+    box-sizing: inherit;
+    margin-top: 12px;
+    border-bottom: 1px solid rgba(90, 101, 119, 0.15);
+}
+
+.shareTagBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: inherit;
+}
+
+.itemBox {
+    display: flex;
+    width: 100%;
+    box-sizing: inherit;
+}
+
+.tagItems {
+    font-size: 16px;
+    padding: 12px 16px;
+    background-color: rgba(33, 175, 191, 0);
+    border-bottom-style: solid;
+    border-bottom-color: #FF9000;
+    opacity: 1;
+    flex: 0 1 auto;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tagItem {
+    font: 500 0.875rem / 1.46 "Pretendard Variable", Figtree, "IBM Plex Sans JP", "Pretendard JP Variable";
+    color: #FF9000;
+}
+
+
+.linkShareContainer .box {
+    padding: 24px 32px 12px;
+}
+
+.linkContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.copyLinkContainer {
+    display: flex;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.linkBox {
+    margin-right: 8px;
+    flex: 1 1 0;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    background-color: rgba(90, 101, 118, 0.09);
+    border: 1px solid rgba(90, 101, 119, 0.24);
+    border-radius: 8px;
+    padding: 0 16px;
+}
+
+.linkInput {
+    padding: 0;
+    background-color: transparent;
+    flex-grow: 1;
+    border: none;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    color: rgb(22, 24, 29);
+    font: 400 0.875rem / 146% "Pretendard Variable", Figtree, "IBM Plex Sans JP", "Pretendard JP Variable";
+}
+
+.copyBox {
+    width: 80px;
+}
+
+.copyButton {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    outline: rgba(255, 255, 255, 0) solid 1px;
+    text-align: center;
+    border-radius: 8px;
+    height: 40px;
+    min-height: auto;
+    font: 500 0.875rem / 146% "Pretendard Variable", Figtree, "IBM Plex Sans JP", "Pretendard JP Variable";
+    background-color: #FF9000;
+    color: rgb(255, 255, 255);
+    padding: 12px 16px;
+    cursor: pointer;
+    border: none;
+}
+
+.copyButton:hover {
+    background-color: rgba(255, 144, 0, 0.78);
+}
+
+
+.copyButtonText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    user-select: none;
+    line-height: 1;
+}
+
+.iconBox {
+    display: flex;
+}
+
+.icon {
+    background-size: contain;
+    border-radius: 832.5px;
+}
+
+.kakao-icon {
+    display: flex;
+    border: none;
+    background: white;
+
+    img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+
+/* 상세 옵션 */
+
+.detailOptionTextBox {
+    transition: all 0.4s ease-in-out 0s;
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    background-color: rgba(90, 97, 114, 0);
+    cursor: pointer;
+    border-radius: 0;
+}
+
+.detailOptionTextLayout {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-grow: 4;
+    margin-right: 12px;
+    width: 100%;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.detailOption {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgb(67, 72, 86);
+    font: 400 0.875rem / 1.42 "Pretendard Variable", Figtree, "IBM Plex Sans JP", "Pretendard JP Variable";
+    padding: 0;
+}
+.detailButton svg {
+    width: 20px;
+    height: 20px;
+    color: rgb(67, 72, 86);
+}
+
+.detailButton {
+    transition: transform 0.3s ease 0s;
+}
+
+.close {
+    transition: transform 0.3s ease 0s;
+    display: inline-flex;
+    margin-left: 8px;
+    transform: rotate(0deg);
+}
+
+.open {
+    transition: transform 0.3s ease 0s;
+    display: inline-flex;
+    margin-left: 8px;
+    transform: rotate(90deg);
+}
+
+
+.detailOptionContainer {
+    display: block;
+    white-space: normal;
+    max-height: 1000px;
+}
+
+.hidden {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(0%);
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.visible {
+    max-height: 1000px; /* 충분히 큰 값으로 설정하여 모든 내용이 표시될 수 있도록 합니다 */
+    opacity: 1;
+    transform: translateY(0%);
+    transition: max-height 0.5s ease-in, opacity 0.5s ease-in, transform 0.5s ease-in;
+}
+
+
+.detailOptionBox {
+    box-sizing: border-box;
+}
+
+.detailOptionLayout {
+    display: flex;
+    flex-direction: column;
+}
+
+.detailOptionContent {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.detailOptionContent-list {
+    display: flex;
+}
+
+.detailOptionContent-list-item {
+    margin-right: 8px;
+    display: flex;
+    gap: 4px;
+    max-width: fit-content;
+    align-items: center;
+}
+
+.OptionText {
+    color: rgb(22, 24, 29);
+    font: 400 0.875rem / 1.42 "Pretendard Variable", Figtree, "IBM Plex Sans JP", "Pretendard JP Variable";
+}
+
+.detailOptionCheckbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: rgb(245, 215, 10); /* 체크 색상 */
+}
+
+
+.underLine {
+    width: 100%;
+    padding: 0 0 50px;
+}
+
+.underLine2 {
+    width: 100%;
+    border-bottom: 1px solid rgba(90, 101, 119, 0.15);
+}
