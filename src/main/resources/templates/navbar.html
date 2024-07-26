@@ -12,8 +12,8 @@
 		</a>
 	</div>
 	<div class="navbar-right">
-		<form th:if="${!auth}" th:action="@{/login}" method="get" class="navbar-link" onclick="this.submit();">로그인</form>
-		<form th:if="${auth}" th:action="@{/logout}" method="post" class="navbar-link" onclick="this.submit();">로그아웃</form>
+		<form th:if="${@rq.logout}" th:action="@{/login}" method="get" class="navbar-link" onclick="this.submit();">로그인</form>
+		<form th:if="${@rq.login}" th:action="@{/logout}" method="post" class="navbar-link" onclick="this.submit();">로그아웃</form>
 		<button class="hamburger-btn" onclick="toggleMenu()">
 			<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
 			     style="width: 40px; height: 40px; color: rgb(22, 24, 29);">
@@ -27,8 +27,8 @@
 			<a th:href="@{/}">HOME</a>
 			<a th:href="@{/about}">ABOUT</a>
 			<a th:href="@{/service}">SERVICE</a>
-			<a th:if="${!auth}" th:href="@{/login}">로그인</a>
-			<form th:if="${auth}" th:action="@{/logout}" method="post" th:value="로그아웃" onclick="this.submit()"> </form>
+			<a th:if="${@rq.logout}" th:href="@{/login}">로그인</a>
+			<form th:if="${@rq.login}" th:action="@{/logout}" method="post" th:value="로그아웃" onclick="this.submit()"> </form>
 		</div>
 	</div>
 	<script th:src="@{/js/navbar.js}"></script>
