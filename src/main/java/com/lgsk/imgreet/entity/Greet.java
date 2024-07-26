@@ -42,5 +42,4 @@ public class Greet extends BaseEntity {
 
     @NotNull
     private boolean allowComments;
-
 }

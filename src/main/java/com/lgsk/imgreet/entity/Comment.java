@@ -45,5 +45,4 @@ public class Comment extends BaseEntity {
     @NotNull
     @Column(length = 2000)
     private String content;
-
 }

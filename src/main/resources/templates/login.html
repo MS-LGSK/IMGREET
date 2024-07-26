@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>ImGreet</title>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+        </div>
+        <div class="form-container sign-in-container">
+            <form th:id="left_form">
+                <a th:href="@{/}" class="logo-link">
+                    <img th:src="@{https://ifh.cc/g/Hzvxcy.jpg}" alt="ImGreet Logo" class="logo"/>
+                </a>
+                <span th:class="pub">쉽고 재밌게 초대장을 만들고</span>
+                <span th:class="pub">소중한 사람들과 추억을 공유해요!</span>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h2>간편 로그인 / 회원 가입</h2>
+                    <span>아이디와 비밀번호 입력하기 귀찮으시죠?</span>
+                    <span>빠른 회원가입으로 입력없이 간편하게 로그인하세요!</span>
+                    <br>
+                    <a th:href="@{/oauth2/authorization/kakao}">
+                        <img th:id="btn_kakao" th:src="@{https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png}">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Copyrights © 2024 LSGK TEAM</p>
+    </footer>
+    </body>
+    <link rel="stylesheet" th:href="@{/css/login.css?after}" />
+</html>

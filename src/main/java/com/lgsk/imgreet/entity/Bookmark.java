@@ -2,7 +2,6 @@ package com.lgsk.imgreet.entity;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -29,23 +28,13 @@ public class Bookmark implements Serializable {
     @Getter(AccessLevel.NONE)
     private BookmarkId id;
 
-//    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "USER_ID")
     private User user;
 
-//    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @MapsId("templateId")
     @JoinColumn(name = "TEMPLATE_ID")
     private Template template;
-
-    public Long getUserId() {
-        return id.getUserId();
-    }
-
-    public Long getTemplateId() {
-        return id.getTemplateId();
-    }
 }
