@@ -4,6 +4,11 @@
 	<meta charset="UTF-8" />
 	<title>ImGreet</title>
 	<!-- Assuming you have a CSS file -->
+	<!-- kakao 공유하기 api-->
+	<script src="https://developers.kakao.com/sdk/js/kakao.js" defer></script>
+	<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" defer
+			integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
+	</script>
 </head>
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
 <link rel="stylesheet" th:href="@{/css/share.css}"/>
@@ -67,10 +72,11 @@
 						</div>
 					</div>
 					<div class="iconBox">
-						<button class="icon kakao-icon"><img
-								src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오"/></button>&emsp;
-						<button class="icon qr-icon"><img
-								src="https://img.icons8.com/windows/32/qr-code.png" alt="QR"/></button>
+						<a class="icon kakao-icon" id="kakaoShareBtn">
+							<img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유">
+						</a>
+						<button class="icon qr-icon">
+							<img src="https://img.icons8.com/windows/32/qr-code.png" alt="QR"/></button>
 					</div>
 				</div>
 
@@ -197,5 +203,14 @@
 	</div>
 </div>
 </body>
-<script th:src="@{/js/share.js}"></script>
+<!--초대장 Title 변수 -->
+<script th:inline="javascript">
+	// const title = [[${title}]];		// 값이 생기는 경우 주석 해제 후 사용
+	// const image = [[${image}]];
+	const title = '초대해요~';
+	const image = 'https://ifh.cc/v-pgF3To';
+</script>
+<script th:src="@{/js/shareKakao.js}" defer></script>
+<script th:src="@{/js/share.js}" ></script>
+
 </html>
