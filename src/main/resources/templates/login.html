@@ -26,11 +26,9 @@
                     <span>아이디와 비밀번호 입력하기 귀찮으시죠?</span>
                     <span>빠른 회원가입으로 입력없이 간편하게 로그인하세요!</span>
                     <br>
-                    <form th:action="@{/oauth2/authorization/kakao}" method="get" th:onclick="this.submit()">
-                        <button th:id="btn_img" type="button">
-                            <img th:id="btn_kakao" th:src="@{https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png}">
-                        </button>
-                    </form>
+                    <a th:href="@{/oauth2/authorization/kakao}">
+                        <img th:id="btn_kakao" th:src="@{https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png}">
+                    </a>
                 </div>
             </div>
         </div>
@@ -41,5 +39,5 @@
         <p>Copyrights © 2024 LSGK TEAM</p>
     </footer>
     </body>
-    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/login.css?after}" />
 </html>
