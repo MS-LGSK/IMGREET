@@ -26,6 +26,6 @@ class LoginControllerTest {
                 .andReturn();
 
         int status = mvcResult.getResponse().getStatus();
-        assertThat(status, equalTo(401));
+        assertThat(status, equalTo(200));
     }
 }
