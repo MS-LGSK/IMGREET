@@ -37,6 +37,7 @@ public class CategoryService {
         for (Category category : categories) {
             CategoryIdResponseDTO dto = CategoryIdResponseDTO.builder()
                     .id(category.getId())
+                    .type(category.getType())
                     .build();
 
             response.add(dto);
