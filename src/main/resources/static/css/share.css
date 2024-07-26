@@ -225,6 +225,16 @@ body {
         height: 40px;
     }
 }
+.qr-icon {
+    display: flex;
+    border: none;
+    background: white;
+
+    img {
+        width: 40px;
+        height: 40px;
+    }
+}
 
 
 /* 상세 옵션 */
