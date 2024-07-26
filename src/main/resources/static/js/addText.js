@@ -1,58 +1,92 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('container');
+    const sidebarContent = document.getElementById('sidebarContent');
+    const sidebar = document.getElementById('sidebar');
+    const categoryButtonsContainer = document.getElementById('categoryButtons');
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
 
-    // 사이드바 열기
-    function openSidebar(items) {
-        const sidebarContent = document.getElementById('sidebarContent');
-        sidebarContent.innerHTML = '';
-
-        items.forEach(item => {
-            const li = document.createElement('li');
-            li.className = 'nav-item';
-
-            const button = document.createElement('button');
-            button.className = 'nav-button';
-            button.textContent = item;
-
-            button.addEventListener('click', function () {
-                handleSidebarButtonClick(item);
+    function fetchCategoryIds() {
+        fetch('/category')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (Array.isArray(data)) {
+                    storeCategoryIds(data);
+                    displayCategoryButtons(data);
+                } else {
+                    console.error('Fetched data is not an array:', data);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching category IDs: ', error);
             });
-
-            li.appendChild(button);
-            sidebarContent.appendChild(li);
-        });
-
-        document.getElementById('sidebar').classList.add('open');
     }
 
-    // 텍스트 카테고리의 서브 카테고리 출력
-    document.getElementById('text').addEventListener('click', function () {
-        openSidebar(['가로 텍스트', '세로 텍스트']);
+    // local storage에 category ID 저장
+    function storeCategoryIds(data) {
+        const categories = data.map(category => ({
+            id: category.id,
+            type: category.type
+        }));
+        localStorage.setItem('categories', JSON.stringify(categories));
+    }
+
+    // sidebar에 카테고리 버튼 표시
+    function displayCategoryButtons(categoryIds) {
+        categoryButtonsContainer.innerHTML = ''; // Clear previous content
+        categoryIds.forEach(category => {
+            const button = document.createElement('button');
+            button.className = 'category-button';
+            button.textContent = category.type;
+            button.dataset.categoryId = category.id;
+
+            button.addEventListener('click', () => fetchAndDisplaySubTypes(category.id));
+            categoryButtonsContainer.appendChild(button);
+        });
+    }
+
+    // category ID에 대한 subType 표시
+    function fetchAndDisplaySubTypes(categoryId) {
+        fetch(`/${categoryId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(subTypes => {
+                openSidebar(subTypes);
+            })
+            .catch(error => {
+                console.error('Error fetching subtypes: ', error);
+            });
+    }
+
+    // open sidebar
+    function openSidebar(subTypes) {
+        sidebarContent.innerHTML = ''; // Clear previous content
+
+        subTypes.forEach(subType => {
+            const button = document.createElement('button');
+            button.className = 'nav-button';
+            button.textContent = subType.subType;
+
+            button.addEventListener('click', () => handleSidebarButtonClick(subType.subType));
+            sidebarContent.appendChild(button);
+        });
+        sidebar.classList.add('open');
+    }
+
+    // close sidebar
+    sidebarCloseBtn.addEventListener('click', () => {
+        sidebar.classList.remove('open');
     });
 
-    // 도형 카테고리의 서브 카테고리 출력
-    document.getElementById('shape').addEventListener('click', function () {
-        openSidebar(['원', '사각형', '삼각형']);
-    });
-
-    // 이미지 카테고리의 서브 카테고리 출력
-    document.getElementById('image').addEventListener('click', function () {
-        openSidebar(['이미지 업로드']);
-    });
-
-    // // 사이드바 외부 클릭 시 닫기
-    // document.addEventListener('click', function (event) {
-    //     if (!event.target.closest('.fixed-sidebar') && !event.target.closest('.sidebar-nav')) {
-    //         document.getElementById('sidebar').classList.remove('open');
-    //     }
-    // });
-
-    // 사이드바 닫기 버튼 클릭 시 닫기
-    document.getElementById('sidebarCloseBtn').addEventListener('click', function () {
-        document.getElementById('sidebar').classList.remove('open');
-    });
-
-    // 버튼 클릭 시 동작을 처리하는 함수 -> command 패턴으로 변경 예정
+    // Handle sidebar button clicks
     function handleSidebarButtonClick(item) {
         const text = document.createElement('textarea');
         if (item === '가로 텍스트') {
@@ -66,10 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
         initializeTextEditor(text);
     }
 
-    // 가로 텍스트 버튼을 클릭 시 호출될 함수
+    // Initialize text editor
     function initializeTextEditor(text) {
         const editorContainer = document.createElement('div');
         editorContainer.className = 'editor-container';
+        editorContainer.classList.add('active');
 
         editorContainer.appendChild(text);
         container.appendChild(editorContainer);
@@ -101,79 +136,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 startX = e.clientX;
                 startY = e.clientY;
             }
-            // } else {
-            //     // editorContainer.classList.add('active');
-            // }
         });
 
-        function handleDeleteKeyDown(e) {
-            const activeElement = document.activeElement;
-            const isTextInput = activeElement.tagName === 'INPUT' ||
-                activeElement.tagName === 'TEXTAREA' ||
-                activeElement.isContentEditable;
-
-            if (e.key === 'Backspace' && !isTextInput) {
-                editorContainer.remove();
-            }
-        }
-
-        // 클릭 이벤트 핸들러 함수
-        function handleClick() {
-            editorContainer.classList.add('active');
-        }
-
-        // 이벤트 리스너 등록
-        editorContainer.addEventListener('click', handleClick);
-        document.addEventListener('keydown', handleDeleteKeyDown);
-
+        // drag and size
         document.addEventListener('mousemove', function (e) {
             if (isDragging) {
-                editorContainer.style.left = `${e.clientX - offsetX}px`;
-                editorContainer.style.top = `${e.clientY - offsetY}px`;
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
+                editorContainer.style.left = `${x}px`;
+                editorContainer.style.top = `${y}px`;
             } else if (isResizing) {
-                const rect = editorContainer.getBoundingClientRect();
-                const aspectRatio = startWidth / startHeight;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
 
                 if (resizeHandle.classList.contains('br')) {
-                    const newWidth = Math.max(200, e.clientX - rect.left);
-                    const newHeight = newWidth / aspectRatio;
-                    editorContainer.style.width = `${newWidth}px`;
-                    editorContainer.style.height = `${Math.max(100, newHeight)}px`;
-                } else if (resizeHandle.classList.contains('tr')) {
-                    const newWidth = Math.max(200, e.clientX - rect.left);
-                    const newHeight = newWidth / aspectRatio;
-                    editorContainer.style.width = `${newWidth}px`;
-                    editorContainer.style.height = `${Math.max(100, newHeight)}px`;
-                    editorContainer.style.top = `${e.clientY - startY}px`;
+                    editorContainer.style.width = `${startWidth + dx}px`;
+                    editorContainer.style.height = `${startHeight + dy}px`;
                 } else if (resizeHandle.classList.contains('bl')) {
-                    const newWidth = Math.max(200, e.clientX - rect.left);
-                    const newHeight = newWidth / aspectRatio;
-                    editorContainer.style.width = `${newWidth}px`;
-                    editorContainer.style.height = `${Math.max(100, newHeight)}px`;
-                    editorContainer.style.left = `${e.clientX - startX}px`;
+                    editorContainer.style.width = `${startWidth - dx}px`;
+                    editorContainer.style.height = `${startHeight + dy}px`;
+                    editorContainer.style.left = `${editorContainer.offsetLeft + dx}px`;
+                } else if (resizeHandle.classList.contains('tr')) {
+                    editorContainer.style.width = `${startWidth + dx}px`;
+                    editorContainer.style.height = `${startHeight - dy}px`;
+                    editorContainer.style.top = `${editorContainer.offsetTop + dy}px`;
                 } else if (resizeHandle.classList.contains('tl')) {
-                    const newWidth = Math.max(200, e.clientX - rect.left);
-                    const newHeight = newWidth / aspectRatio;
-                    editorContainer.style.width = `${newWidth}px`;
-                    editorContainer.style.height = `${Math.max(100, newHeight)}px`;
-                    editorContainer.style.left = `${e.clientX - startX}px`;
-                    editorContainer.style.top = `${e.clientY - startY}px`;
+                    editorContainer.style.width = `${startWidth - dx}px`;
+                    editorContainer.style.height = `${startHeight - dy}px`;
+                    editorContainer.style.left = `${editorContainer.offsetLeft + dx}px`;
+                    editorContainer.style.top = `${editorContainer.offsetTop + dy}px`;
                 } else if (resizeHandle.classList.contains('top')) {
-                    const newHeight = Math.max(100, startHeight + startY - e.clientY);
-                    const newWidth = newHeight * aspectRatio;
-                    editorContainer.style.width = `${newWidth}px`;
-                    editorContainer.style.height = `${newHeight}px`;
-                    editorContainer.style.top = `${e.clientY - startY}px`;
+                    editorContainer.style.height = `${startHeight - dy}px`;
+                    editorContainer.style.top = `${editorContainer.offsetTop + dy}px`;
                 } else if (resizeHandle.classList.contains('bottom')) {
-                    editorContainer.style.height = `${startHeight + e.clientY - startY}px`;
+                    editorContainer.style.height = `${startHeight + dy}px`;
                 } else if (resizeHandle.classList.contains('left')) {
-                    const newWidth = Math.max(200, startWidth + startX - e.clientX);
-                    const newHeight = newWidth / aspectRatio;
-                    editorContainer.style.width = `${newWidth}px`;
-                    editorContainer.style.height = `${newHeight}px`;
-                    editorContainer.style.left = `${e.clientX - startX}px`;
+                    editorContainer.style.width = `${startWidth - dx}px`;
+                    editorContainer.style.left = `${editorContainer.offsetLeft + dx}px`;
                 } else if (resizeHandle.classList.contains('right')) {
-                    editorContainer.style.width = `${startWidth + e.clientX - startX}px`;
+                    editorContainer.style.width = `${startWidth + dx}px`;
                 }
             }
         });
@@ -181,8 +182,52 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('mouseup', function () {
             isDragging = false;
             isResizing = false;
-            editorContainer.classList.remove('active');
             editorContainer.style.cursor = 'grab';
         });
+
+        // 수정 : textarea 클릭 시 active 적용 및 비-active 상태에서 클릭 시 active 해제
+        document.addEventListener('click', function (e) {
+            if (!editorContainer.contains(e.target)) {
+                editorContainer.classList.remove('active');
+                console.log('Clicked outside: Active class removed.');
+            }
+        });
+
+        text.addEventListener('click', function () {
+            editorContainer.classList.add('active');
+            console.log('Textarea clicked: Active class added.');
+        });
+
+        // textarea에 텍스트 내용이 있던 없던, 텍스트 편집 커서가 아닌 경우 backspace 시 textarea 삭제
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Backspace') {
+                const activeElement = document.activeElement;
+
+                if (activeElement.tagName === 'TEXTAREA') {
+                    const editorContainer = activeElement.closest('.editor-container');
+                    // const cursorStyle = window.getComputedStyle(activeElement).getPropertyValue('cursor');
+                    const isEditorActive = editorContainer && editorContainer.classList.contains('active');
+
+                    // Check for text input and cursor type
+                    const isTextInput = activeElement.value.trim() !== '';
+                    const isTextCursor = window.getComputedStyle(activeElement).cursor === 'text';
+
+                    if (isEditorActive) {
+                        if (!isTextCursor || !isTextInput) {
+                            console.log('Text cursor not active or no text input: Deleting textarea.');
+                            e.preventDefault(); // Prevent the default backspace action
+                            editorContainer.remove(); // Remove the active editorContainer
+                        } else {
+                            console.log('Text cursor active: Text deletion allowed.');
+                        }
+                    } else {
+                        console.log('Editor not active: No action taken.');
+                    }
+                } else {
+                    console.log('No active textarea found or activeElement is not textarea.');
+                }
+            }
+        });
     }
+    fetchCategoryIds();
 });
