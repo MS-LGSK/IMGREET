@@ -6,6 +6,7 @@
     position: absolute;
     cursor: move;
     background: transparent;
+    border: transparent;
     box-sizing: border-box;
     overflow: hidden;
     resize: both; /* For native resize handle fallback */
