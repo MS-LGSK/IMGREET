@@ -6,11 +6,10 @@
     <title th:text="${title}">Greet</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/createGreet.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/text.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/createGreet.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/text.css}"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
-    <link rel="stylesheet" th:href="@{/css/starter-template.css}"/>
 </head>
 <body>
 <nav id="nav" class="navbar navbar-expand-md navbar-light bg-white fixed-top">
@@ -36,17 +35,12 @@
 </nav>
 
 <div class="fixed-sidebar">
-    <button id="text" type="button">
-        <img width="30" height="30" src="https://img.icons8.com/ios/50/000000/text.png" alt="text"/>
-    </button>
-    <button id="shape" type="button">
-        <img width="30" height="30" src="https://img.icons8.com/fluency-systems-regular/48/000000/shape--v1.png"
-             alt="shape"/>
-    </button>
-    <button id="image" type="button">
-        <img width="30" height="30" src="https://img.icons8.com/fluency-systems-regular/48/000000/image--v1.png"
-             alt="image"/>
-    </button>
+    <div id="categoryButtons">
+        <button class="category-button" th:each="category : ${categories}"
+                th:data-category-id="${category.id}"
+                th:text="${category.type}">
+        </button>
+    </div>
 </div>
 
 <div class="sidebar-nav" id="sidebar">
