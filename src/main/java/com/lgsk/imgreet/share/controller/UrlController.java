@@ -10,18 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/share")
-public class UrlContoller {
+public class UrlController {
 
     private final UrlService urlService;
 
     // url 형식 : http://localhost:8080/url?id={id값 암호화}
-    @PostMapping("/api/{greet_id}")
-    public void shareKakao(@PathVariable long greet_id) {
-        // 받아온 id 값 암호화
-    }
 
-    @PostMapping("/api/{greet_id}")
-    public void shareQR(@PathVariable long greet_id) {
+    @PostMapping("/qr/{greet_id}")
+    public void shareQR(@PathVariable("greet_id") Long greet_id) {
     }
 
 
