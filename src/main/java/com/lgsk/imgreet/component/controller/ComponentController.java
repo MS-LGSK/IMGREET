@@ -21,7 +21,8 @@ public class ComponentController {
     }
 
     @PostMapping("/greet/{greet_id}/component")
-    public void saveComponent(@PathVariable("greet_id") Long greetId, @RequestBody List<ComponentDTO> componentDTO) {
-        componentService.saveComponent(greetId, componentDTO);
+    public void saveGreetComponent(@PathVariable("greet_id") Long greetId, @RequestBody List<ComponentDTO> componentDTO) {
+        componentService.saveGreetComponent(greetId, componentDTO);
     }
+
 }

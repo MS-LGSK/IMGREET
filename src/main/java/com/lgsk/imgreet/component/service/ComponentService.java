@@ -23,7 +23,7 @@ public class ComponentService {
     private final CategoryDetailRepository categoryDetailRepository;
     private final GreetRepository greetRepository;
 
-    public void saveComponent(Long greetId, List<ComponentDTO> componentDTOList) {
+    public void saveGreetComponent(Long greetId, List<ComponentDTO> componentDTOList) {
         Greet greet = greetRepository.findById(greetId)
                 .orElseThrow(() -> new IllegalStateException("초대장이 존재하지 않습니다."));
 

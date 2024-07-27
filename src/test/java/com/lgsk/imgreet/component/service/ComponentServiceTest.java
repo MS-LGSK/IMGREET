@@ -9,7 +9,6 @@ import com.lgsk.imgreet.entity.User;
 import com.lgsk.imgreet.greet.repository.GreetRepository;
 import com.lgsk.imgreet.login.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +84,7 @@ class ComponentServiceTest {
 
         // when
         List<ComponentDTO> lists = Arrays.asList(componentDTO1, componentDTO2);
-        componentService.saveComponent(greet.getId(), lists);
+        componentService.saveGreetComponent(greet.getId(), lists);
 
         // then
         List<Component> findComponents = componentRepository.findAll();
@@ -129,7 +128,7 @@ class ComponentServiceTest {
 
         // when
         List<ComponentDTO> lists = Arrays.asList(dto);
-        componentService.saveComponent(greet.getId(), lists);
+        componentService.saveGreetComponent(greet.getId(), lists);
 
         // then
         List<Component> findComponents = componentRepository.findAll();
@@ -152,7 +151,7 @@ class ComponentServiceTest {
 
         // when
         List<ComponentDTO> lists = Arrays.asList(dto);
-        componentService.saveComponent(greet.getId(), lists);
+        componentService.saveGreetComponent(greet.getId(), lists);
 
         // then
         List<Component> findComponents = componentRepository.findAll();
