@@ -5,38 +5,48 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initializeKakao() {
-        Kakao.init('키 값'); // 키값 숨기기
-        console.log(Kakao.isInitialized());
+        $.ajax({
+            type: 'POST',
+            url: '/getJSKey',
+            success: function (kakaoJSKey) {
+                if (kakaoJSKey) {
+                    Kakao.init(kakaoJSKey);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log('error', status, error);
+            }
+        });
+    }
 
-        function shareMessage() {
-            const shareUrl = document.getElementById("linkInput").value;
+    function shareMessage() {
+        const shareUrl = document.getElementById("linkInput").value;
 
-            Kakao.Share.createDefaultButton({
-                container: '#kakaoShareBtn',
-                objectType: 'feed',
-                content: {
-                    title: 'Im Greet',
-                    description: title,
-                    imageUrl: image,
+        Kakao.Share.createDefaultButton({
+            container: '#kakaoShareBtn',
+            objectType: 'feed',
+            content: {
+                title: 'Im Greet',
+                description: title,
+                imageUrl: image,
+                link: {
+                    mobileWebUrl: shareUrl,
+                    webUrl: shareUrl
+                },
+            },
+            buttons: [
+                {
+                    title: '웹으로 보기',
                     link: {
                         mobileWebUrl: shareUrl,
-                        webUrl: shareUrl
+                        webUrl: shareUrl,
                     },
-                },
-                buttons: [
-                    {
-                        title: '웹으로 보기',
-                        link: {
-                            mobileWebUrl: shareUrl,
-                            webUrl: shareUrl,
-                        },
-                    }
-                ],
-                installTalk: true
-            });
-        }
-        document.querySelector('.kakao-icon').addEventListener('click', shareMessage);
-
+                }
+            ],
+            installTalk: true
+        });
     }
+    document.getElementById('kakaoShareBtn').addEventListener('click', shareMessage);
+
 });
 
