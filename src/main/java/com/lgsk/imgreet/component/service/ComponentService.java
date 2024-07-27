@@ -1,6 +1,7 @@
 package com.lgsk.imgreet.component.service;
 
 import com.lgsk.imgreet.categoryDetail.repository.CategoryDetailRepository;
+import com.lgsk.imgreet.component.model.ComponentResponseDTO;
 import com.lgsk.imgreet.component.repository.ComponentRepository;
 import com.lgsk.imgreet.entity.CategoryDetail;
 import com.lgsk.imgreet.entity.Component;
@@ -41,9 +42,28 @@ public class ComponentService {
                             .categoryDetail(categoryDetail)
                             .greet(greet)
                             .build();
-                    })
-                    .collect(Collectors.toList());
+                })
+                .collect(Collectors.toList());
 
         componentRepository.saveAll(components);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ComponentResponseDTO> getGreetComponent(Long greetId) {
+        Greet greet = greetRepository.findById(greetId)
+                .orElseThrow(() -> new IllegalStateException("초대장이 존재하지 않습니다."));
+
+        List<Component> componentList = componentRepository.findAllByGreetId(greet.getId());
+
+        return componentList.stream()
+                .map(dto -> ComponentResponseDTO.builder()
+                        .content(dto.getContent())
+                        .x(dto.getX())
+                        .y(dto.getY())
+                        .width(dto.getWidth())
+                        .height(dto.getHeight())
+                        .rotation(dto.getRotation())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
