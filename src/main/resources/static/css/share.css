@@ -370,3 +370,42 @@ body {
     width: 100%;
     border-bottom: 1px solid rgba(90, 101, 119, 0.15);
 }
+
+/* QR 화면 */
+#qrPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+#qrPopupClose {
+    margin-top: 20px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    bottom: 10px; /* Position it at the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+}
+#qrPopupClose svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+    color: rgb(112, 121, 143);
+}
+#qrPopupOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
