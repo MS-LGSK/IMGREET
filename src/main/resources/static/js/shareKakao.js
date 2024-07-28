@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             success: function (kakaoJSKey) {
                 if (kakaoJSKey) {
                     Kakao.init(kakaoJSKey);
+                    shareMessage();
                 }
             },
             error: function(xhr, status, error) {
@@ -46,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
             installTalk: true
         });
     }
-    document.getElementById('kakaoShareBtn').addEventListener('click', shareMessage);
 
 });
 
