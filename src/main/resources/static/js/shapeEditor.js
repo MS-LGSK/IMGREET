@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('container');
+    const fillColor = document.getElementById('fillColor');
+    const strokeColor = document.getElementById('strokeColor');
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, 'svg');
     svg.setAttribute('width', '100%');
@@ -61,12 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
         currentSelectedShape.originalStrokeWidth = currentSelectedShape.getAttribute('stroke-width');
         currentSelectedShape.setAttribute('stroke-width', parseFloat(currentSelectedShape.originalStrokeWidth) + 2);
         createSelectionBox(currentSelectedShape);
+
+        // 색상 입력 필드 업데이트
+        fillColor.value = currentSelectedShape.getAttribute('fill') || '#000000';
+        strokeColor.value = currentSelectedShape.getAttribute('stroke') || '#000000';
     }
 
     // 도형 이외의 영역 클릭 시 두께 원래대로
     document.addEventListener('click', (e) => {
         // 클릭된 요소가 도형, 선택 상자, 크기 조절 핸들이 아닌 경우
-        if (currentSelectedShape && !e.target.closest('.shape, .selection-box, .resize-handle')) {
+        if (currentSelectedShape && !e.target.closest('.shape, .selection-box, .resize-handle, #fillColor, #strokeColor')) {
             currentSelectedShape.setAttribute('stroke-width', currentSelectedShape.originalStrokeWidth);
             currentSelectedShape = null;
             removeSelectionBox();
@@ -236,6 +242,22 @@ document.addEventListener('DOMContentLoaded', () => {
             svg.removeChild(currentSelectedShape);
             currentSelectedShape = null;
             removeSelectionBox();
+        }
+    });
+
+    // 색 채우기
+    fillColor.addEventListener('input', () => {
+        if(currentSelectedShape) {
+            const selectedColor = fillColor.value;
+            currentSelectedShape.setAttribute('fill', selectedColor);
+        }
+    });
+
+    // 테두리 색 변경
+    strokeColor.addEventListener('input', () => {
+        if(currentSelectedShape) {
+            const selectedColor = strokeColor.value;
+            currentSelectedShape.setAttribute('stroke', selectedColor);
         }
     });
 
