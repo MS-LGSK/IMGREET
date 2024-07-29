@@ -74,6 +74,11 @@ body, html {
     margin-top: 10%;
 }
 
+#title {
+    background-color: transparent;
+    border: none;
+}
+
 .main-content {
     background-color: #EEEEEE;
     height: 100vh;
