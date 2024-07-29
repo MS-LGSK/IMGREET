@@ -32,6 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function createRectangle() {
+        return createShapeElement('rect', {
+            x: 30, y: 30, width: 50, height: 30,
+            stroke: 'black', 'stroke-width': 2, fill: 'transparent'
+        });
+    }
+
     // Add shape in SVG
     function addShape(shape) {
         svg.appendChild(shape);
@@ -197,5 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.createCircle = createCircle;
+    window.createRectangle = createRectangle;
     window.addShape = addShape;
 });

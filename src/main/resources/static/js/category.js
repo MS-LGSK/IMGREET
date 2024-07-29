@@ -97,6 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
         switch(item) {
             case '원':
                 return window.createCircle();
+            case '사각형':
+                return window.createRectangle();
             default:
                 console.error('Unknown shape type:', item);
                 return null;
@@ -107,7 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const componentFactory = {
         '가로 텍스트': createTextComponent,
         '세로 텍스트': createTextComponent,
-        '원': createShapeComponent
+        '원': createShapeComponent,
+        '사각형': createShapeComponent
     }
 
     function handleSidebarButtonClick(item) {
