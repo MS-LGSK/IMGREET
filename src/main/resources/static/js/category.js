@@ -93,10 +93,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return text;
     }
 
+    function createShapeComponent(item) {
+        switch(item) {
+            case '원':
+                return window.createCircle();
+            default:
+                console.error('Unknown shape type:', item);
+                return null;
+        }
+    }
+
     // Component factory mapping
     const componentFactory = {
-        '가로 텍스트': createTextComponent(),
-        '세로 텍스트': createTextComponent()
+        '가로 텍스트': createTextComponent,
+        '세로 텍스트': createTextComponent,
+        '원': createShapeComponent
     }
 
     function handleSidebarButtonClick(item) {
@@ -109,6 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (component.tagName === 'TEXTAREA') {
                     if (window.initializeTextEditor) {
                         window.initializeTextEditor(component);
+                    }
+                } else {
+                    if (window.addShape) {
+                        window.addShape(component);
                     }
                 }
             }
