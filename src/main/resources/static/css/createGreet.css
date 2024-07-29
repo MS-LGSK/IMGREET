@@ -5,17 +5,49 @@ body, html {
 
 #nav {
     position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1051; /* Highest z-index to ensure it's above all other elements */
+}
+
+.toolbar {
+    position: fixed;
+    top: 56px; /* Same height as the navbar */
+    left: 0;
+    width: 100%; /* Full width */
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    z-index: 1050; /* Below navbar, above other content */
+}
+
+.toolbar-item {
+    margin-right: 1rem;
+}
+
+.toolbar-item label {
+    margin-right: 0.5rem;
+}
+
+.toolbar-item input[type="color"], .toolbar-item input[type="number"] {
+    width: auto;
+}
+
+.toolbar-item button {
+    margin-right: 0.5rem;
 }
 
 .fixed-sidebar {
     position: fixed;
-    top: 56px;
+    top: 96px; /* Below the toolbar (56px for navbar + 40px for toolbar) */
     left: 0;
-    height: 100%;
+    height: calc(100% - 96px); /* Full height minus the navbar and toolbar */
     width: 60px;
     background-color: #F7E7DC;
     color: black;
-    z-index: 1050;
+    z-index: 1049; /* Below toolbar */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,16 +65,26 @@ body, html {
 
 .sidebar-nav {
     position: fixed;
-    top: 0;
-    left: 60px;
-    height: 100%;
+    top: 96px; /* Same as fixed-sidebar */
+    left: 60px; /* Right next to fixed-sidebar */
+    height: calc(100% - 96px); /* Adjust height for navbar and toolbar */
     width: 250px;
     background-color: #FFF8F3;
-    padding-top: 80px;
+    padding-top: 20px;
     padding-left: 15px;
     z-index: 1000;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
+}
+
+.navbar {
+    z-index: 1051;
+}
+
+.nav-button {
+    background-color: transparent;
+    border: none;
+    margin-top: 10%;
 }
 
 #sidebarContent {
@@ -64,27 +106,14 @@ body, html {
     float: right;
 }
 
-.navbar {
-    z-index: 1051;
-}
-
-.nav-button {
-    background-color: transparent;
-    border: none;
-    margin-top: 10%;
-}
-
-#title {
-    background-color: transparent;
-    border: none;
-}
-
 .main-content {
     background-color: #EEEEEE;
     height: 100vh;
     display: flex;
     align-content: center;
     justify-content: center;
+    margin-left: 60px; /* Account for the sidebar width */
+    margin-top: 96px; /* Account for navbar and toolbar */
 }
 
 .myCanvasContainer {
@@ -108,4 +137,9 @@ body, html {
     width: 100%;
     height: 100%;
     position: relative;
+}
+
+#title {
+    background-color: transparent;
+    border: none;
 }

@@ -37,6 +37,27 @@
     </div>
 </nav>
 
+<div id="toolbar" class="toolbar">
+    <div class="toolbar-item">
+        <label for="fillColor">Fill Color:</label>
+        <input type="color" id="fillColor" name="fillColor"/>
+    </div>
+    <div class="toolbar-item">
+        <label for="strokeColor">Stroke Color:</label>
+        <input type="color" id="strokeColor" name="strokeColor"/>
+    </div>
+    <div class="toolbar-item">
+        <label for="fontSize">Font Size:</label>
+        <input type="number" id="fontSize" name="fontSize" min="1" max="100" value="16"/>
+    </div>
+    <div class="toolbar-item">
+        <button id="boldButton"><strong>B</strong></button>
+        <button id="italicButton"><em>I</em></button>
+        <button id="underlineButton"><u>U</u></button>
+    </div>
+</div>
+
+
 <div class="fixed-sidebar">
     <div id="categoryButtons">
         <button class="category-button" th:each="category : ${categories}"
