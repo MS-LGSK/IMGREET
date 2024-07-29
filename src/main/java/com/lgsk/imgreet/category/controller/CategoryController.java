@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/category")
 public class CategoryController {
@@ -24,9 +24,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public String getAllCategoryId(Model model) {
-        List<CategoryIdResponseDTO> response = categoryService.getAllCategoryId();
-        model.addAttribute("categoryId", response);
-        return "/";         // 초대장 페이지 생성 후, 해당 페이지로 변경 필요
+    public List<CategoryIdResponseDTO> getAllCategoryId() {
+        return categoryService.getAllCategoryId();
     }
 }

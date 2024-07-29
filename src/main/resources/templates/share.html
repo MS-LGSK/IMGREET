@@ -4,6 +4,13 @@
 	<meta charset="UTF-8" />
 	<title>ImGreet</title>
 	<!-- Assuming you have a CSS file -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- kakao 공유하기 api-->
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+	integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 </head>
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
 <link rel="stylesheet" th:href="@{/css/share.css}"/>
@@ -67,9 +74,23 @@
 						</div>
 					</div>
 					<div class="iconBox">
-						<button class="icon kakao-icon"><img
-								src="https://resource.miricanvas.com/image/sns/kakaotalk.png" alt="카카오"/></button>
+						<a class="icon kakao-icon" id="kakaoShareBtn">
+							<img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유">
+						</a>
+						<button class="icon qr-icon" id="qrShareBtn">
+							<img src="https://img.icons8.com/windows/32/qr-code.png" alt="QR"/></button>
 					</div>
+				</div>
+
+				<!-- QR 공유 화면 -->
+				<div id="qrPopupOverlay"></div>
+					<div id="qrPopup">
+						<div id="shareQRContainer"> </div>
+						<div id="qrPopupClose">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+								<path d="M19.784 5.28a.75.75 0 1 0-1.06-1.06l-6.722 6.721L5.28 4.22a.75.75 0 1 0-1.06 1.06l6.721 6.722-6.721 6.721a.75.75 0 0 0 1.06 1.061l6.722-6.721 6.721 6.721a.75.75 0 0 0 1.061-1.06l-6.721-6.722 6.721-6.722Z"></path>
+							</svg>
+						</div>
 				</div>
 
 				<div class="detailOptionTextContainer">
@@ -195,5 +216,15 @@
 	</div>
 </div>
 </body>
-<script th:src="@{/js/share.js}"></script>
+<!--초대장 Title 변수 -->
+<script th:inline="javascript">
+	// const title = [[${title}]];		// 값이 생기는 경우 주석 해제 후 사용
+	// const image = [[${image}]];
+	const title = '초대해요~';
+	const image = 'https://ifh.cc/g/Z2o5s6.jpg';
+</script>
+<script th:src="@{/js/shareKakao.js}"></script>
+<script th:src="@{/js/shareUrlQr.js}"></script>
+<script th:src="@{/js/share.js}" ></script>
+
 </html>

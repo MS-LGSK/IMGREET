@@ -24,5 +24,14 @@ public class GreetService {
                         .expireDate(dto.getExpireDate())
                         .allowComments(dto.isAllowComments())
                         .build());
+
+    }
+
+    @Transactional(readOnly = true)
+    public String getGreetTitle(Long greetId) {
+        Greet greet = greetRepository.findById(greetId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 초대장입니다."));
+
+        return greet.getTitle();
     }
 }

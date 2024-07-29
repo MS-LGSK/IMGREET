@@ -8,4 +8,6 @@ import lombok.Getter;
 public class CategoryIdResponseDTO {
 
     private Long id;
+
+    private String type;
 }

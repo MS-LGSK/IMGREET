@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -86,4 +88,78 @@ class CategoryDetailRepositoryTest {
 
     }
 
+    @Test
+    @DisplayName("카테고리 & 서브타입 데이터 추가")
+    @Transactional
+    void addData() {
+        // given
+        Category category_text = Category.builder()
+                .type("TEXT")
+                .free(true)
+                .build();
+
+        Category category_shape = Category.builder()
+                .type("SHAPE")
+                .free(true)
+                .build();
+
+        Category category_image = Category.builder()
+                .type("IMAGE")
+                .free(true)
+                .build();
+
+        Category saveText = categoryRepository.save(category_text);
+        Category saveShape = categoryRepository.save(category_shape);
+        Category saveImage = categoryRepository.save(category_image);
+
+        categoryDetailRepository.save(
+                CategoryDetail.builder()
+                        .subType("가로 텍스트")
+                        .category(saveText)
+                        .build());
+
+        categoryDetailRepository.save(
+                CategoryDetail.builder()
+                        .subType("세로 텍스트")
+                        .category(saveText)
+                        .build());
+
+        categoryDetailRepository.save(
+                CategoryDetail.builder()
+                        .subType("원")
+                        .category(saveShape)
+                        .build());
+
+        categoryDetailRepository.save(
+                CategoryDetail.builder()
+                        .subType("사각형")
+                        .category(saveShape)
+                        .build());
+
+        categoryDetailRepository.save(
+                CategoryDetail.builder()
+                        .subType("삼각형")
+                        .category(saveShape)
+                        .build());
+
+        // when
+        List<Category> categoryList = categoryRepository.findAll();
+        List<CategoryDetail> categoryDetails = new ArrayList<>();
+
+        for (Category category : categoryList) {
+            categoryDetails.addAll(categoryDetailRepository.findAllByCategoryId(category.getId()));
+        }
+
+        // then
+        Assertions.assertThat(categoryList.size()).isEqualTo(3);
+
+        // 카테고리별로 기대되는 CategoryDetail의 수를 검증
+        Assertions.assertThat(categoryDetails.stream()
+                .filter(detail -> detail.getCategory().equals(saveText))
+                .count()).isEqualTo(2);
+
+        Assertions.assertThat(categoryDetails.stream()
+                .filter(detail -> detail.getCategory().equals(saveShape))
+                .count()).isEqualTo(3);
+    }
 }
