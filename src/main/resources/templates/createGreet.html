@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title th:text="${title}">Greet</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/createGreet.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/text.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+</head>
+<body>
+<nav id="nav" class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+    <a class="navbar-brand" href="#">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <form class="form-inline">
+            <input type="text" class="form-control" id="title" th:value="${title}" placeholder="제목을 입력하세요">
+        </form>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="undoButton">실행 취소하기</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="redoButton">되돌리기</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="shareButton">공유하기</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="fixed-sidebar">
+    <div id="categoryButtons">
+        <button class="category-button" th:each="category : ${categories}"
+                th:data-category-id="${category.id}"
+                th:text="${category.type}">
+        </button>
+    </div>
+</div>
+
+<div class="sidebar-nav" id="sidebar">
+    <button class="sidebar-close-btn" id="sidebarCloseBtn">&times;</button>
+    <ul class="navbar-nav" id="sidebarContent"></ul>
+</div>
+
+<div class="main-content">
+    <div class="myCanvasContainer">
+        <div class="myCanvas" id="myCanvas">
+            <div id="container" th:utext="${component}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/category.js"></script>
+<script src="/js/textEditor.js"></script>
+</body>
+</html>
