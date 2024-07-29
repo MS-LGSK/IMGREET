@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,7 +28,7 @@ class CategoryDetailRepositoryTest {
 
     @Test
     @DisplayName("서브타입 저장하기")
-//    @Transactional
+    @Transactional
     void saveSubType() {
         // given
         Category text = Category.builder()
@@ -88,7 +90,9 @@ class CategoryDetailRepositoryTest {
 
     @Test
     @DisplayName("카테고리 & 서브타입 데이터 추가")
+    @Transactional
     void addData() {
+        // given
         Category category_text = Category.builder()
                 .type("TEXT")
                 .free(true)
@@ -137,6 +141,25 @@ class CategoryDetailRepositoryTest {
                         .subType("삼각형")
                         .category(saveShape)
                         .build());
-    }
 
+        // when
+        List<Category> categoryList = categoryRepository.findAll();
+        List<CategoryDetail> categoryDetails = new ArrayList<>();
+
+        for (Category category : categoryList) {
+            categoryDetails.addAll(categoryDetailRepository.findAllByCategoryId(category.getId()));
+        }
+
+        // then
+        Assertions.assertThat(categoryList.size()).isEqualTo(3);
+
+        // 카테고리별로 기대되는 CategoryDetail의 수를 검증
+        Assertions.assertThat(categoryDetails.stream()
+                .filter(detail -> detail.getCategory().equals(saveText))
+                .count()).isEqualTo(2);
+
+        Assertions.assertThat(categoryDetails.stream()
+                .filter(detail -> detail.getCategory().equals(saveShape))
+                .count()).isEqualTo(3);
+    }
 }
