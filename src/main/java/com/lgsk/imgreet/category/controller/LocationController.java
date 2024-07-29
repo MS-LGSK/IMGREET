@@ -1,5 +1,6 @@
-package com.lgsk.imgreet.share;
+package com.lgsk.imgreet.category.controller;
 
+import com.lgsk.imgreet.category.dto.LocationDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

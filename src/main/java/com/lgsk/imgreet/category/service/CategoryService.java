@@ -1,8 +1,8 @@
 package com.lgsk.imgreet.category.service;
 
 
-import com.lgsk.imgreet.category.model.CategoryDTO;
-import com.lgsk.imgreet.category.model.CategoryIdResponseDTO;
+import com.lgsk.imgreet.category.dto.CategoryDTO;
+import com.lgsk.imgreet.category.dto.CategoryIdResponseDTO;
 import com.lgsk.imgreet.category.repository.CategoryRepository;
 import com.lgsk.imgreet.entity.Category;
 import lombok.RequiredArgsConstructor;

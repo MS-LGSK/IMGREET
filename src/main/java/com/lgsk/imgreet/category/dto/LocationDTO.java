@@ -1,4 +1,4 @@
-package com.lgsk.imgreet.share;
+package com.lgsk.imgreet.category.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
