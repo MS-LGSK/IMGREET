@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createTriangle() {
-        const points = '30,50 50,30 70,50';
+        const points = '100,50 150,150 50,150';
         return createShapeElement('polygon', {
             points: points, stroke: 'black', 'stroke-width': 2, 'fill': 'transparent'
         });
