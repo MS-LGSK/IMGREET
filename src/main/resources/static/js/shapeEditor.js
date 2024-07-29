@@ -59,6 +59,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // 선택 상자 생성 함수
+    function createSelectionBox(shape) {
+        const bbox = shape.getBBox();
+        selectionBox = document.createElementNS(svgNS, 'rect');
+        selectionBox.setAttribute('x', bbox.x - 5);
+        selectionBox.setAttribute('y', bbox.y - 5);
+        selectionBox.setAttribute('width', bbox.width + 10);
+        selectionBox.setAttribute('height', bbox.height + 10);
+        selectionBox.setAttribute('stroke', 'blue');
+        selectionBox.setAttribute('stroke-dasharray', '3');
+        selectionBox.setAttribute('fill', 'none');
+        selectionBox.classList.add('selection-box'); // 선택 상자에 클래스 추가
+        svg.appendChild(selectionBox);
+
+        createResizeHandle(bbox);
+    }
+
+    // 선택 상자 제거 함수
+    function removeSelectionBox() {
+        if (selectionBox) {
+            selectionBox.remove();
+            selectionBox = null;
+        }
+        if (resizeHandle) {
+            resizeHandle.remove();
+            resizeHandle = null;
+        }
+    }
+
     window.createCircle = createCircle;
     window.addShape = addShape;
 });
