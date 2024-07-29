@@ -39,6 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function createTriangle() {
+        const points = '30,50 50,30 70,50';
+        return createShapeElement('polygon', {
+            points: points, stroke: 'black', 'stroke-width': 2, 'fill': 'transparent'
+        });
+    }
+
     // Add shape in SVG
     function addShape(shape) {
         svg.appendChild(shape);
@@ -112,19 +119,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function startResize(event) {
         event.preventDefault();
         const bbox = currentSelectedShape.getBBox();
-        // `resizeStart`를 설정하여 초기 마우스 좌표와 도형의 크기를 저장합니다
+
         resizeStart = {
             x: event.clientX,
             y: event.clientY,
             width: bbox.width,
-            height: bbox.height
+            height: bbox.height,
+            points: currentSelectedShape.getAttribute('points')
         };
+
         document.addEventListener('mousemove', resize);
         document.addEventListener('mouseup', stopResize);
     }
 
     function resize(event) {
-        // 초기 마우스 좌표와 도형의 크기
+        if (!currentSelectedShape) return;
+
         const dx = event.clientX - resizeStart.x;
         const dy = event.clientY - resizeStart.y;
         const newWidth = Math.max(resizeStart.width + dx, 0); // 너비를 0보다 크게 유지
@@ -133,13 +143,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentSelectedShape.tagName === 'circle') {
             const newRadius = Math.min(newWidth, newHeight) / 2;
             currentSelectedShape.setAttribute('r', newRadius);
-        } else {
+        } else if (currentSelectedShape.tagName === 'rect') {
             currentSelectedShape.setAttribute('width', newWidth);
             currentSelectedShape.setAttribute('height', newHeight);
+        } else if (currentSelectedShape.tagName === 'polygon') {
+            const points = currentSelectedShape.getAttribute('points').split(' ');
+            const bbox = currentSelectedShape.getBBox();
+            const scaleX = newWidth / bbox.width;
+            const scaleY = newHeight / bbox.height;
+
+            const newPoints = points.map(point => {
+                const [px, py] = point.split(',').map(Number);
+                const cx = bbox.x + bbox.width / 2;
+                const cy = bbox.y + bbox.height / 2;
+                const newPx = cx + (px - cx) * scaleX;
+                const newPy = cy + (py - cy) * scaleY;
+                return `${newPx},${newPy}`;
+            }).join(' ');
+
+            currentSelectedShape.setAttribute('points', newPoints);
         }
 
         updateSelectionBox();
     }
+
 
     function stopResize() {
         document.removeEventListener('mousemove', resize);
@@ -156,6 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 도형 드래그 중
     function drag(event) {
+        if (!currentSelectedShape) return;
+
         const dx = event.clientX - dragStart.x;
         const dy = event.clientY - dragStart.y;
 
@@ -164,11 +193,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const cy = parseFloat(currentSelectedShape.getAttribute('cy')) + dy;
             currentSelectedShape.setAttribute('cx', cx);
             currentSelectedShape.setAttribute('cy', cy);
-        } else {
+        } else if (currentSelectedShape.tagName === 'rect') {
             const x = parseFloat(currentSelectedShape.getAttribute('x')) + dx;
             const y = parseFloat(currentSelectedShape.getAttribute('y')) + dy;
             currentSelectedShape.setAttribute('x', x);
             currentSelectedShape.setAttribute('y', y);
+        } else if (currentSelectedShape.tagName === 'polygon') {
+            const points = currentSelectedShape.getAttribute('points').split(' ');
+            const newPoints = points.map(point => {
+                const [px, py] = point.split(',').map(Number);
+                return `${px + dx},${py + dy}`;
+            }).join(' ');
+            currentSelectedShape.setAttribute('points', newPoints);
         }
 
         dragStart.x = event.clientX;
@@ -205,5 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.createCircle = createCircle;
     window.createRectangle = createRectangle;
+    window.createTriangle = createTriangle;
     window.addShape = addShape;
 });
