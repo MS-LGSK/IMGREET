@@ -1,4 +1,4 @@
-package com.lgsk.imgreet.share;
+package com.lgsk.imgreet.share.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
