@@ -60,10 +60,12 @@
 
 <div class="fixed-sidebar">
     <div id="categoryButtons">
-        <button class="category-button" th:each="category : ${categories}"
-                th:data-category-id="${category.id}"
-                th:text="${category.type}">
-        </button>
+        <div th:each="category : ${categories}">
+            <button class="category-button"
+                    th:data-category-id="${category.id}"
+                    th:text="${category.type}">
+            </button>
+        </div>
     </div>
 </div>
 
