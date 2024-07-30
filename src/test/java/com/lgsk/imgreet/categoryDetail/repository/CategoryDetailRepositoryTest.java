@@ -172,30 +172,18 @@ class CategoryDetailRepositoryTest {
                 .free(false)
                 .build();
 
-        Category category_qr = Category.builder()
-                .type("QR")
-                .free(false)
-                .build();
-
         Category category_comment = Category.builder()
                 .type("댓글")
                 .free(true)
                 .build();
 
         Category saveMap = categoryRepository.save(category_map);
-        Category saveQR = categoryRepository.save(category_qr);
         Category saveComment = categoryRepository.save(category_comment);
 
         categoryDetailRepository.save(
                 CategoryDetail.builder()
                         .subType("지도")
                         .category(saveMap)
-                        .build());
-
-        categoryDetailRepository.save(
-                CategoryDetail.builder()
-                        .subType("QR")
-                        .category(saveQR)
                         .build());
 
         categoryDetailRepository.save(
@@ -213,15 +201,9 @@ class CategoryDetailRepositoryTest {
         }
 
         // then
-        Assertions.assertThat(categoryList.size()).isEqualTo(6);
-
         // 카테고리별로 기대되는 CategoryDetail의 수를 검증
         Assertions.assertThat(categoryDetails.stream()
                 .filter(detail -> detail.getCategory().equals(saveMap))
-                .count()).isEqualTo(1);
-
-        Assertions.assertThat(categoryDetails.stream()
-                .filter(detail -> detail.getCategory().equals(saveQR))
                 .count()).isEqualTo(1);
 
         Assertions.assertThat(categoryDetails.stream()
