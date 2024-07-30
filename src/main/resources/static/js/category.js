@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (window.initializeTextEditor) {
                         window.initializeTextEditor(component);
                     }
-                } else if (component.tagName === 'SHAPE') {
+                } else if (component.tagName === 'circle' || component.tagName === 'rect' || component.tagName === 'polygon') {
                     if (window.addShape) {
                         window.addShape(component);
                     }
