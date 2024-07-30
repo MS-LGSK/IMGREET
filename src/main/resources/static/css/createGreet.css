@@ -151,3 +151,45 @@ body, html {
     margin-top: 10px;
     padding: 0 10px;
 }
+
+/* Map Container */
+#map-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px; /* Adds padding inside the map container */
+    background-color: #FFF8F3; /* Matches the sidebar background color */
+}
+
+/* Input elements inside map container */
+#map-container input[type="button"] {
+    background-color: #FF9000; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Adds spacing below the button */
+    align-self: flex-start; /* Aligns the button to the left */
+}
+
+#map-container input[type="text"] {
+    width: calc(100% - 20px); /* Full width minus padding */
+    padding: 8px;
+    margin-bottom: 10px; /* Adds spacing below each text input */
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* Guide text */
+#map-container #guide {
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+/* Ensure that the inputs are hidden */
+#map-container input[type="text"][style*="display: none;"] {
+    display: none;
+}
