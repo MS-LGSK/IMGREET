@@ -137,6 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 newImage.style.visibility = "visible";
                 URL.revokeObjectURL(newImage.src); // 메모리 해제
             };
+
+            window.imageDraggable(newImage);
         } else {
             console.error('No file selected');
         }
@@ -158,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (createComponent) {
             const component = createComponent(item);
 
-            console.log(component.tagName);
             if (component) {
                 if (component.tagName === 'TEXTAREA') {
                     if (window.initializeTextEditor) {
