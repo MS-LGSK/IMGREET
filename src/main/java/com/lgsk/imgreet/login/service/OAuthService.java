@@ -1,11 +1,9 @@
 package com.lgsk.imgreet.login.service;
 
-import com.lgsk.imgreet.base.entity.Role;
-import com.lgsk.imgreet.entity.User;
-import com.lgsk.imgreet.login.dto.UserDTO;
-import com.lgsk.imgreet.login.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -15,9 +13,13 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
+import com.lgsk.imgreet.base.entity.Role;
+import com.lgsk.imgreet.entity.User;
+import com.lgsk.imgreet.login.dto.UserDTO;
+import com.lgsk.imgreet.login.repository.UserRepository;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +44,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
         String nickname;
         if ("kakao".equals(registrationId)) {
             oAuthId = registrationId + "_" + attributes.get("id");
-            nickname = profile.toString();
+            nickname = profile.get("nickname").toString();
         } else {
             throw new OAuth2AuthenticationException("허용되지 않는 인증입니다.");
         }
