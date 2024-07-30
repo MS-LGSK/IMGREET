@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lgsk.imgreet.category.model.CategoryDTO;
-import com.lgsk.imgreet.category.model.CategoryIdResponseDTO;
+import com.lgsk.imgreet.category.dto.CategoryDTO;
+import com.lgsk.imgreet.category.dto.CategoryIdResponseDTO;
 import com.lgsk.imgreet.category.repository.CategoryRepository;
 import com.lgsk.imgreet.entity.Category;
 
