@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createShapeComponent(item) {
-        switch(item) {
+        switch (item) {
             case '원':
                 return window.createCircle();
             case '사각형':
@@ -107,13 +107,51 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function addImage(input) {
+        const file = input.files[0]; // 선택된 파일 가져오기
+
+        if (file) {
+            // 새로운 이미지 요소 추가
+            const newImage = document.createElement("img");
+            newImage.classList.add('img');
+
+            // 이미지 소스 설정
+            newImage.src = URL.createObjectURL(file);
+
+            // 이미지 스타일 설정
+            newImage.style.position = "absolute"; // 절대 위치로 설정
+            newImage.style.top = "10px"; // 원하는 위치 설정
+            newImage.style.left = "10px"; // 원하는 위치 설정
+            newImage.style.width = "70%";
+            newImage.style.height = "70%";
+            newImage.style.visibility = "hidden";
+            newImage.style.objectFit = "contain";
+
+            // 이미지를 container에 추가
+            const container = document.getElementById('container');
+            container.style.position = "relative"; // 컨테이너를 relative로 설정
+            container.appendChild(newImage);
+
+            // 이미지 표시
+            newImage.onload = () => {
+                newImage.style.visibility = "visible";
+                URL.revokeObjectURL(newImage.src); // 메모리 해제
+            };
+
+            window.imageDraggable(newImage);
+        } else {
+            console.error('No file selected');
+        }
+    }
+
     // Component factory mapping
     const componentFactory = {
         '가로 텍스트': createTextComponent,
         '세로 텍스트': createTextComponent,
         '원': createShapeComponent,
         '사각형': createShapeComponent,
-        '삼각형': createShapeComponent
+        '삼각형': createShapeComponent,
+        '이미지 추가': triggerImageUpload
     }
 
     function handleSidebarButtonClick(item) {
@@ -127,15 +165,33 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (window.initializeTextEditor) {
                         window.initializeTextEditor(component);
                     }
-                } else {
+                } else if (component.tagName === 'SHAPE') {
                     if (window.addShape) {
                         window.addShape(component);
                     }
+                } else if (component.tagName === '이미지 추가') {
+                    triggerImageUpload();
                 }
             }
         } else {
             console.error('Unknown component type:', item);
         }
+    }
+
+    function triggerImageUpload() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.style.display = 'none';
+
+        input.addEventListener('change', (e) => {
+            addImage(e.target);
+            e.target.value = '';
+        });
+
+        document.body.appendChild(input);
+        input.click();
+        document.body.removeChild(input);
     }
 
     fetchCategoryIds();
