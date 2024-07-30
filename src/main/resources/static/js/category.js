@@ -85,21 +85,56 @@ document.addEventListener('DOMContentLoaded', () => {
         sidebar.classList.remove('open');
     });
 
-    // Handle sidebar button clicks
-    function handleSidebarButtonClick(item) {
-        if (window.initializeTextEditor) {
-            const text = document.createElement('textarea');
-            if (item === '가로 텍스트') {
-                text.className = 'horizontal-text';
-                text.placeholder = '텍스트를 입력하세요.';
-            } else if (item === '세로 텍스트') {
-                text.className = 'vertical-text';
-                text.placeholder = '텍스트를 입력하세요.';
-            }
+    function createTextComponent(item) {
+        const text = document.createElement('textarea');
+        const orientation = item.includes('가로') ? 'horizontal' : 'vertical';
+        text.className = `${orientation}-text`;
+        text.placeholder = '텍스트를 입력하세요.';
+        return text;
+    }
 
-            window.initializeTextEditor(text);
+    function createShapeComponent(item) {
+        switch(item) {
+            case '원':
+                return window.createCircle();
+            case '사각형':
+                return window.createRectangle();
+            case '삼각형':
+                return window.createTriangle();
+            default:
+                console.error('Unknown shape type:', item);
+                return null;
+        }
+    }
+
+    // Component factory mapping
+    const componentFactory = {
+        '가로 텍스트': createTextComponent,
+        '세로 텍스트': createTextComponent,
+        '원': createShapeComponent,
+        '사각형': createShapeComponent,
+        '삼각형': createShapeComponent
+    }
+
+    function handleSidebarButtonClick(item) {
+        const createComponent = componentFactory[item];
+
+        if (createComponent) {
+            const component = createComponent(item);
+
+            if (component) {
+                if (component.tagName === 'TEXTAREA') {
+                    if (window.initializeTextEditor) {
+                        window.initializeTextEditor(component);
+                    }
+                } else {
+                    if (window.addShape) {
+                        window.addShape(component);
+                    }
+                }
+            }
         } else {
-            console.error('initializeTextEditor function is not available.');
+            console.error('Unknown component type:', item);
         }
     }
 

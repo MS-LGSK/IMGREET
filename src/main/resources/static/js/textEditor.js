@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('container');
 
-    // Initialize text editor
     function initializeTextEditor(text) {
         const editorContainer = document.createElement('div');
         editorContainer.className = 'editor-container';
@@ -16,6 +15,18 @@ document.addEventListener('DOMContentLoaded', () => {
             handle.className = `resize-handle ${pos}`;
             editorContainer.appendChild(handle);
         });
+
+        // Set the initial position of the editor container to be centered in the container
+        const containerRect = container.getBoundingClientRect();
+        const editorRect = editorContainer.getBoundingClientRect();
+
+        // Calculate initial position
+        const initialLeft = (containerRect.width - editorRect.width) / 2;
+        const initialTop = (containerRect.height - editorRect.height) / 2;
+
+        editorContainer.style.position = 'absolute';
+        editorContainer.style.left = `${initialLeft}px`;
+        editorContainer.style.top = `${initialTop}px`;
 
         let isDragging = false;
         let isResizing = false;
@@ -39,13 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // drag and size
         document.addEventListener('mousemove', function (e) {
             if (isDragging) {
+                const containerRect = container.getBoundingClientRect();
+                const editorRect = editorContainer.getBoundingClientRect();
                 const x = e.clientX - offsetX;
                 const y = e.clientY - offsetY;
-                editorContainer.style.left = `${x}px`;
-                editorContainer.style.top = `${y}px`;
+
+                // Restrict movement within the container bounds
+                const newX = Math.max(containerRect.left, Math.min(containerRect.right - editorRect.width, x));
+                const newY = Math.max(containerRect.top, Math.min(containerRect.bottom - editorRect.height, y));
+
+                editorContainer.style.left = `${newX - containerRect.left}px`;
+                editorContainer.style.top = `${newY - containerRect.top}px`;
             } else if (isResizing) {
                 const dx = e.clientX - startX;
                 const dy = e.clientY - startY;
@@ -86,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
             editorContainer.style.cursor = 'grab';
         });
 
-        // 수정 : textarea 클릭 시 active 적용 및 비-active 상태에서 클릭 시 active 해제
         document.addEventListener('click', function (e) {
             if (!editorContainer.contains(e.target)) {
                 editorContainer.classList.remove('active');
@@ -99,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Textarea clicked: Active class added.');
         });
 
-        // textarea에 텍스트 내용이 있던 없던, 텍스트 편집 커서가 아닌 경우 backspace 시 textarea 삭제
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Backspace') {
                 const activeElement = document.activeElement;
@@ -108,15 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const editorContainer = activeElement.closest('.editor-container');
                     const isEditorActive = editorContainer && editorContainer.classList.contains('active');
 
-                    // Check for text input and cursor type
                     const isTextInput = activeElement.value.trim() !== '';
                     const isTextCursor = window.getComputedStyle(activeElement).cursor === 'text';
 
                     if (isEditorActive) {
                         if (!isTextCursor || !isTextInput) {
                             console.log('Text cursor not active or no text input: Deleting textarea.');
-                            e.preventDefault(); // Prevent the default backspace action
-                            editorContainer.remove(); // Remove the active editorContainer
+                            e.preventDefault();
+                            editorContainer.remove();
                         } else {
                             console.log('Text cursor active: Text deletion allowed.');
                         }
@@ -130,5 +144,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    window.initializeTextEditor = initializeTextEditor; // 함수 전역으로 내보내기
+    window.initializeTextEditor = initializeTextEditor; // Make function available globally
 });
