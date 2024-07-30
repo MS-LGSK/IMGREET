@@ -1,13 +1,12 @@
 package com.lgsk.imgreet.category.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class LocationDTO {
-    private final double latitude;
-    private final double longitude;
+    private double latitude;
+    private double longitude;
 
     public String json() {
         return String.format("{\"latitude\": %f, \"longitude\": %f}", latitude, longitude);
