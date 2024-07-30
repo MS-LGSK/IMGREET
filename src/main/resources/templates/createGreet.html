@@ -4,7 +4,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title th:text="${title}">Greet</title>
-
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d3ed3db1fc1bdaf63dfdafb12b6475b3&libraries=services"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/createGreet.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/text.css}"/>
@@ -70,6 +71,30 @@
 <div class="sidebar-nav" id="sidebar">
     <button class="sidebar-close-btn" id="sidebarCloseBtn">&times;</button>
     <ul class="navbar-nav" id="sidebarContent"></ul>
+
+    <div id="forbiddenFree" style="display: none">
+        <div th:if="${#authorization.expression('hasAuthority(''FREE_USER'')')}">
+            <br>
+            <p> 해당 기능은 유료회원만 </p>
+            <p> 이용 가능합니다. </p> <br>
+        </div>
+    </div>
+
+    <!-- 지도 -->
+    <div id="map-container" style="display: none">
+        <div th:if="${#authorization.expression('hasAuthority(''PAID_USER'')')}" >
+            <br>
+            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+            <input type="text" id="sample4_postcode" placeholder="우편번호">
+            <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+            <input type="text" id="sample4_jibunAddress" placeholder="지번주소">
+            <span id="guide" style="color:#999;display:none"></span>
+            <input type="text" id="sample4_detailAddress" placeholder="상세주소">
+            <input type="text" id="sample4_extraAddress" placeholder="참고항목">
+            <input type="text" id="latitude" placeholder="위도" style="display: none;">
+            <input type="text" id="longitude" placeholder="경도" style="display: none;">
+        </div>
+    </div>
 </div>
 
 <div class="main-content">
@@ -84,5 +109,6 @@
 <script src="/js/category.js"></script>
 <script src="/js/textEditor.js"></script>
 <script src="/js/shapeEditor.js"></script>
+<script src="/js/address.js"></script>
 </body>
 </html>

@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarContent = document.getElementById('sidebarContent');
     const sidebar = document.getElementById('sidebar');
     const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+    const forbiddenFree = document.getElementById('forbiddenFree');
+    const mapContainer = document.getElementById('map-container');
 
     function fetchCategoryIds() {
         fetch('/category')
@@ -29,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function storeCategoryIds(data) {
         const categories = data.map(category => ({
             id: category.id,
-            type: category.type
+            type: category.type,
+            free : category.free
         }));
         localStorage.setItem('categories', JSON.stringify(categories));
     }
@@ -37,13 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // sidebar에 카테고리 버튼 표시
     function displayCategoryButtons(categoryIds) {
         categoryButtonsContainer.innerHTML = ''; // 이전 내용 삭제
+
         categoryIds.forEach(category => {
             const button = document.createElement('button');
             button.className = 'category-button';
             button.textContent = category.type;
             button.dataset.categoryId = category.id;
+            button.dataset.categoryFree = category.free;
 
-            button.addEventListener('click', () => fetchAndDisplaySubTypes(category.id));
+            button.addEventListener('click', () => {
+                fetchAndDisplaySubTypes(category.id);
+                checkAndDisplayCategory(category.type, category.free);
+            });
             categoryButtonsContainer.appendChild(button);
         });
     }
@@ -138,5 +146,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const categoryFactory = {
+        '지도' : createMapCategory,
+        // 'QR' : createQRCategory,
+        // '댓글' : createCommentCategory
+    }
+
+    function checkAndDisplayCategory(category, free) {
+        if (!free) {
+            forbiddenFree.style.display = 'block';
+        } else {
+            forbiddenFree.style.display = 'none';
+        }
+
+        const createCategory = categoryFactory[category];
+        if (createCategory) {
+            createCategory();
+        } else {
+            mapContainer.style.display = 'none';
+        }
+    }
+
+    function createMapCategory() {
+        mapContainer.style.display = 'block';
+    }
+
     fetchCategoryIds();
+
 });

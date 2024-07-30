@@ -10,4 +10,6 @@ public class CategoryIdResponseDTO {
     private Long id;
 
     private String type;
+
+    private boolean free;
 }
