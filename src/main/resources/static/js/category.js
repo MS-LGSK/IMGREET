@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
     const forbiddenFree = document.getElementById('forbiddenFree');
     const mapContainer = document.getElementById('map-container');
+    const commentContainer = document.getElementById('comment-container');
 
     function fetchCategoryIds() {
         fetch('/category')
@@ -148,11 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const categoryFactory = {
         '지도' : createMapCategory,
-        // 'QR' : createQRCategory,
-        // '댓글' : createCommentCategory
+        '댓글' : createCommentCategory
     }
 
     function checkAndDisplayCategory(category, free) {
+        mapContainer.style.display = 'none';
+        commentContainer.style.display = 'none';
+
         if (!free) {
             forbiddenFree.style.display = 'block';
         } else {
@@ -162,13 +165,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const createCategory = categoryFactory[category];
         if (createCategory) {
             createCategory();
-        } else {
-            mapContainer.style.display = 'none';
         }
     }
 
     function createMapCategory() {
         mapContainer.style.display = 'block';
+    }
+
+    function createCommentCategory() {
+        commentContainer.style.display = 'block';
     }
 
     fetchCategoryIds();
