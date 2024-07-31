@@ -42,7 +42,6 @@ public class User extends BaseEntity {
     @NotNull
     private String nickname;
 
-    @NotNull
     private String oauthId;
 
     private String password;
