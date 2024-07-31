@@ -60,7 +60,7 @@ class BookmarkRepositoryTests {
 	@Test
 	@Transactional
 	@DisplayName("즐겨찾기 저장 및 템플릿 즐겨찾기 수")
-	void templateBookmark() {
+	void saveAndGetTemplateBookmark() {
 
 		bookmarkRepository.save(Bookmark.builder()
 			.id(new BookmarkId(user.getId(), template.getId()))
@@ -76,7 +76,7 @@ class BookmarkRepositoryTests {
 	@Test
 	@Transactional
 	@DisplayName("나의 즐겨찾기")
-	void myBookmark() {
+	void saveAndGetMyBookmark() {
 
 		bookmarkRepository.save(Bookmark.builder()
 			.id(new BookmarkId(user.getId(), template.getId()))
