@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,10 +26,10 @@ public class Subscribe {
     @Column(length = 10, nullable = false)
     private String name;
 
-    @NotNull
+    @Column(nullable = false)
     private int period;
 
-    @NotNull
+    @Column(nullable = false)
     private int price;
 
 }
