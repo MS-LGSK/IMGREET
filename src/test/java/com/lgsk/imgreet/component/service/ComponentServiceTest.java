@@ -228,5 +228,48 @@ class ComponentServiceTest {
         assertThat(component2.getCategoryDetail().getId()).isEqualTo(22L);
         assertThat(component2.getTemplate().getId()).isEqualTo(template.getId());
     }
+
+    @Test
+    @DisplayName("template component 가져오기")
+    void getTemplateComponent() {
+        // given
+        User user = userRepository.save(User.builder()
+                .oauthId("kakao_123")
+                .role(Role.FREE_USER)
+                .nickname("테스트")
+                .build());
+
+        Template template = templateRepository.save(Template.builder()
+                .creatorId(user.getId())
+                .build());
+
+        ComponentDTO componentDTO1 = ComponentDTO.builder()
+                .content("Content 1")
+                .x(10f)
+                .y(20f)
+                .width(100f)
+                .height(50f)
+                .rotation(0f)
+                .categoryDetailId(21L)
+                .build();
+
+        ComponentDTO componentDTO2 = ComponentDTO.builder()
+                .content("Content 2")
+                .x(15f)
+                .y(25f)
+                .width(150f)
+                .height(75f)
+                .rotation(0f)
+                .categoryDetailId(22L)
+                .build();
+
+        List<ComponentDTO> lists = Arrays.asList(componentDTO1, componentDTO2);
+        componentService.saveTemplateComponent(template.getId(), lists);
+
+        // when
+        List<ComponentResponseDTO> templateComponentList = componentService.getTemplateComponent(template.getId());
+
+        // then
+        assertThat(templateComponentList.size()).isEqualTo(2);
     }
 }
