@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -30,7 +29,7 @@ public class TemplateReport extends BaseEntity {
 
     private Boolean done;
 
-    @NotNull
+    @Column(nullable = false)
     private String ipaddress;
 
     @ManyToOne
