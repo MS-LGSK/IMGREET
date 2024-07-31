@@ -31,7 +31,7 @@ public class GreetReport extends BaseEntity {
     @NotNull
     private String ipAddress;
 
-    private char done;
+    private Boolean done;
 
     @ManyToOne
     @JoinColumn(name = "GREET_ID", nullable = false)

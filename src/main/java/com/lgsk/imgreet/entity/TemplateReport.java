@@ -28,7 +28,7 @@ public class TemplateReport extends BaseEntity {
     @Column(length = 1000, nullable = false)
     private String reason;
 
-    private char done;
+    private Boolean done;
 
     @NotNull
     private String ipaddress;
