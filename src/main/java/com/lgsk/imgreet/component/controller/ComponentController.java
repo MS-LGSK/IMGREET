@@ -48,4 +48,23 @@ public class ComponentController {
         return "createGreet";
     }
 
+    @PostMapping("/template/{template_id}/component")
+    public String saveTemplateComponent(@PathVariable("template_id") Long templateId, @RequestBody List<ComponentDTO> componentDTO) {
+        componentService.saveTemplateComponent(templateId, componentDTO);
+        return "main";
+    }
+
+    @GetMapping("/template/{template_id}")
+    public String getTemplateComponent(@PathVariable("template_id") Long templateId, Model model) {
+        List<ComponentResponseDTO> components = componentService.getTemplateComponent(templateId);
+
+        String componentHtml = components.stream()
+                .map(ComponentResponseDTO::getContent)
+                .collect(Collectors.joining());
+
+        model.addAttribute("component", componentHtml);
+        model.addAttribute("templateId", templateId);
+        return "createGreet";
+    }
+
 }
