@@ -17,7 +17,7 @@ public class BookmarkController {
 	private final Rq rq;
 	private final BookmarkService bookmarkService;
 
-	@PostMapping("/bookmarks")
+	@PostMapping("/bookmarks")	//Restful API 개발에는 @PathVariable이 더 좋음
 	public String saveBookark(@RequestParam("templateId") Long templateId) {
 		User user = rq.getUser();
 		bookmarkService.saveBookmark(user, templateId);
