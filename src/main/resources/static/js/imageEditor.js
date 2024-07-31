@@ -109,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 리사이즈 핸들 생성
     function createResizeHandle(selectionBox) {
         // 기존 리사이즈 핸들 제거 (중복 생성을 방지하기 위해)
-        console.log('createResizeHandle 호출');
         const existingHandle = selectionBox.querySelector('.resize-handle');
         if (existingHandle) {
             existingHandle.remove();
@@ -130,13 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
         resizeHandle.style.bottom = '0px';
 
         selectionBox.appendChild(resizeHandle);
-        console.log('startResize 들어가기 전');
         resizeHandle.addEventListener('mousedown', startResize);
     }
 
     // 리사이즈 시작
     function startResize(event) {
-        console.log('startResize 호출');
         event.preventDefault();
         isResizing = true;
 
@@ -153,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 리사이즈 처리
     function resize(event) {
-        console.log('resize 호출');
         if (!isResizing || !selectedImage) return;
 
         const dx = event.clientX - startX;
@@ -173,6 +169,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.removeEventListener('mousemove', resize);
         document.removeEventListener('mouseup', stopResize);
     }
+
+    // 이미지 삭제
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'Backspace' && selectedImage) {
+            selectedImage.remove();
+            selectedImage = null;
+            removeSelectionBox();
+        }
+    })
 
     // 전역에서 imageDraggable 함수 사용 가능
     window.imageDraggable = imageDraggable;
