@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>ImGreet</title>
+    <!-- Assuming you have a CSS file -->
+    <link rel="stylesheet" th:href="@{/css/myPage.css}" />
+</head>
+<body>
+<!-- Navigation -->
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<!-- Main Content -->
+<div class="container">
+    <nav class="sidebar">
+        <ul>
+            <li><a href="#">나의 계정</a></li>
+            <li><a href="#">로그인 및 보안</a></li>
+            <li><a href="#">알림</a></li>
+            <li><a href="#">환경 설정</a></li>
+            <li><a href="#">워크스페이스 설정</a></li>
+            <li><a href="#">구독 설정</a></li>
+            <li><a href="#">결제 내역</a></li>
+        </ul>
+    </nav>
+    <div class="main-content">
+        <h2>나의 계정</h2>
+        <div class="profile">
+            <div class="profile-image">
+                <img src="https://via.placeholder.com/150" alt="Profile Image">
+                <button>사진 업로드</button>
+            </div>
+            <div class="profile-info">
+                <label for="name">이름</label>
+                <input type="text" id="name" value="대용">
+                <label for="email">이메일</label>
+                <input type="email" id="email" value="cys964@naver.com">
+                <button class="save-changes">변경사항 저장</button>
+                <button class="delete-account">계정 삭제</button>
+            </div>
+        </div>
+        <div class="account-warning">
+            <p>계정 삭제시 내가 참여중인 워크스페이스의 내 드라이브와 하위 항목이 모두 삭제됩니다.</p>
+        </div>
+    </div>
+</div>
+<script src="js/my_account.js"></script>
+</body>
+</html>
+
+
