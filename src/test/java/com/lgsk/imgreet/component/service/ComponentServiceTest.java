@@ -2,6 +2,7 @@ package com.lgsk.imgreet.component.service;
 
 import com.lgsk.imgreet.base.entity.Role;
 import com.lgsk.imgreet.component.model.ComponentDTO;
+import com.lgsk.imgreet.component.model.ComponentResponseDTO;
 import com.lgsk.imgreet.component.repository.ComponentRepository;
 import com.lgsk.imgreet.entity.Component;
 import com.lgsk.imgreet.entity.Greet;
@@ -204,6 +205,28 @@ class ComponentServiceTest {
         componentService.saveTemplateComponent(template.getId(), lists);
 
         // then
-        Assertions.assertThat(componentRepository.findAllByTemplateId(template.getId()).size()).isEqualTo(2);
+        List<Component> findComponents = componentRepository.findAllByTemplateId(template.getId());
+        assertThat(findComponents).hasSize(2);
+
+        Component component1 = findComponents.get(0);
+        assertThat(component1.getContent()).isEqualTo("Content 1");
+        assertThat(component1.getX()).isEqualTo(10f);
+        assertThat(component1.getY()).isEqualTo(20f);
+        assertThat(component1.getWidth()).isEqualTo(100f);
+        assertThat(component1.getHeight()).isEqualTo(50f);
+        assertThat(component1.getRotation()).isEqualTo(0f);
+        assertThat(component1.getCategoryDetail().getId()).isEqualTo(21L);
+        assertThat(component1.getTemplate().getId()).isEqualTo(template.getId());
+
+        Component component2 = findComponents.get(1);
+        assertThat(component2.getContent()).isEqualTo("Content 2");
+        assertThat(component2.getX()).isEqualTo(15f);
+        assertThat(component2.getY()).isEqualTo(25f);
+        assertThat(component2.getWidth()).isEqualTo(150f);
+        assertThat(component2.getHeight()).isEqualTo(75f);
+        assertThat(component2.getRotation()).isEqualTo(0f);
+        assertThat(component2.getCategoryDetail().getId()).isEqualTo(22L);
+        assertThat(component2.getTemplate().getId()).isEqualTo(template.getId());
+    }
     }
 }
