@@ -32,3 +32,26 @@ document.addEventListener("click", function(event) {
         }
     }
 });
+
+
+// navbar myPage
+function toggleUserInfo() {
+    var userInfo = document.getElementById("userInfo");
+    if (userInfo.style.display === "block") {
+        userInfo.style.display = "none";
+    } else {
+        userInfo.style.display = "block";
+    }
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.myPage')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.style.display === "block") {
+                openDropdown.style.display = "none";
+            }
+        }
+    }
+}

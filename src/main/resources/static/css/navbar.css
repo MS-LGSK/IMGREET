@@ -215,14 +215,17 @@ button {
             padding: 15px 0;
         }
 
+        .dropdown-
     }
 }
 
 /* 데스크탑 사이즈 */
 @media screen and (min-width: 1179px) {
     .navbar-right .navbar-link {
+        font-size: 20px;
         /*margin-right: 15px;*/
         display: flex;
+        cursor: pointer;
 
     }
 
@@ -270,4 +273,71 @@ button {
 
 .light-yellow-btn:hover {
     background-color: #ffd9b3;
+}
+
+
+.myPage {
+    text-decoration: none;
+    background: #FFEACF;
+    color: #FF9000;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 20px;
+
+    margin-left: 20px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 200px;
+    margin: 10px;
+}
+
+.user-info-header {
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.user-info-header span {
+    display: block;
+}
+
+.user-info-body a, .user-info-body form button {
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    color: black;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-info-body a:hover, .user-info-body form button:hover {
+    background-color: #f1f1f1;
+}
+
+.user-info-body form button {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.myPage:hover + .dropdown-content, .dropdown-content:hover {
+    /*display: block;*/
+}
+
+.user-info-content {
+    font-size: 18px;
 }
