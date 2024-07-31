@@ -12,13 +12,27 @@
 		</a>
 	</div>
 	<div class="navbar-right">
-		<form th:if="${@rq.logout}" th:action="@{/login}" method="get" class="navbar-link" onclick="this.submit();">로그인</form>
-		<form th:if="${@rq.login}" th:action="@{/logout}" method="post" class="navbar-link" onclick="this.submit();">로그아웃</form>
+		<a class="navbar-link" th:if="${@rq.logout}" th:href="@{/login}">로그인</a>
+		<div class="myPageController">
+			<div th:if="${@rq.login}" type="text" shape="circle" class="myPage" onclick="toggleUserInfo()">내 정보</div>
+			<div id="userInfo" class="dropdown-content">
+				<div class="user-info-header">
+					<span>대용</span>
+					<span>cys964@naver.com</span>
+				</div>
+				<div class="user-info-body">
+					<a class="user-info-content" href="/workspace">워크스페이스</a>
+					<a class="user-info-content" href="/myPage">나의 정보</a>
+					<form th:if="${@rq.login}" th:action="@{/logout}" method="post">
+						<button type="submit" class="user-info-content">로그아웃</button>
+					</form>
+				</div>
+			</div>
+		</div>
 		<button class="hamburger-btn" onclick="toggleMenu()">
 			<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
 			     style="width: 40px; height: 40px; color: rgb(22, 24, 29);">
-				<path d="M3 5.75A.75.75 0 0 1 3.75 5h16.495a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 5.75ZM3 12a.75.75 0 0 1 .75-.75h16.495a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm.75 5.5a.75.75 0 0 0 0 1.5h16.495a.75.75 0 0 0 0-1.5H3.75Z">
-				</path>
+				<path d="M3 5.75A.75.75 0 0 1 3.75 5h16.495a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 5.75ZM3 12a.75.75 0 0 1 .75-.75h16.495a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm.75 5.5a.75.75 0 0 0 0 1.5h16.495a.75.75 0 0 0 0-1.5H3.75Z"></path>
 			</svg>
 		</button>
 	</div>
@@ -28,7 +42,9 @@
 			<a th:href="@{/about}">ABOUT</a>
 			<a th:href="@{/service}">SERVICE</a>
 			<a th:if="${@rq.logout}" th:href="@{/login}">로그인</a>
-			<form th:if="${@rq.login}" th:action="@{/logout}" method="post" th:value="로그아웃" onclick="this.submit()"> </form>
+			<form th:if="${@rq.login}" th:action="@{/logout}" method="post" id="logoutForm">
+				<button type="submit" class="logout-button">로그아웃</button>
+			</form>
 		</div>
 	</div>
 	<script th:src="@{/js/navbar.js}"></script>
