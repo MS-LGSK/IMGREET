@@ -1,5 +1,7 @@
 package com.lgsk.imgreet.base.commonUtil;
 
+import com.lgsk.imgreet.entity.User;
+import com.lgsk.imgreet.login.service.UserService;
 import groovy.util.logging.Log4j2;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,13 +17,15 @@ import org.springframework.web.context.annotation.RequestScope;
 @Component
 @RequestScope
 public class Rq {
+    private final UserService userService;
     private HttpServletRequest req;
     private HttpServletResponse resp;
     @Getter
     private HttpSession session;
-    private OAuth2User user;
+    private OAuth2User oAuth2User;
+    private User user;
 
-    public Rq(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+    public Rq(HttpServletRequest req, HttpServletResponse resp, HttpSession session, UserService userService) {
         this.req = req;
         this.resp = resp;
         this.session = session;
@@ -30,17 +34,35 @@ public class Rq {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication.getPrincipal() instanceof OAuth2User oUser) {
-            this.user = oUser;
+            this.oAuth2User = oUser;
         } else {
-            this.user = null;
+            this.oAuth2User = null;
         }
+        this.userService = userService;
     }
 
     public boolean isLogin() {
-        return this.user != null;
+        return this.oAuth2User != null;
     }
 
     public boolean isLogout() {
         return !isLogin();
+    }
+
+    public String getClientIpAddress() {
+        return req.getRemoteAddr();
+    }
+
+    public User getUser() {
+        if (isLogout()) {
+            return null;
+        }
+
+        if (user == null) {
+            String oAuthId = "kakao_" + oAuth2User.getAttribute("id");
+            user = userService.getUserByOauthId(oAuthId);
+        }
+
+        return user;
     }
 }

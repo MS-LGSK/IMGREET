@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarContent = document.getElementById('sidebarContent');
     const sidebar = document.getElementById('sidebar');
     const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+    const forbiddenFree = document.getElementById('forbiddenFree');
+    const mapContainer = document.getElementById('map-container');
+    const commentContainer = document.getElementById('comment-container');
 
     function fetchCategoryIds() {
         fetch('/category')
@@ -29,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function storeCategoryIds(data) {
         const categories = data.map(category => ({
             id: category.id,
-            type: category.type
+            type: category.type,
+            free : category.free
         }));
         localStorage.setItem('categories', JSON.stringify(categories));
     }
@@ -42,8 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
             button.className = 'category-button';
             button.textContent = category.type;
             button.dataset.categoryId = category.id;
+            button.dataset.categoryFree = category.free;
 
-            button.addEventListener('click', () => fetchAndDisplaySubTypes(category.id));
+            button.addEventListener('click', () => {
+                fetchAndDisplaySubTypes(category.id);
+                checkAndDisplayCategory(category.type, category.free);
+            });
             categoryButtonsContainer.appendChild(button);
         });
     }
@@ -165,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (window.initializeTextEditor) {
                         window.initializeTextEditor(component);
                     }
-                } else if (component.tagName === 'SHAPE') {
+                } else if (component.tagName === 'circle' || component.tagName === 'rect' || component.tagName === 'polygon') {
                     if (window.addShape) {
                         window.addShape(component);
                     }
@@ -192,6 +200,35 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(input);
         input.click();
         document.body.removeChild(input);
+    }
+
+    const categoryFactory = {
+        '지도' : createMapCategory,
+        '댓글' : createCommentCategory
+    }
+
+    function checkAndDisplayCategory(category, free) {
+        mapContainer.style.display = 'none';
+        commentContainer.style.display = 'none';
+
+        if (!free) {
+            forbiddenFree.style.display = 'block';
+        } else {
+            forbiddenFree.style.display = 'none';
+        }
+
+        const createCategory = categoryFactory[category];
+        if (createCategory) {
+            createCategory();
+        }
+    }
+
+    function createMapCategory() {
+        mapContainer.style.display = 'block';
+    }
+
+    function createCommentCategory() {
+        commentContainer.style.display = 'block';
     }
 
     fetchCategoryIds();
