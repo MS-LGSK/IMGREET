@@ -12,7 +12,9 @@ button {
 .navbar {
     width: 100%;
     display: flex;
-    position: fixed;
+    position: sticky;
+    top: 0;
+    left: 0;
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
@@ -132,6 +134,8 @@ button {
     color: #333333;
 }
 
+
+
 .dropdown-menu .btn {
     margin: 15px 0;
     font-size: 18px;
@@ -178,6 +182,18 @@ button {
         background-color: #fff;
         z-index: 1;
         width: 100%;
+
+        button {
+            padding: 15px 0;
+            font-size: 30px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            text-decoration: underline;
+        }
     }
 
     .dropdown-menu.show {
@@ -195,6 +211,18 @@ button {
         .yellow-btn {
             width: 95%;
             padding: 15px 0;
+        }
+
+        button {
+            padding: 15px 0;
+            font-size: 30px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            text-decoration: underline;
         }
 
     }
@@ -340,4 +368,11 @@ button {
 
 .user-info-content {
     font-size: 18px;
+}
+
+.myPageController {
+
+    @media screen and (max-width: 1178px) {
+        display: none;
+    }
 }
