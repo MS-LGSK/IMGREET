@@ -48,4 +48,10 @@ public class ComponentController {
         return "createGreet";
     }
 
+    @PostMapping("/template/{template_id}/component")
+    public String saveTemplateComponent(@PathVariable("template_id") Long templateId, @RequestBody List<ComponentDTO> componentDTO) {
+        componentService.saveTemplateComponent(templateId, componentDTO);
+        return "main";
+    }
+
 }
