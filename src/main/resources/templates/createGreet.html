@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title th:text="${title}">Greet</title>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d3ed3db1fc1bdaf63dfdafb12b6475b3&libraries=services"></script>
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d3ed3db1fc1bdaf63dfdafb12b6475b3&libraries=services"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/createGreet.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/text.css}"/>
@@ -24,17 +25,23 @@
         <form class="form-inline">
             <input type="text" class="form-control" id="title" th:value="${title}" placeholder="제목을 입력하세요">
         </form>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="undoButton">실행 취소하기</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="redoButton">되돌리기</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="shareButton">공유하기</a>
-            </li>
-        </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="undoButton">실행 취소하기</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="redoButton">되돌리기</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="shareButton">공유하기</a>
+                </li>
+                <form class="form-inline" action="/template/save" method="post">
+                    <li class="nav-item">
+                        <button type="submit" class="nav-link btn" id="saveButton">템플릿으로 게시하기</button>
+                    </li>
+                </form>
+            </ul>
+        </form>
     </div>
 </nav>
 
@@ -84,12 +91,14 @@
 
     <!-- 지도 -->
     <div id="map-container" style="display: none">
-        <div th:if="${#authorization.expression('hasAuthority(''PAID_USER'')')}" >
+        <div th:if="${#authorization.expression('hasAuthority(''PAID_USER'')')}">
             <br>
             <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
             <input type="text" id="sample4_postcode" placeholder="우편번호" readonly onclick="sample4_execDaumPostcode()">
-            <input type="text" id="sample4_roadAddress" placeholder="도로명주소" readonly onclick="sample4_execDaumPostcode()">
-            <input type="text" id="sample4_jibunAddress" placeholder="지번주소" readonly onclick="sample4_execDaumPostcode()">
+            <input type="text" id="sample4_roadAddress" placeholder="도로명주소" readonly
+                   onclick="sample4_execDaumPostcode()">
+            <input type="text" id="sample4_jibunAddress" placeholder="지번주소" readonly
+                   onclick="sample4_execDaumPostcode()">
             <span id="guide" style="color:#999;display:none"></span>
             <input type="text" id="sample4_detailAddress" placeholder="상세주소">
             <input type="text" id="sample4_extraAddress" placeholder="참고항목">
