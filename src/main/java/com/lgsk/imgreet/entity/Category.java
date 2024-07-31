@@ -29,5 +29,5 @@ public class Category {
     private String type;
 
     @NotNull
-    private boolean free;
+    private Boolean free;
 }
