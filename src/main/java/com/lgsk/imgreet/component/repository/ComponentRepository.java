@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ComponentRepository extends JpaRepository<Component, Long> {
     List<Component> findAllByGreetId(Long id);
+    List<Component> findAllByTemplateId(Long id);
 }
