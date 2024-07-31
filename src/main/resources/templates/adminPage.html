@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>ImGreet</title>
+  <link rel="stylesheet" th:href="@{/css/adminPage.css}" />
+</head>
+<body>
+  <!-- Navigation -->
+  <nav th:replace="~{navbar :: navbarFragment}"></nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <nav class="sidebar">
+      <ul>
+        <li><a href="/adminPage/getGreetReport" th:style="${current == 'GreetReport'} ? 'text-decoration: underline;'">신고 초대장 관리</a></li>
+        <li><a href="/adminPage/getCommentReport" th:style="${current == 'CommentReport'} ? 'text-decoration: underline;'">신고 댓글 관리</a></li>
+      </ul>
+    </nav>
+  </div>
+</body>
+</html>
