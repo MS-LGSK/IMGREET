@@ -5,9 +5,12 @@ import com.lgsk.imgreet.component.model.ComponentDTO;
 import com.lgsk.imgreet.component.repository.ComponentRepository;
 import com.lgsk.imgreet.entity.Component;
 import com.lgsk.imgreet.entity.Greet;
+import com.lgsk.imgreet.entity.Template;
 import com.lgsk.imgreet.entity.User;
 import com.lgsk.imgreet.greet.repository.GreetRepository;
 import com.lgsk.imgreet.login.repository.UserRepository;
+import com.lgsk.imgreet.template.repository.TemplateRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,6 +36,9 @@ class ComponentServiceTest {
 
     @Autowired
     private GreetRepository greetRepository;
+
+    @Autowired
+    private TemplateRepository templateRepository;
 
     @Autowired
     private ComponentRepository componentRepository;
@@ -111,7 +117,7 @@ class ComponentServiceTest {
         assertThat(component2.getCategoryDetail().getId()).isEqualTo(22L);
         assertThat(component2.getGreet().getId()).isEqualTo(greet.getId());
     }
-    
+
     @Test
     @DisplayName("Check nullable=false")
     @Transactional
@@ -156,5 +162,48 @@ class ComponentServiceTest {
         // then
         List<Component> findComponents = componentRepository.findAll();
         assertThat(findComponents).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("save template component")
+    @Transactional
+    void saveTemplateComponent() {
+        // given
+        User user = userRepository.save(User.builder()
+                .oauthId("kakao_123")
+                .role(Role.FREE_USER)
+                .nickname("테스트")
+                .build());
+
+        Template template = templateRepository.save(Template.builder()
+                .creatorId(user.getId())
+                .build());
+
+        // when
+        ComponentDTO componentDTO1 = ComponentDTO.builder()
+                .content("Content 1")
+                .x(10f)
+                .y(20f)
+                .width(100f)
+                .height(50f)
+                .rotation(0f)
+                .categoryDetailId(21L)
+                .build();
+
+        ComponentDTO componentDTO2 = ComponentDTO.builder()
+                .content("Content 2")
+                .x(15f)
+                .y(25f)
+                .width(150f)
+                .height(75f)
+                .rotation(0f)
+                .categoryDetailId(22L)
+                .build();
+
+        List<ComponentDTO> lists = Arrays.asList(componentDTO1, componentDTO2);
+        componentService.saveTemplateComponent(template.getId(), lists);
+
+        // then
+        Assertions.assertThat(componentRepository.findAllByTemplateId(template.getId()).size()).isEqualTo(2);
     }
 }
