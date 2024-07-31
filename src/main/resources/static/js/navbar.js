@@ -36,7 +36,7 @@ document.addEventListener("click", function(event) {
 
 // navbar myPage
 function toggleUserInfo() {
-    var userInfo = document.getElementById("userInfo");
+    const userInfo = document.getElementById("userInfo");
     if (userInfo.style.display === "block") {
         userInfo.style.display = "none";
     } else {
@@ -46,9 +46,9 @@ function toggleUserInfo() {
 
 window.onclick = function(event) {
     if (!event.target.matches('.myPage')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
             if (openDropdown.style.display === "block") {
                 openDropdown.style.display = "none";
             }
