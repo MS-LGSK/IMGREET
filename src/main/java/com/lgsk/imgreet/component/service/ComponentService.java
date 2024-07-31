@@ -93,4 +93,23 @@ public class ComponentService {
 
         componentRepository.saveAll(components);
     }
+
+    @Transactional(readOnly = true)
+    public List<ComponentResponseDTO> getTemplateComponent(Long templateId) {
+        Template template = templateRepository.findById(templateId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 템플릿입니다."));
+
+        List<Component> componentList = componentRepository.findAllByTemplateId(template.getId());
+
+        return componentList.stream()
+                .map(dto -> ComponentResponseDTO.builder()
+                        .content(dto.getContent())
+                        .x(dto.getX())
+                        .y(dto.getY())
+                        .width(dto.getWidth())
+                        .height(dto.getHeight())
+                        .rotation(dto.getRotation())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

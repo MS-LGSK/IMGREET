@@ -54,4 +54,17 @@ public class ComponentController {
         return "main";
     }
 
+    @GetMapping("/template/{template_id}")
+    public String getTemplateComponent(@PathVariable("template_id") Long templateId, Model model) {
+        List<ComponentResponseDTO> components = componentService.getTemplateComponent(templateId);
+
+        String componentHtml = components.stream()
+                .map(ComponentResponseDTO::getContent)
+                .collect(Collectors.joining());
+
+        model.addAttribute("component", componentHtml);
+        model.addAttribute("templateId", templateId);
+        return "createGreet";
+    }
+
 }
