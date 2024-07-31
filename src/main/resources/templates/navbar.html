@@ -12,7 +12,7 @@
 		</a>
 	</div>
 	<div class="navbar-right">
-		<form class="navbar-link" action="/login" method="get">로그인</form>
+		<a class="navbar-link" th:if="${@rq.logout}" th:href="@{/login}">로그인</a>
 		<div class="myPageController">
 			<div type="text" shape="circle" class="myPage" onclick="toggleUserInfo()">내 정보</div>
 			<div id="userInfo" class="dropdown-content">
@@ -30,7 +30,8 @@
 			</div>
 		</div>
 		<button class="hamburger-btn" onclick="toggleMenu()">
-			<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 40px; height: 40px; color: rgb(22, 24, 29);">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+			     style="width: 40px; height: 40px; color: rgb(22, 24, 29);">
 				<path d="M3 5.75A.75.75 0 0 1 3.75 5h16.495a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 5.75ZM3 12a.75.75 0 0 1 .75-.75h16.495a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm.75 5.5a.75.75 0 0 0 0 1.5h16.495a.75.75 0 0 0 0-1.5H3.75Z"></path>
 			</svg>
 		</button>
@@ -41,8 +42,8 @@
 			<a th:href="@{/about}">ABOUT</a>
 			<a th:href="@{/service}">SERVICE</a>
 			<a th:if="${@rq.logout}" th:href="@{/login}">로그인</a>
-			<form th:action="@{/logout}" method="post">
-				<button type="submit">로그아웃</button>
+			<form th:if="${@rq.login}" th:action="@{/logout}" method="post" id="logoutForm">
+				<button type="submit" class="logout-button">로그아웃</button>
 			</form>
 		</div>
 	</div>
