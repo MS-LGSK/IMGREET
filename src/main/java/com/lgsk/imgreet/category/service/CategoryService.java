@@ -1,16 +1,17 @@
 package com.lgsk.imgreet.category.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lgsk.imgreet.category.dto.CategoryDTO;
 import com.lgsk.imgreet.category.dto.CategoryIdResponseDTO;
 import com.lgsk.imgreet.category.repository.CategoryRepository;
 import com.lgsk.imgreet.entity.Category;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public List<CategoryIdResponseDTO> getAllCategoryId() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAllByOrderById();
 
         List<CategoryIdResponseDTO> response = new ArrayList<>();
 
@@ -38,6 +39,7 @@ public class CategoryService {
             CategoryIdResponseDTO dto = CategoryIdResponseDTO.builder()
                     .id(category.getId())
                     .type(category.getType())
+                    .free(category.isFree())
                     .build();
 
             response.add(dto);
