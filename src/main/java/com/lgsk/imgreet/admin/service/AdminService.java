@@ -10,12 +10,17 @@ import com.lgsk.imgreet.admin.DTO.CommentReportDTO;
 import com.lgsk.imgreet.admin.DTO.CommentReportResponseDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportResponseDTO;
+import com.lgsk.imgreet.admin.DTO.TemplateReportDTO;
+import com.lgsk.imgreet.admin.DTO.TemplateReportResponseDTO;
 import com.lgsk.imgreet.admin.repository.CommnetReportRepository;
 import com.lgsk.imgreet.admin.repository.GreetReportRepository;
+import com.lgsk.imgreet.admin.repository.TemplateReportRepository;
 import com.lgsk.imgreet.comment.repository.CommentRepository;
 import com.lgsk.imgreet.entity.Comment;
 import com.lgsk.imgreet.entity.Greet;
+import com.lgsk.imgreet.entity.Template;
 import com.lgsk.imgreet.greet.repository.GreetRepository;
+import com.lgsk.imgreet.template.repository.TemplateRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,8 +30,10 @@ public class AdminService {
 
 	private final GreetReportRepository greetReportRepository;
 	private final CommnetReportRepository commentReportRepository;
+	private final TemplateReportRepository templateReportRepository;
 	private final GreetRepository greetRepository;
 	private final CommentRepository commentRepository;
+	private final TemplateRepository templateRepository;
 
 	// 신고 초대장 목록 가져오기
 	@Transactional
@@ -50,6 +57,31 @@ public class AdminService {
 		}
 
 		return greetReportDTOList;
+	}
+
+
+	// 신고 템플릿 목록 가져오기
+	@Transactional
+	public List<TemplateReportDTO> getTemplateReportList() {
+		List<TemplateReportDTO> templateReportDTOList = new ArrayList<>();
+
+		List<TemplateReportResponseDTO> templateReportList = templateReportRepository.findDistinctByDone();
+		for (TemplateReportResponseDTO templateReport : templateReportList) {
+			Template template = templateRepository.findById(templateReport.getTemplateId())
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 템플릿입니다."));
+
+			TemplateReportDTO templateReportDTO = TemplateReportDTO.builder()
+				.templateId(template.getId())
+				.templateTitle(template.getTitle())
+				.templateURL("templateUrl")
+				.reason(templateReport.getReason())
+				.creatorId(template.getCreatorId())
+				.build();
+
+			templateReportDTOList.add(templateReportDTO);
+		}
+
+		return templateReportDTOList;
 	}
 
 

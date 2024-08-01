@@ -17,8 +17,11 @@ import com.lgsk.imgreet.admin.DTO.CommentReportDTO;
 import com.lgsk.imgreet.admin.DTO.CommentReportResponseDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportResponseDTO;
+import com.lgsk.imgreet.admin.DTO.TemplateReportDTO;
+import com.lgsk.imgreet.admin.DTO.TemplateReportResponseDTO;
 import com.lgsk.imgreet.admin.repository.CommnetReportRepository;
 import com.lgsk.imgreet.admin.repository.GreetReportRepository;
+import com.lgsk.imgreet.admin.repository.TemplateReportRepository;
 import com.lgsk.imgreet.base.entity.Role;
 import com.lgsk.imgreet.comment.repository.CommentRepository;
 import com.lgsk.imgreet.entity.Comment;
@@ -37,6 +40,7 @@ public class AdminServiceTests {
 
 	@Autowired private GreetReportRepository greetReportRepository;
 	@Autowired private CommnetReportRepository commnetReportRepository;
+	@Autowired private TemplateReportRepository templateReportRepository;
 	@Autowired private UserRepository userRepository;
 	@Autowired private GreetRepository greetRepository;
 	@Autowired private CommentRepository commentRepository;
@@ -94,7 +98,10 @@ public class AdminServiceTests {
 			.build());
 
 		template = templateRepository.save(Template.builder()
-			..build())
+			.title("혐오")
+			.creatorId(badUser.getId())
+			.imageUrl("ImgUrlAddress")
+			.build());
 
 	}
 
@@ -148,6 +155,50 @@ public class AdminServiceTests {
 
 	@Test
 	@Transactional
+	@DisplayName("템플릿 신고 목록 가져오기")
+	void getTemplateReportList() {
+
+		// given
+		templateReport1 = templateReportRepository.save(TemplateReport.builder()
+			.template(template)
+			.reason("혐오")
+			.ipaddress("ipAddress1")
+			.done(false)
+			.build());
+
+		templateReport2 = templateReportRepository.save(TemplateReport.builder()
+			.template(template)
+			.reason("혐오")
+			.ipaddress("ipAddress2")
+			.done(false)
+			.build());
+
+		// when
+		List<TemplateReportDTO> templateReportDTOList = new ArrayList<>();
+
+		List<TemplateReportResponseDTO> templateReportList = templateReportRepository.findDistinctByDone();
+		for (TemplateReportResponseDTO templateReport : templateReportList) {
+			Template template = templateRepository.findById(templateReport.getTemplateId())
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 템플릿입니다."));
+
+			TemplateReportDTO templateReportDTO = TemplateReportDTO.builder()
+				.templateId(template.getId())
+				.templateTitle(template.getTitle())
+				.templateURL("templateUrl")
+				.reason(templateReport.getReason())
+				.creatorId(template.getCreatorId())
+				.build();
+
+			templateReportDTOList.add(templateReportDTO);
+		}
+
+		// then
+		assertThat(templateReportDTOList).hasSize(1);
+	}
+
+
+	@Test
+	@Transactional
 	@DisplayName("댓글 신고 목록 가져오기")
 	void getCommentReportList() {
 
@@ -189,11 +240,4 @@ public class AdminServiceTests {
 		assertThat(commentReportDTOList).hasSize(1);
 	}
 
-
-	@Test
-	@Transactional
-	@DisplayName("템플릿 신고 목록 가져오기")
-	void getTemplateReportList() {
-
-	}
 }

@@ -13,8 +13,9 @@
   <div class="container">
     <nav class="sidebar">
       <ul>
-        <li><a href="/adminPage/getGreetReport" th:style="${current == 'GreetReport'} ? 'text-decoration: underline;'">신고 초대장 관리</a></li>
-        <li><a href="/adminPage/getCommentReport" th:style="${current == 'CommentReport'} ? 'text-decoration: underline;'">신고 댓글 관리</a></li>
+        <li><a href="/adminPage/GreetReport" th:style="${current == 'Greet'} ? 'text-decoration: underline;'">신고 초대장 관리</a></li>
+        <li><a href="/adminPage/CommentReport" th:style="${current == 'Comment'} ? 'text-decoration: underline;'">신고 댓글 관리</a></li>
+        <li><a href="/adminPage/TemplateReport" th:style="${current == 'Template'} ? 'text-decoration: underline;'">신고 템플릿 관리</a></li>
       </ul>
     </nav>
   </div>
