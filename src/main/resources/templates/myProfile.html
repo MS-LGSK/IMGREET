@@ -1,0 +1,20 @@
+<div class="main-content" th:fragment="contentFragment">
+	<h2>나의 계정</h2>
+	<div class="profile">
+		<div class="profile-image">
+			<img src="https://via.placeholder.com/150" alt="Profile Image">
+			<button>사진 업로드</button>
+		</div>
+		<div class="profile-info">
+			<label for="name">이름</label>
+			<input type="text" id="name" value="대용">
+			<label for="email">이메일</label>
+			<input type="email" id="email" value="cys964@naver.com">
+			<button class="save-changes">변경사항 저장</button>
+			<button class="delete-account">계정 삭제</button>
+		</div>
+	</div>
+	<div class="account-warning">
+		<p>계정 삭제시 내가 참여중인 워크스페이스의 내 드라이브와 하위 항목이 모두 삭제됩니다.</p>
+	</div>
+</div>
