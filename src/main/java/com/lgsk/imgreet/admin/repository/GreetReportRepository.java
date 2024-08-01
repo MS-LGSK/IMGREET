@@ -13,9 +13,9 @@ public interface GreetReportRepository extends JpaRepository<GreetReport, Long> 
 	@Query(" SELECT DISTINCT new com.lgsk.imgreet.admin.DTO.GreetReportResponseDTO(gr.greet.id, gr.reason) "
 		+ "    FROM GreetReport gr "
 		+ "   WHERE gr.done = false "
-		+ " 	AND (gr.reason, gr.greet.id) IN ( SELECT gr2.reason, gr2.greet.id"
+		+ " 	AND (gr.greet.id, gr.reason) IN ( SELECT gr2.greet.id, gr2.reason "
 		+ "										    FROM GreetReport gr2"
-		+ "									    GROUP BY gr2.reason, gr2.greet.id )"
+		+ "									    GROUP BY gr2.greet.id, gr2.reason )"
 		+ " ORDER BY gr.greet.id")
 	List<GreetReportResponseDTO> findDistinctByDone();
 
