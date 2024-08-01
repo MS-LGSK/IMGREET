@@ -8,13 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lgsk.imgreet.admin.DTO.CommentReportDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportDTO;
+import com.lgsk.imgreet.admin.DTO.GreetReportResponseDTO;
 import com.lgsk.imgreet.admin.repository.CommnetReportRepository;
 import com.lgsk.imgreet.admin.repository.GreetReportRepository;
 import com.lgsk.imgreet.comment.repository.CommentRepository;
 import com.lgsk.imgreet.entity.Comment;
 import com.lgsk.imgreet.entity.CommentReport;
 import com.lgsk.imgreet.entity.Greet;
-import com.lgsk.imgreet.entity.GreetReport;
 import com.lgsk.imgreet.greet.repository.GreetRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,26 +24,25 @@ import lombok.RequiredArgsConstructor;
 public class AdminService {
 
 	private final GreetReportRepository greetReportRepository;
-	private final CommnetReportRepository commnetReportRepository;
+	private final CommnetReportRepository commentReportRepository;
 	private final GreetRepository greetRepository;
 	private final CommentRepository commentRepository;
 
+	// 신고 초대장 목록 가져오기
 	@Transactional
 	public List<GreetReportDTO> getGreetReportList() {
 		List<GreetReportDTO> greetReportDTOList = new ArrayList<>();
 
-		List<GreetReport> greetReportList = greetReportRepository.findAllByDone(false);
-		for (GreetReport greetReport : greetReportList) {
-			Long greetId = greetReport.getGreet().getId();
-			Greet greet = greetRepository.findById(greetId)
+		List<GreetReportResponseDTO> greetReportResponseDTOList = greetReportRepository.findDistinctByDone();
+		for (GreetReportResponseDTO greetReport : greetReportResponseDTOList) {
+			Greet greet = greetRepository.findById(greetReport.getGreetId())
 				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 초대장입니다."));
 
 			GreetReportDTO greetReportDTO = GreetReportDTO.builder()
-				.reportId(greetReport.getId())
-				.greetId(greetId)
+				.greetId(greetReport.getGreetId())
 				.greetTitle(greet.getTitle())
 				.greetUrl(greet.getTitle())
-				.reportReason(greetReport.getReason())
+				.reason(greetReport.getReason())
 				.userId(greet.getUser().getId())
 				.build();
 
@@ -54,10 +53,12 @@ public class AdminService {
 	}
 
 
+	// 신고 댓글 목록 가져오기
+	@Transactional
 	public List<CommentReportDTO> getCommentReportList() {
 		List<CommentReportDTO> commentReportDTOList = new ArrayList<>();
 
-		List<CommentReport> commentReportList = commnetReportRepository.findAllByDone(false);
+		List<CommentReport> commentReportList = commentReportRepository.findAllByDone(false);
 		for (CommentReport commentReport : commentReportList) {
 			Long commentId = commentReport.getComment().getId();
 			Comment comment = commentRepository.findById(commentId)
@@ -78,5 +79,12 @@ public class AdminService {
 		}
 
 		return commentReportDTOList;
+	}
+
+
+	// 신고 초대장 삭제
+	@Transactional
+	public void deleteGreet(Long greetId) {
+
 	}
 }

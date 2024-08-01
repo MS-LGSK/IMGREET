@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lgsk.imgreet.admin.DTO.CommentReportDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportDTO;
+import com.lgsk.imgreet.admin.DTO.GreetReportResponseDTO;
 import com.lgsk.imgreet.admin.repository.CommnetReportRepository;
 import com.lgsk.imgreet.admin.repository.GreetReportRepository;
 import com.lgsk.imgreet.base.entity.Role;
@@ -47,22 +47,30 @@ public class AdminServiceTests {
 
 	Greet greet;
 	User badUser;
-	User reporter;
-	GreetReport greetReport;
+	User reporter1;
+	User reporter2;
+	GreetReport greetReport1;
+	GreetReport greetReport2;
 	Comment comment;
 	CommentReport commentReport;
 
 	@BeforeEach
 	void setup() {
 
-		reporter = userRepository.save(User.builder()
+		reporter1 = userRepository.save(User.builder()
 			.oauthId("kakao_001")
-			.nickname("신고자")
+			.nickname("신고자1")
+			.role(Role.FREE_USER)
+			.build());
+
+		reporter2 = userRepository.save(User.builder()
+			.oauthId("kakao_002")
+			.nickname("신고자2")
 			.role(Role.FREE_USER)
 			.build());
 
 		badUser = userRepository.save(User.builder()
-			.oauthId("kakao_002")
+			.oauthId("kakao_003")
 			.nickname("Bad Creator")
 			.role(Role.FREE_USER)
 			.build());
@@ -89,32 +97,56 @@ public class AdminServiceTests {
 
 	@Test
 	@Transactional
+	@DisplayName("초대장 신고 저장하기")
+	void getReportGreet() {
+		greetReport1 = greetReportRepository.save(GreetReport.builder()
+			.greet(greet)
+			.ipAddress("ipAddress1")
+			.reason("욕설")
+			.done(false)
+			.build());
+
+		greetReport2 = greetReportRepository.save(GreetReport.builder()
+			.greet(greet)
+			.ipAddress("ipAddress2")
+			.reason("욕설")
+			.done(false)
+			.build());
+	}
+
+	@Test
+	@Transactional
 	@DisplayName("초대장 신고 목록 가져오기")
 	void getGreetReportList() {
 
 		// given
-		greetReport = greetReportRepository.save(GreetReport.builder()
+		greetReport1 = greetReportRepository.save(GreetReport.builder()
 			.greet(greet)
-			.ipAddress("ipAddress")
-			.reason("제목에 욕설이 있어요.")
+			.ipAddress("ipAddress3")
+			.reason("욕설")
+			.done(false)
+			.build());
+
+		greetReport2 = greetReportRepository.save(GreetReport.builder()
+			.greet(greet)
+			.ipAddress("ipAddress4")
+			.reason("욕설")
 			.done(false)
 			.build());
 
 		// when
 		List<GreetReportDTO> greetReportDTOList = new ArrayList<>();
 
-		List<GreetReport> greetReportList = greetReportRepository.findAllByDone(false);
-		for (GreetReport greetReport : greetReportList) {
-			Long greetId = greetReport.getGreet().getId();
-			Greet greet = greetRepository.findById(greetId)
+		List<GreetReportResponseDTO> greetReportResponseDTOList = greetReportRepository.findDistinctByDone();
+		for (GreetReportResponseDTO greetReport : greetReportResponseDTOList) {
+			Greet greet = greetRepository.findById(greetReport.getGreetId())
 				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 초대장입니다."));
 
 			GreetReportDTO greetReportDTO = GreetReportDTO.builder()
-				.reportId(greetReport.getId())
-				.greetId(greetId)
+				.greetId(greetReport.getGreetId())
 				.greetTitle(greet.getTitle())
 				.greetUrl(greet.getTitle())
-				.reportReason(greetReport.getReason())
+				.reason(greetReport.getReason())
 				.userId(greet.getUser().getId())
 				.build();
 
@@ -124,50 +156,10 @@ public class AdminServiceTests {
 		// then
 		assertThat(greetReportDTOList).hasSize(1);
 
-		GreetReportDTO getGreetReportDTO = greetReportDTOList.get(0);
-		assertThat(getGreetReportDTO.getReportId()).isEqualTo(greetReport.getId());
+		GreetReportDTO greetReportList = greetReportDTOList.get(0);
+		assertThat(greetReportList.getGreetId()).isEqualTo(greet.getId());
 	}
 
 
-	@Test
-	@Transactional
-	@DisplayName("댓글 신고 목록 가져오기")
-	void getCommentReportList() {
 
-		// given
-		commentReport = commnetReportRepository.save(CommentReport.builder()
-			.comment(comment)
-			.reason("홍보")
-			.done(false)
-			.build());
-
-		// when
-		List<CommentReportDTO> commentReportDTOList = new ArrayList<>();
-
-		List<CommentReport> commentReportList = commnetReportRepository.findAllByDone(false);
-		for (CommentReport commentReport : commentReportList) {
-			Long commentId = commentReport.getComment().getId();
-			Comment comment = commentRepository.findById(commentId)
-				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
-			Greet greet = comment.getGreet();
-
-			CommentReportDTO commentReportDTO = CommentReportDTO.builder()
-				.reportId(commentReport.getId())
-				.greetId(greet.getId())
-				.greetTitle(greet.getTitle())
-				.greetUrl(greet.getTitle())
-				.commentId(commentId)
-				.commentContent(comment.getContent())
-				.reportReason(commentReport.getReason())
-				.build();
-
-			commentReportDTOList.add(commentReportDTO);
-		}
-
-		// then
-		assertThat(commentReportDTOList).hasSize(1);
-
-		CommentReportDTO getCommentReportDTO = commentReportDTOList.get(0);
-		assertThat(getCommentReportDTO.getReportId()).isEqualTo(commentReport.getId());
-	}
 }
