@@ -1,31 +1,36 @@
 package com.lgsk.imgreet.base.commonUtil;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
+import javax.crypto.spec.SecretKeySpec;
 
 @Component
-@RequiredArgsConstructor
 public class JwtUtil {
 
-    private final JwtEncoder jwtEncoder;
+    @Value("${spring.jwt.secret}")
+    private String SECRET_KEY;
 
-    public String generateGreetToken(String greetId) {
-        Instant now = Instant.now();
-        long expiry = 259200L; // 3일
+    public String generateGreetToken(Long greetId) {
+        return Jwts.builder()
+                .subject(greetId.toString())
+                .claim("greetId", greetId)
+                .expiration(null)
+                .signWith(new SecretKeySpec(SECRET_KEY.getBytes(), "HmacSHA256"))
+                .compact();
+    }
 
-        JwtClaimsSet claims = JwtClaimsSet.builder()
-                .issuer("self")
-                .issuedAt(now)
-                .expiresAt(now.plusSeconds(expiry))
-                .subject(greetId)
-                .claim("scope", "ROLE_USER")
-                .build();
-
-        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    public Claims getClaims(String token) {
+        try {
+            return Jwts.parser()
+                    .verifyWith(new SecretKeySpec(SECRET_KEY.getBytes(), "HmacSHA256"))
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid token", e);
+        }
     }
 }

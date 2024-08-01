@@ -34,8 +34,10 @@ public class GreetService {
         if (user == null) {
             throw new UserPrincipalNotFoundException("로그인된 유저 정보가 존재하지 않습니다.");
         }
-        String encodedToken = jwtUtil.generateGreetToken(dto.getId().toString());
-        dto.setUrl("/share/%s".formatted(encodedToken));
+        String token = jwtUtil.generateGreetToken(dto.getId());
+        System.out.println("encodedToken = " + token);
+        dto.setUrl("/share/%s".formatted(token));
+        System.out.println("dto.getUrl() = " + dto.getUrl());
         return greetRepository.save(
                 Greet.builder()
                         .id(dto.getId())
