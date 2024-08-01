@@ -1,9 +1,8 @@
 package com.lgsk.imgreet.component.controller;
 
-import com.lgsk.imgreet.component.model.ComponentResponseDTO;
+import com.lgsk.imgreet.component.dto.ComponentDTO;
+import com.lgsk.imgreet.component.dto.ComponentResponseDTO;
 import com.lgsk.imgreet.component.service.ComponentService;
-import com.lgsk.imgreet.component.model.ComponentDTO;
-import com.lgsk.imgreet.greet.model.GetGreetTitleDTO;
 import com.lgsk.imgreet.greet.service.GreetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

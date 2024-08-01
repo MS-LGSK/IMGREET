@@ -1,4 +1,4 @@
-package com.lgsk.imgreet.component.model;
+package com.lgsk.imgreet.component.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

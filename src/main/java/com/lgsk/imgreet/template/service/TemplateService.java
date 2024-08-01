@@ -1,13 +1,13 @@
 package com.lgsk.imgreet.template.service;
 
 import com.lgsk.imgreet.categoryDetail.repository.CategoryDetailRepository;
+import com.lgsk.imgreet.component.dto.ComponentDTO;
 import com.lgsk.imgreet.component.repository.ComponentRepository;
 import com.lgsk.imgreet.entity.CategoryDetail;
 import com.lgsk.imgreet.entity.Component;
 import com.lgsk.imgreet.entity.Template;
 import com.lgsk.imgreet.entity.User;
 import com.lgsk.imgreet.login.repository.UserRepository;
-import com.lgsk.imgreet.component.model.ComponentDTO;
 
 import com.lgsk.imgreet.template.repository.TemplateRepository;
 import lombok.RequiredArgsConstructor;

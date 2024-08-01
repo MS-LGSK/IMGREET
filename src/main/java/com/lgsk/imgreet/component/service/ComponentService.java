@@ -1,11 +1,11 @@
 package com.lgsk.imgreet.component.service;
 
 import com.lgsk.imgreet.categoryDetail.repository.CategoryDetailRepository;
-import com.lgsk.imgreet.component.model.ComponentResponseDTO;
+import com.lgsk.imgreet.component.dto.ComponentDTO;
+import com.lgsk.imgreet.component.dto.ComponentResponseDTO;
 import com.lgsk.imgreet.component.repository.ComponentRepository;
 import com.lgsk.imgreet.entity.CategoryDetail;
 import com.lgsk.imgreet.entity.Component;
-import com.lgsk.imgreet.component.model.ComponentDTO;
 import com.lgsk.imgreet.entity.Greet;
 import com.lgsk.imgreet.entity.Template;
 import com.lgsk.imgreet.greet.repository.GreetRepository;

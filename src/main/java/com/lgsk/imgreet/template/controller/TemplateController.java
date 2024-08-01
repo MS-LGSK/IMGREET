@@ -2,9 +2,9 @@ package com.lgsk.imgreet.template.controller;
 
 import com.lgsk.imgreet.base.commonUtil.Rq;
 import com.lgsk.imgreet.component.service.ComponentService;
+import com.lgsk.imgreet.component.dto.ComponentDTO;
 import com.lgsk.imgreet.entity.User;
 import com.lgsk.imgreet.template.service.TemplateService;
-import com.lgsk.imgreet.component.model.ComponentDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
