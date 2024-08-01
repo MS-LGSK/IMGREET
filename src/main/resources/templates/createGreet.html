@@ -144,7 +144,6 @@
                 allowComments: false
             }),
             success: function(data) {
-                console.log('@@@ data @@@\n' + JSON.stringify(data))
                 shareGreet(data)
             },
             error: function(error) {
@@ -154,19 +153,22 @@
     }
 
     function shareGreet(data) {
+        let date = new Date()
+        date.setDate(date.getDate() + 3)
+
         $.ajax({
             url: '/greet/save',
             method: 'post',
             contentType: 'application/json',
-            data: {
-                greetId: data.greetId,
+            data: JSON.stringify({
+                id: data.greetId,
                 userId: data.userId,
                 title: $('#title').val(),
-
-
-            },
+                allowComments: false,
+                expireDate: date.toISOString().slice(0, 19)
+            }),
             success: function(data) {
-                alert(JSON.stringify(data))
+                window.location.href = `http://localhost:8080${data.redirectUrl}`
             },
             error: function(error) {
                 alert(`공유에 실패하였습니다. ${JSON.stringify(error)}`)
