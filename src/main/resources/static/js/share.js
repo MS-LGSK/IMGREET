@@ -1,15 +1,15 @@
-document.getElementById("detailButton").addEventListener("click", function () {
-    this.classList.toggle("close");
-    this.classList.toggle("open");
-    const detailOptionContainer = document.getElementById("detailOptionContainer");
-    if (detailOptionContainer.classList.contains("hidden")) {
-        detailOptionContainer.classList.remove("hidden");
-        detailOptionContainer.classList.add("visible");
-    } else {
-        detailOptionContainer.classList.remove("visible");
-        detailOptionContainer.classList.add("hidden");
-    }
-});
+// document.getElementById("detailButton").addEventListener("click", function () {
+//     this.classList.toggle("close");
+//     this.classList.toggle("open");
+//     const detailOptionContainer = document.getElementById("detailOptionContainer");
+//     if (detailOptionContainer.classList.contains("hidden")) {
+//         detailOptionContainer.classList.remove("hidden");
+//         detailOptionContainer.classList.add("visible");
+//     } else {
+//         detailOptionContainer.classList.remove("visible");
+//         detailOptionContainer.classList.add("hidden");
+//     }
+// });
 
 document.querySelectorAll(".detailOptionCheckbox").forEach((checkbox) => {
     checkbox.addEventListener("change", function () {
@@ -112,4 +112,129 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 좌표 데이터를 가져와서 지도를 초기화
     fetchLocation();
+});
+
+// comment
+document.getElementById('submitComment').addEventListener('click', function () {
+    const nickname = document.getElementById('nickname').value;
+    const password = document.getElementById('password').value;
+    const comment = document.getElementById('comment').value;
+
+    if (nickname && password && comment) {
+        const commentDisplay = document.querySelector('.commentDisplay');
+        const newComment = document.createElement('div');
+        newComment.classList.add('comment');
+        newComment.innerHTML = `
+            <div class="commentBox">
+                <div class="nickname">${nickname}</div>
+                <div class="dropdown">
+                    <button class="dropdownBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path d="M12 8a2 2 0 100-4 2 2 0 000 4zm0 4a2 2 0 100-4 2 2 0 000 4zm0 4a2 2 0 100-4 2 2 0 000 4z"/>
+                        </svg>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#" class="deleteComment">댓글 삭제하기</a>
+                        <a href="#" class="reportComment">댓글 신고하기</a>
+                    </div>
+                </div>
+            </div>
+            <div class="timestamp">${new Date().toLocaleString()}</div>
+            <div class="text">${comment}</div>
+        `;
+        commentDisplay.appendChild(newComment);
+
+        // Clear the input fields
+        document.getElementById('nickname').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('comment').value = '';
+
+        // Add event listeners for the new comment
+        newComment.querySelector('.dropdownBtn').addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent event bubbling
+            const dropdownContent = newComment.querySelector('.dropdown-content');
+            const isActive = dropdownContent.style.display === 'block';
+
+            // Close all dropdowns
+            document.querySelectorAll('.dropdown-content').forEach(function(content) {
+                content.style.display = 'none';
+            });
+
+            // Toggle the clicked dropdown
+            dropdownContent.style.display = isActive ? 'none' : 'block';
+        });
+
+        newComment.querySelector('.deleteComment').addEventListener('click', function() {
+            commentDisplay.removeChild(newComment);
+        });
+
+        newComment.querySelector('.reportComment').addEventListener('click', function() {
+            document.getElementById('report-form-overlay').style.display = 'block';
+            document.getElementById('report-form').style.display = 'block';
+        });
+    } else {
+        alert('모든 필드를 입력하세요.');
+    }
+});
+
+
+// 댓글 삭제 이벤트
+
+// 댓글 삭제 버튼 클릭 이벤트
+document.addEventListener('click', function (event) {
+    if (event.target.classList.contains('deleteComment')) {
+        event.preventDefault(); // 기본 링크 동작 방지
+        const commentElement = event.target.closest('.comment');
+        const deletePasswordOverlay = document.getElementById('delete-password-overlay');
+        const deletePasswordForm = document.getElementById('delete-password-form');
+        const confirmDeleteButton = document.getElementById('confirm-delete');
+        const cancelDeleteButton = document.getElementById('cancel-delete');
+        const deletePasswordInput = document.getElementById('delete-password');
+
+        // Show delete password modal
+        deletePasswordOverlay.style.display = 'block';
+        deletePasswordForm.style.display = 'block';
+
+        confirmDeleteButton.addEventListener('click', function () {
+            const password = deletePasswordInput.value;
+
+            // Send password to server for verification
+            fetch('/verify-delete-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    password: password,
+                    commentId: commentElement.dataset.commentId, // Ensure you set commentId data attribute
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Password is correct, remove comment
+                        commentElement.remove();
+                        alert('댓글이 삭제되었습니다.');
+                    } else {
+                        alert('비밀번호가 올바르지 않습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('댓글 삭제 실패:', error);
+                })
+                .finally(() => {
+                    // Hide password modal
+                    deletePasswordOverlay.style.display = 'none';
+                    deletePasswordForm.style.display = 'none';
+                    deletePasswordInput.value = '';
+                });
+        });
+
+        cancelDeleteButton.addEventListener('click', function () {
+            // Hide password modal
+            deletePasswordOverlay.style.display = 'none';
+            deletePasswordForm.style.display = 'none';
+            deletePasswordInput.value = '';
+        });
+    }
 });

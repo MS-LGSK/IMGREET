@@ -1,10 +1,8 @@
 package com.lgsk.imgreet.component.controller;
 
-import com.lgsk.imgreet.component.dto.ComponentDTO;
-import com.lgsk.imgreet.component.dto.ComponentResponseDTO;
-import com.lgsk.imgreet.component.service.ComponentService;
-import com.lgsk.imgreet.greet.service.GreetService;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.lgsk.imgreet.component.dto.ComponentDTO;
+import com.lgsk.imgreet.component.dto.ComponentResponseDTO;
+import com.lgsk.imgreet.component.model.ComponentDTO;
+import com.lgsk.imgreet.component.service.ComponentService;
+import com.lgsk.imgreet.greet.service.GreetService;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Controller
