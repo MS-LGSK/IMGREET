@@ -7,7 +7,6 @@ import lombok.Getter;
 @Builder
 public class CommentReportDTO {
 
-	Long reportId;
 	Long greetId;
 	String greetTitle;
 	String greetUrl;

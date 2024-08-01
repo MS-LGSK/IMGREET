@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lgsk.imgreet.admin.DTO.CommentReportDTO;
+import com.lgsk.imgreet.admin.DTO.CommentReportResponseDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportResponseDTO;
 import com.lgsk.imgreet.admin.repository.CommnetReportRepository;
@@ -23,36 +25,35 @@ import com.lgsk.imgreet.entity.Comment;
 import com.lgsk.imgreet.entity.CommentReport;
 import com.lgsk.imgreet.entity.Greet;
 import com.lgsk.imgreet.entity.GreetReport;
+import com.lgsk.imgreet.entity.Template;
+import com.lgsk.imgreet.entity.TemplateReport;
 import com.lgsk.imgreet.entity.User;
 import com.lgsk.imgreet.greet.repository.GreetRepository;
 import com.lgsk.imgreet.login.repository.UserRepository;
+import com.lgsk.imgreet.template.repository.TemplateRepository;
 
 @SpringBootTest
 public class AdminServiceTests {
 
-	@Autowired
-	private GreetReportRepository greetReportRepository;
+	@Autowired private GreetReportRepository greetReportRepository;
+	@Autowired private CommnetReportRepository commnetReportRepository;
+	@Autowired private UserRepository userRepository;
+	@Autowired private GreetRepository greetRepository;
+	@Autowired private CommentRepository commentRepository;
+	@Autowired private TemplateRepository templateRepository;
 
-	@Autowired
-	private CommnetReportRepository commnetReportRepository;
-
-	@Autowired
-	private GreetRepository greetRepository;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private CommentRepository commentRepository;
-
-	Greet greet;
 	User badUser;
 	User reporter1;
 	User reporter2;
+	Greet greet;
 	GreetReport greetReport1;
 	GreetReport greetReport2;
 	Comment comment;
-	CommentReport commentReport;
+	CommentReport commentReport1;
+	CommentReport commentReport2;
+	Template template;
+	TemplateReport templateReport1;
+	TemplateReport templateReport2;
 
 	@BeforeEach
 	void setup() {
@@ -92,27 +93,11 @@ public class AdminServiceTests {
 			.content("굉장히 좋고 저렴해요")
 			.build());
 
+		template = templateRepository.save(Template.builder()
+			..build())
+
 	}
 
-
-	@Test
-	@Transactional
-	@DisplayName("초대장 신고 저장하기")
-	void getReportGreet() {
-		greetReport1 = greetReportRepository.save(GreetReport.builder()
-			.greet(greet)
-			.ipAddress("ipAddress1")
-			.reason("욕설")
-			.done(false)
-			.build());
-
-		greetReport2 = greetReportRepository.save(GreetReport.builder()
-			.greet(greet)
-			.ipAddress("ipAddress2")
-			.reason("욕설")
-			.done(false)
-			.build());
-	}
 
 	@Test
 	@Transactional
@@ -161,5 +146,54 @@ public class AdminServiceTests {
 	}
 
 
+	@Test
+	@Transactional
+	@DisplayName("댓글 신고 목록 가져오기")
+	void getCommentReportList() {
 
+		// given
+		commentReport1 = commnetReportRepository.save(CommentReport.builder()
+			.comment(comment)
+			.reason("홍보")
+			.done(false)
+			.build());
+
+		commentReport2 = commnetReportRepository.save(CommentReport.builder()
+			.comment(comment)
+			.reason("홍보")
+			.done(false)
+			.build());
+
+		// when
+		List<CommentReportDTO> commentReportDTOList = new ArrayList<>();
+
+		List<CommentReportResponseDTO> commentReportList = commnetReportRepository.findDistinctByDone();
+		for (CommentReportResponseDTO commentReport : commentReportList) {
+			Comment comment = commentRepository.findById(commentReport.getCommentId())
+				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
+			Greet greet = comment.getGreet();
+
+			CommentReportDTO commentReportDTO = CommentReportDTO.builder()
+				.greetId(greet.getId())
+				.greetTitle(greet.getTitle())
+				.greetUrl(greet.getUrl())
+				.commentId(comment.getId())
+				.commentContent(comment.getContent())
+				.reportReason(commentReport.getReason())
+				.build();
+
+			commentReportDTOList.add(commentReportDTO);
+		}
+
+		// then
+		assertThat(commentReportDTOList).hasSize(1);
+	}
+
+
+	@Test
+	@Transactional
+	@DisplayName("템플릿 신고 목록 가져오기")
+	void getTemplateReportList() {
+
+	}
 }

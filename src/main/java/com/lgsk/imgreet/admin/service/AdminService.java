@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lgsk.imgreet.admin.DTO.CommentReportDTO;
+import com.lgsk.imgreet.admin.DTO.CommentReportResponseDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportResponseDTO;
 import com.lgsk.imgreet.admin.repository.CommnetReportRepository;
 import com.lgsk.imgreet.admin.repository.GreetReportRepository;
 import com.lgsk.imgreet.comment.repository.CommentRepository;
 import com.lgsk.imgreet.entity.Comment;
-import com.lgsk.imgreet.entity.CommentReport;
 import com.lgsk.imgreet.entity.Greet;
 import com.lgsk.imgreet.greet.repository.GreetRepository;
 
@@ -58,19 +58,17 @@ public class AdminService {
 	public List<CommentReportDTO> getCommentReportList() {
 		List<CommentReportDTO> commentReportDTOList = new ArrayList<>();
 
-		List<CommentReport> commentReportList = commentReportRepository.findAllByDone(false);
-		for (CommentReport commentReport : commentReportList) {
-			Long commentId = commentReport.getComment().getId();
-			Comment comment = commentRepository.findById(commentId)
+		List<CommentReportResponseDTO> commentReportList = commentReportRepository.findDistinctByDone();
+		for (CommentReportResponseDTO commentReport : commentReportList) {
+			Comment comment = commentRepository.findById(commentReport.getCommentId())
 				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
 			Greet greet = comment.getGreet();
 
 			CommentReportDTO commentReportDTO = CommentReportDTO.builder()
-				.reportId(commentReport.getId())
 				.greetId(greet.getId())
 				.greetTitle(greet.getTitle())
-				.greetUrl(greet.getTitle())
-				.commentId(commentId)
+				.greetUrl(greet.getUrl())
+				.commentId(comment.getId())
 				.commentContent(comment.getContent())
 				.reportReason(commentReport.getReason())
 				.build();
