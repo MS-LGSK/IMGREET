@@ -25,22 +25,20 @@
         <form class="form-inline">
             <input type="text" class="form-control" id="title" th:value="${title}" placeholder="제목을 입력하세요">
         </form>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="undoButton">실행 취소하기</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="redoButton">되돌리기</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="shareButton">공유하기</a>
-                </li>
-                <form class="form-inline" action="/template/save" method="post">
-                    <li class="nav-item">
-                        <button type="submit" class="nav-link btn" id="saveButton">템플릿으로 게시하기</button>
-                    </li>
-                </form>
-            </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="undoButton">실행 취소하기</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="redoButton">되돌리기</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="shareButton">공유하기</a>
+            </li>
+            <li class="nav-item">
+                <button type="submit" class="nav-link btn" id="saveButton">템플릿으로 게시하기</button>
+            </li>
+        </ul>
         </form>
     </div>
 </nav>
@@ -69,12 +67,15 @@
 <div class="fixed-sidebar">
     <div id="categoryButtons">
         <div th:each="category : ${categories}">
-            <button class="category-button"
-                    th:data-category-id="${category.id}"
-                    th:text="${category.type}">
-            </button>
+            <div th:each="subtype : ${category.subtypes}">
+                <button class="category-button"
+                        th:data-subtype-id="${subtype.id}"
+                        th:text="${subtype.name}">
+                </button>
+            </div>
         </div>
     </div>
+
 </div>
 
 <div class="sidebar-nav" id="sidebar">
@@ -124,6 +125,7 @@
     </div>
 </div>
 
+<script src="/js/createGreet.js"></script>
 <script src="/js/category.js"></script>
 <script src="/js/textEditor.js"></script>
 <script src="/js/shapeEditor.js"></script>
