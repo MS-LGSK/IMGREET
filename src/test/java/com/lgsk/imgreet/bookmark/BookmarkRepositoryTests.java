@@ -54,6 +54,8 @@ class BookmarkRepositoryTests {
 		// template 정보 저장
 		template = templateRepository.save(Template.builder()
 			.creatorId(creator.getId())
+			.title("템플릿")
+			.imageUrl("imgUrl")
 			.build());
 	}
 

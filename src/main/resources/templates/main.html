@@ -30,11 +30,13 @@
                         <h3>한마디</h3>
                         <p>영상을 부담없이따따띠리따</p>
                         <div class="icon-box">
-                            <a class="bookmark-icon" id="bookmarkBtn" th:href="@{/bookmark}">
-                                <img class="bookmark-icon"
-                                     src="https://img.icons8.com/fluency-systems-regular/48/document-1.png"
-                                alt="즐겨찾기" />
-                            </a>
+                            <form th:action="@{/bookmark/{templateId}(templateId=${templateId})}" method="post" style="display: inline;">
+                                <button type="submit" class="bookmark-icon-button">
+                                    <img class="bookmark-icon"
+                                         src="https://img.icons8.com/fluency-systems-regular/48/document-1.png"
+                                         alt="즐겨찾기" />
+                                </button>
+                            </form>
                             <a th:href="@{/template/1}" class="btn">템플릿 보러가기 >></a>
                         </div>
                     </div>
