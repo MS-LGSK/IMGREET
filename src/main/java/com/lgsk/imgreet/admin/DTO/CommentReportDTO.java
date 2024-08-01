@@ -7,11 +7,11 @@ import lombok.Getter;
 @Builder
 public class CommentReportDTO {
 
-	Long greetId;
-	String greetTitle;
-	String greetUrl;
-	Long commentId;
-	String commentContent;
-	String reportReason;
+	private Long greetId;
+	private String greetTitle;
+	private String greetUrl;
+	private Long commentId;
+	private String commentContent;
+	private String reportReason;
 
 }
