@@ -92,7 +92,7 @@ class TemplateServiceTest {
     @Transactional
     void saveTemplate() {
         // when
-        templateService.saveTemplate(user.getId(), componentDTOList);
+        templateService.saveTemplate("제목", "/path", user.getId(), componentDTOList);
 
         // then
         List<Template> templates = templateRepository.findAll();

@@ -2,6 +2,7 @@ document.getElementById("saveButton").addEventListener("click", function(event) 
     event.preventDefault(); // Prevent form submission
 
     const container = document.getElementById("container");
+    const title = document.getElementById("title");
     const svgElements = Array.from(container.querySelectorAll('svg > *'));
     const nonSvgElements = Array.from(container.querySelectorAll('textarea, img'));
 
@@ -44,7 +45,7 @@ document.getElementById("saveButton").addEventListener("click", function(event) 
             width: parseInt(nonSvgElement.style.width || 100, 10),
             height: parseInt(nonSvgElement.style.height || 100, 10),
             rotation: parseFloat(nonSvgElement.style.transform.replace('rotate(', '').replace('deg)', '') || 0),
-            categoryDetailId: Number(subTypeId) // Convert to integer
+            categoryDetailId: Number(subTypeId)
         };
     }).filter(component => component !== null);
 
