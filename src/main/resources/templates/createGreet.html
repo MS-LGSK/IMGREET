@@ -84,7 +84,7 @@
 
     <!-- 지도 -->
     <div id="map-container" style="display: none">
-        <div th:if="${#authorization.expression('hasAuthority(''PAID_USER'')')}" >
+        <div th:if="${#authorization.expression('hasAuthority(''PAID_USER'') or hasAuthority(''ADMIN'')')}" >
             <br>
             <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
             <input type="text" id="sample4_postcode" placeholder="우편번호" readonly onclick="sample4_execDaumPostcode()">
