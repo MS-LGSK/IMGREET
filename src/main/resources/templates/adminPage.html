@@ -18,6 +18,56 @@
         <li><a href="/adminPage/TemplateReport" th:style="${current == 'Template'} ? 'text-decoration: underline;'">신고 템플릿 관리</a></li>
       </ul>
     </nav>
+
+    <div class="content">
+      <div th:if="${current == 'Greet'}">
+        <h2>신고 초대장 관리</h2>
+        <table>
+          <thead>
+          <tr>
+            <th>초대장 ID</th>
+            <th>초대장 제목</th>
+            <th>신고 사유</th>
+            <th>유저 정보</th>
+            <th> </th>
+            <th> </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="report : ${greetReportPage.content}">
+            <td th:text="${report.greetId}"></td>
+            <td th:text="${report.greetTitle}"></td>
+            <td th:text="${report.reason}"></td>
+            <td th:text="${report.userId}"></td>
+            <td>
+              <form th:action="@{/adminPage/updateGreet/{greetId}(greetId=${report.greetId})}" method="post">
+                <button type="submit">수정</button>
+              </form>
+            </td>
+            <td>
+              <form th:action="@{/adminPage/deleteGreet/{greetId}(greetId=${report.greetId})}" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit">삭제</button>
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <ul>
+            <li th:if="${greetReportPage.hasPrevious()}">
+              <a th:href="@{/adminPage/GreetReport(page=${greetReportPage.number - 1})}">Previous</a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(0, greetReportPage.totalPages - 1)}" th:classappend="${i == greetReportPage.number} ? 'active'">
+              <a th:href="@{/adminPage/GreetReport(page=${i})}" th:text="${i + 1}"></a>
+            </li>
+            <li th:if="${greetReportPage.hasNext()}">
+              <a th:href="@{/adminPage/GreetReport(page=${greetReportPage.number + 1})}">Next</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
   </div>
 </body>
 </html>

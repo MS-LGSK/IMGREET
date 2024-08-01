@@ -2,12 +2,16 @@ package com.lgsk.imgreet.admin.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lgsk.imgreet.admin.DTO.CommentReportDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportDTO;
@@ -26,17 +30,20 @@ public class AdminController {
 	private final Rq rq;
 	private final AdminService adminService;
 
+	private static final int PAGE_SIZE = 10;
+
 	// 신고 초대장 관리 - 신고 초대장 목록 가져오기
 	@GetMapping("/GreetReport")
-	public String getGreetReportList (Model model) throws IllegalAccessException {
+	public String getGreetReportList (@RequestParam(defaultValue = "0") int page, Model model) throws IllegalAccessException {
 
 		if (rq.getUser().getRole() != Role.ADMIN) {
 			throw new IllegalAccessException("잘못된 접근입니다.");
 		}
 
-		List<GreetReportDTO> greetReportDTOList = adminService.getGreetReportList();
+		Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+		Page<GreetReportDTO> greetReportDTOPage = adminService.getGreetReportList(pageable);
 
-		model.addAttribute("greetReportList", greetReportDTOList);
+		model.addAttribute("greetReportPage", greetReportDTOPage);
 		model.addAttribute("current", "Greet");
 
 		return "adminPage";

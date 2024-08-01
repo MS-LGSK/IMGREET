@@ -1,42 +1,168 @@
+/* 기본 스타일 설정 */
 body, html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
 }
 
+/* 전체 컨테이너 */
 .container {
     display: flex;
+    min-height: 100vh;
 }
 
+/* 사이드바 스타일 */
 .sidebar {
-    width: 250px;
+    width: 15%;
     background-color: #f8f9fa;
     padding: 20px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     height: 100vh;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    position: fixed; /* 사이드바를 화면에 고정시킵니다 */
+    top: 0;
+    left: 0;
+    z-index: 100; /* 사이드바가 콘텐츠 위에 표시되도록 설정합니다 */
 }
 
-.sidebar ul {
-    list-style-type: none;
-    padding: 0;
+/* 메인 콘텐츠 스타일 */
+.main-content {
+    margin-left: 15%; /* 사이드바 너비만큼 여백을 둡니다 */
+    padding: 40px;
+    padding-top: 100px; /* 상단 패딩 조정 */
+    flex: 1;
+    background-color: #f4f4f4;
+    min-height: 100vh; /* 콘텐츠가 화면 전체 높이를 차지하도록 설정합니다 */
+    box-sizing: border-box; /* 패딩과 보더를 포함하여 너비와 높이를 계산합니다 */
 }
 
-.sidebar ul li {
+/* 중앙에 배치된 컨텐츠 */
+.content {
+    padding: 20px;
+    max-width: 100%; /* 최대 너비를 100%로 설정 */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 스타일 */
+h2 {
+    color: #ff9000; /* 제목 색상 */
     margin-bottom: 20px;
 }
 
-.sidebar ul li a {
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #ff9000;
+    color: #fff;
+}
+
+td {
+    background-color: #fafafa;
+}
+
+/* 테이블 열 너비 조정 */
+th:nth-child(1), td:nth-child(1) {
+    width: 10%;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 25%;
+}
+
+th:nth-child(3), td:nth-child(3) {
+    width: 30%;
+}
+
+th:nth-child(4), td:nth-child(4) {
+    width: 20%;
+}
+
+th:nth-child(5), td:nth-child(5) {
+    width: 15%;
+}
+
+/* 폼 버튼 스타일 */
+button {
+    background-color: #ff9000;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+button:hover {
+    background-color: #e68a00;
+}
+
+/* 페이징 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination a {
     text-decoration: none;
-    color: #333;
+    color: #ff9000;
+    padding: 10px 15px;
+    border: 1px solid #ff9000;
+    border-radius: 4px;
     font-size: 16px;
 }
 
-.sidebar ul li a:hover {
-    text-decoration: underline;
+.pagination a.active {
+    background-color: #ff9000;
+    color: #fff;
 }
 
-.main-content {
-    flex: 1;
-    padding: 40px;
-    padding-top: 100px;
+.pagination a:hover {
+    background-color: #e68a00;
+    border-color: #e68a00;
+}
+
+.pagination li.disabled a {
+    color: #ccc;
+    cursor: not-allowed;
+    border-color: #ccc;
+}
+
+/* 화살표 스타일 */
+.pagination .arrow {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.pagination .arrow.disabled {
+    color: #ccc;
+    cursor: not-allowed;
 }

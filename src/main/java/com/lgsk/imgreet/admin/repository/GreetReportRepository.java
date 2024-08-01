@@ -1,7 +1,7 @@
 package com.lgsk.imgreet.admin.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,6 +17,6 @@ public interface GreetReportRepository extends JpaRepository<GreetReport, Long> 
 		+ "										    FROM GreetReport gr2"
 		+ "									    GROUP BY gr2.greet.id, gr2.reason )"
 		+ " ORDER BY gr.greet.id")
-	List<GreetReportResponseDTO> findDistinctByDone();
+	Page<GreetReportResponseDTO> findDistinctByDone(Pageable pageable);
 
 }

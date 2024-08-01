@@ -3,6 +3,8 @@ package com.lgsk.imgreet.admin.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,26 +39,21 @@ public class AdminService {
 
 	// 신고 초대장 목록 가져오기
 	@Transactional
-	public List<GreetReportDTO> getGreetReportList() {
-		List<GreetReportDTO> greetReportDTOList = new ArrayList<>();
+	public Page<GreetReportDTO> getGreetReportList(Pageable pageable) {
+		return greetReportRepository.findDistinctByDone(pageable).map(this::convertToGreetReportDTO);
+	}
 
-		List<GreetReportResponseDTO> greetReportResponseDTOList = greetReportRepository.findDistinctByDone();
-		for (GreetReportResponseDTO greetReport : greetReportResponseDTOList) {
-			Greet greet = greetRepository.findById(greetReport.getGreetId())
-				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 초대장입니다."));
+	private GreetReportDTO convertToGreetReportDTO(GreetReportResponseDTO greetReport) {
+		Greet greet = greetRepository.findById(greetReport.getGreetId())
+			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 초대장입니다."));
 
-			GreetReportDTO greetReportDTO = GreetReportDTO.builder()
-				.greetId(greetReport.getGreetId())
-				.greetTitle(greet.getTitle())
-				.greetUrl(greet.getTitle())
-				.reason(greetReport.getReason())
-				.userId(greet.getUser().getId())
-				.build();
-
-			greetReportDTOList.add(greetReportDTO);
-		}
-
-		return greetReportDTOList;
+		return GreetReportDTO.builder()
+			.greetId(greetReport.getGreetId())
+			.greetTitle(greet.getTitle())
+			.greetUrl(greet.getTitle())
+			.reason(greetReport.getReason())
+			.userId(greet.getUser().getId())
+			.build();
 	}
 
 
