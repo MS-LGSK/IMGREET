@@ -3,11 +3,13 @@ package com.lgsk.imgreet.greet.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @Builder
 public class UpdateGreetRequestDTO {
 

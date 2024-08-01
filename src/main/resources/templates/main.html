@@ -15,21 +15,30 @@
                 <p>정말정말 쉽고 편리하게 템플릿으로 쉽게 간편하게 시작해보세요!</p>
                 <div class="intro-buttons">
                     <a th:href="@{/start}" class="btn yellow-btn">바로 시작하기</a>
-                    <a th:href="@{/template}" class="btn light-yellow-btn">템플릿 보러가기</a>
+                    <a th:href="@{#templateSection}" class="btn light-yellow-btn">템플릿 보러가기</a>
                 </div>
             </section>
 
-            <section class="templates-section">
+            <section id="templateSection" class="templates-section">
                 <h2>다양한 종류의 템플릿을 만나보세요</h2>
                 <div class="template">
                     <div class="template-item">
                         <div>
-                            <a href="#"> <img src="/images/social.webp" alt="Template 1" /></a>
+                            <a href="#"> <img class="template-img" src="/images/social.webp" alt="Template 1" /></a>
                         </div>
                         <!-- Placeholder image -->
                         <h3>한마디</h3>
                         <p>영상을 부담없이따따띠리따</p>
-                        <a th:href="@{/template/1}" class="btn">템플릿 보러가기 >></a>
+                        <div class="icon-box">
+                            <form th:action="@{/bookmark/{templateId}(templateId=${templateId})}" method="post" style="display: inline;">
+                                <button type="submit" class="bookmark-icon-button">
+                                    <img class="bookmark-icon"
+                                         src="https://img.icons8.com/fluency-systems-regular/48/document-1.png"
+                                         alt="즐겨찾기" />
+                                </button>
+                            </form>
+                            <a th:href="@{/template/1}" class="btn">템플릿 보러가기 >></a>
+                        </div>
                     </div>
                     <div class="template-item">
                         <div>
@@ -76,9 +85,6 @@
                         <p>꽃처럼피어나리라..</p>
                         <a th:href="@{/template/3}" class="btn">템플릿 보러가기 >></a>
                     </div>
-                </div>
-                <div class="all-templates">
-                    <a th:href="@{/templates}" class="btn">모든 템플릿 확인하기</a>
                 </div>
             </section>
         </main>
