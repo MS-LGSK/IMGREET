@@ -29,6 +29,12 @@ public class Template extends BaseEntity {
     @Column(nullable = false)
     private Long creatorId;
 
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String imageUrl;
+
     @OneToMany(mappedBy = "template", cascade = CascadeType.ALL)
     private List<Bookmark> bookmarks;
 }
