@@ -1,9 +1,11 @@
 package com.lgsk.imgreet.login.repository;
 
-import com.lgsk.imgreet.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+
+import com.lgsk.imgreet.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByOauthId(String oauthId);
+
+    User findByNickname(String nickname);
 }
