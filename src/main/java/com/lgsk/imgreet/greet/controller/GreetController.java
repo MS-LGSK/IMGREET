@@ -39,7 +39,7 @@ public class GreetController {
         model.addAttribute("greetId", greetId);
 
         // TODO: remove hard coding
-        String greetUrl = "http://localhost:8080/greet/" + greetId;
+        String greetUrl = "http://localhost:8080/greet/share" + greetId;
 
         // TODO: RestTemplate DI 적용
         ResponseEntity<String> responseEntity = new RestTemplate().exchange(
