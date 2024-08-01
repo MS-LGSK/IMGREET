@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -30,12 +29,12 @@ public class Attendance extends BaseEntity {
     @JoinColumn(name = "GREET_ID", nullable = false)
     private Greet greet;
 
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @Column(length = 20, nullable = false)
     private String phone;
 
-    @NotNull
+    @Column(nullable = false)
     private Long attendanceNumber;
 }

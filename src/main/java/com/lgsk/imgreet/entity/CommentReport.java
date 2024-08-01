@@ -27,7 +27,7 @@ public class CommentReport {
 
     @ManyToOne
     @JoinColumn(name = "COMMENT_ID", nullable = false)
-    private Comment commentId;
+    private Comment comment;
 
     @Column(length = 1000, nullable = false)
     private String reason;

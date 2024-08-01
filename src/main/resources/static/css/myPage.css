@@ -2,18 +2,26 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    height: 100%;
+    overflow: hidden; /* 전체 페이지 스크롤 비활성화 */
 }
 
 .container {
     display: flex;
+    height: 100vh; /* 전체 화면 높이 */
+    overflow: hidden; /* 전체 컨테이너 스크롤 비활성화 */
 }
 
 .sidebar {
-    width: 250px;
     background-color: #f8f9fa;
     padding: 20px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    height: 100vh;
+    height: 100%;
+    width: 15%;
+    /* 상단 테두리 */
+    border: #adadad;
+    top: 0;
+    left: 0;
+    overflow: hidden; /* 사이드바 내부 스크롤 비활성화 */
 }
 
 .sidebar ul {
@@ -35,12 +43,13 @@ body, html {
     text-decoration: underline;
 }
 
-.main-content {
-    flex: 1;
+.right-sidebar {
+    width: 85%;
+    height: 100vh; /* 전체 화면 높이 */
+    overflow: auto; /* 내부 콘텐츠가 넘칠 경우 스크롤 */
     padding: 40px;
-    padding-top: 100px;
+    box-sizing: border-box; /* padding과 border가 width에 포함되도록 설정 */
 }
-
 
 .profile {
     display: flex;

@@ -3,6 +3,7 @@ package com.lgsk.imgreet.entity;
 import com.lgsk.imgreet.base.entity.BaseEntity;
 import com.lgsk.imgreet.base.entity.Role;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -14,7 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,14 +35,13 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @NotNull
+    @Column(nullable = false)
     private String nickname;
 
-    @NotNull
     private String oauthId;
 
     private String password;

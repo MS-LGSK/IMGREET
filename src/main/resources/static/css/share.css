@@ -223,6 +223,7 @@ body {
         height: 40px;
     }
 }
+
 .qr-icon {
     display: flex;
     border: none;
@@ -237,75 +238,6 @@ body {
 
 /* 상세 옵션 */
 
-.detailOptionTextBox {
-    transition: all 0.4s ease-in-out 0s;
-    height: 56px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    background-color: rgba(90, 97, 114, 0);
-    cursor: pointer;
-    border-radius: 0;
-}
-
-.detailOptionTextLayout {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-grow: 4;
-    margin-right: 12px;
-    width: 100%;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.detailOption {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: rgb(67, 72, 86);
-    font: 400 0.875rem / 1.42 "Pretendard Variable", Figtree, "IBM Plex Sans JP", "Pretendard JP Variable";
-    padding: 0;
-}
-.detailButton svg {
-    width: 20px;
-    height: 20px;
-    color: rgb(67, 72, 86);
-}
-
-.detailButton {
-    transition: transform 0.3s ease 0s;
-}
-
-.close {
-    transition: transform 0.3s ease 0s;
-    display: inline-flex;
-    margin-left: 8px;
-    transform: rotate(0deg);
-}
-
-.open {
-    transition: transform 0.3s ease 0s;
-    display: inline-flex;
-    margin-left: 8px;
-    transform: rotate(90deg);
-}
-
-.detailOptionTextContainer {
-    justify-content: space-between;
-    margin: 10px;
-}
-
-.detailOptionContainer {
-    display: block;
-    white-space: normal;
-    max-height: 1000px;
-}
 
 .hidden {
     max-height: 0;
@@ -314,6 +246,7 @@ body {
     transform: translateY(0%);
     transition: max-height 0.3s ease-out, opacity 0.3s ease-out, transform 0.3s ease-out;
 }
+
 .visible {
     max-height: 1000px; /* 충분히 큰 값으로 설정하여 모든 내용이 표시될 수 있도록 합니다 */
     opacity: 1;
@@ -321,45 +254,9 @@ body {
     transition: max-height 0.5s ease-in, opacity 0.5s ease-in, transform 0.5s ease-in;
 }
 
-
-.detailOptionBox {
-    box-sizing: border-box;
-}
-
-.detailOptionLayout {
-    display: flex;
-    flex-direction: column;
-}
-
-.detailOptionContent {
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.detailOptionContent-list {
-    display: flex;
-}
-
-.detailOptionContent-list-item {
-    margin-right: 8px;
-    display: flex;
-    gap: 4px;
-    max-width: fit-content;
-    align-items: center;
-}
-
 .OptionText {
     color: rgb(22, 24, 29);
     font: 400 0.875rem / 1.42 "Pretendard Variable", Figtree, "IBM Plex Sans JP", "Pretendard JP Variable";
-}
-
-.detailOptionCheckbox {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    accent-color: rgb(245, 215, 10); /* 체크 색상 */
 }
 
 
@@ -370,6 +267,7 @@ body {
 
 .underLine2 {
     width: 100%;
+    margin: 20px 0;
     /*border-bottom: 1px solid rgba(90, 101, 119, 0.15);*/
 }
 
@@ -385,6 +283,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
+
 #qrPopupClose {
     margin-top: 20px;
     width: 20px;
@@ -395,12 +294,14 @@ body {
     left: 50%;
     transform: translateX(-50%);
 }
+
 #qrPopupClose svg {
     width: 100%;
     height: 100%;
     fill: currentColor;
     color: rgb(112, 121, 143);
 }
+
 #qrPopupOverlay {
     display: none;
     position: fixed;
@@ -435,4 +336,217 @@ body {
     padding: 10px;
     box-sizing: border-box;
     background-color: #ffffff;
+}
+
+
+/* 댓글 */
+.commentSection {
+    padding: 16px;
+    border-top: 1px solid rgba(90, 101, 119, 0.15);
+    margin-top: 16px;
+
+    /*    화면 넘어가면 스크롤 기능 */
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.commentForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0 15px;
+}
+
+.inputGroup {
+    display: flex;
+    align-items: center;
+}
+
+.inputGroup label {
+    width: 25%;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+label .commentLabel {
+    width: 10%;
+}
+
+.inputGroup input, .inputGroup textarea {
+    padding: 8px;
+    border: 1px solid rgba(90, 101, 119, 0.24);
+    border-radius: 8px;
+}
+
+.inputComment {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#submitComment {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background-color: #FF9000;
+    color: #fff;
+    cursor: pointer;
+}
+
+#submitComment:hover {
+    background-color: rgba(255, 144, 0, 0.78);
+}
+
+.commentDisplay {
+    margin-top: 30px;
+
+}
+
+#comment {
+    width: 100%;
+    height: 20px;
+}
+
+#commentLabel {
+    width: 10%;
+}
+
+.commentDisplay .comment {
+    border-bottom: 1px solid rgba(90, 101, 119, 0.15);
+    padding: 8px 0;
+}
+
+.commentDisplay .comment .nickname {
+    font-weight: bold;
+}
+
+.commentDisplay .comment .timestamp {
+    font-size: 0.875rem;
+    color: rgba(90, 101, 119, 0.5);
+}
+
+.commentDisplay .comment .text {
+    margin-top: 4px;
+}
+
+.dropdown-content {
+    display: none; /* 기본적으로 숨김 */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 64%;
+    right: 0; /* 버튼 오른쪽에 정렬 */
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown.active .dropdown-content {
+    display: block; /* active 클래스가 있을 때 보이도록 */
+}
+
+
+.commentBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdownBtn {
+    display: flex;
+    border: none;
+    background: none;
+}
+
+.dropdownBtn svg {
+    width: 40px;
+    height: 40px;
+
+}
+
+.report-form-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+#report-form-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+
+/* 비밀번호 삭제 입력 폼 */
+#delete-password-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+#delete-password-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+#delete-password {
+    margin-left: 10px;
+}
+
+.delete-form-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+    h3{
+        font-size: 23px;
+        text-align: center;
+    }
+
+    button {
+        font-size: 16px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        color: #333333;
+        background: none;
+        cursor: pointer;
+    }
+
+    label {
+        font-size: 20px;
+    }
 }

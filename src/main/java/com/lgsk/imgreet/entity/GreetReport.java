@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -28,10 +27,10 @@ public class GreetReport extends BaseEntity {
     @Column(length = 1000, nullable = false)
     private String reason;
 
-    @NotNull
+    @Column(nullable = false)
     private String ipAddress;
 
-    private char done;
+    private Boolean done;
 
     @ManyToOne
     @JoinColumn(name = "GREET_ID", nullable = false)
