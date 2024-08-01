@@ -143,4 +143,33 @@ h2 {
     .template-item {
         font-size: 18px; /* 데스크탑 폰트 사이즈 */
     }
+
+}
+
+.template-item .template-img {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+}
+
+.template-item .bookmark-icon {
+    border-radius: 10px 10px 0 0;
+    width: 30px;
+    height: 30px;
+}
+
+.icon-box {
+    display: flex;
+    align-items: center; /* 세로축 가운데 정렬 */
+}
+
+footer {
+    color: rgb(112, 121, 143);
+    font-size: 10px;
+    bottom: 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 3;
+    font-family: 'Montserrat', sans-serif;
 }
