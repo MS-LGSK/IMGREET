@@ -28,12 +28,12 @@ public class ComponentController {
         return "createGreet";
     }
 
-    @PostMapping("/greet/{greet_id}/component")
+    @PostMapping("/greet/{greet_id}/component/save")
     public void saveGreetComponent(@PathVariable("greet_id") Long greetId, @RequestBody List<ComponentDTO> componentDTO) {
         componentService.saveGreetComponent(greetId, componentDTO);
     }
 
-    @GetMapping("/greet/{greet_id}")
+    @GetMapping("/greet/{greet_id}/component/get")
     public String getGreetComponent(@PathVariable("greet_id") Long greetId, Model model) {
         model.addAttribute("title", greetService.getGreetTitle(greetId));
         List<ComponentResponseDTO> components = componentService.getGreetComponent(greetId);
@@ -47,13 +47,13 @@ public class ComponentController {
         return "createGreet";
     }
 
-    @PostMapping("/template/{template_id}/component")
+    @PostMapping("/template/{template_id}/component/save")
     public String saveTemplateComponent(@PathVariable("template_id") Long templateId, @RequestBody List<ComponentDTO> componentDTO) {
         componentService.saveTemplateComponent(templateId, componentDTO);
         return "main";
     }
 
-    @GetMapping("/template/{template_id}")
+    @GetMapping("/template/{template_id}/component/get")
     public String getTemplateComponent(@PathVariable("template_id") Long templateId, Model model) {
         List<ComponentResponseDTO> components = componentService.getTemplateComponent(templateId);
 
