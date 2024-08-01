@@ -24,12 +24,19 @@
                 <div class="template">
                     <div class="template-item">
                         <div>
-                            <a href="#"> <img src="/images/social.webp" alt="Template 1" /></a>
+                            <a href="#"> <img class="template-img" src="/images/social.webp" alt="Template 1" /></a>
                         </div>
                         <!-- Placeholder image -->
                         <h3>한마디</h3>
                         <p>영상을 부담없이따따띠리따</p>
-                        <a th:href="@{/template/1}" class="btn">템플릿 보러가기 >></a>
+                        <div class="icon-box">
+                            <a class="bookmark-icon" id="bookmarkBtn" th:href="@{/bookmark}">
+                                <img class="bookmark-icon"
+                                     src="https://img.icons8.com/fluency-systems-regular/48/document-1.png"
+                                alt="즐겨찾기" />
+                            </a>
+                            <a th:href="@{/template/1}" class="btn">템플릿 보러가기 >></a>
+                        </div>
                     </div>
                     <div class="template-item">
                         <div>

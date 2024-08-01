@@ -84,7 +84,6 @@ h2 {
     .btn {
         text-decoration: none;
         color: #FF9000;
-
     }
 }
 
@@ -130,9 +129,20 @@ h2 {
 
 }
 
-.template-item img {
+.template-item .template-img {
     width: 100%;
     border-radius: 10px 10px 0 0;
+}
+
+.template-item .bookmark-icon {
+    border-radius: 10px 10px 0 0;
+    width: 30px;
+    height: 30px;
+}
+
+.icon-box {
+    display: flex;
+    align-items: center; /* 세로축 가운데 정렬 */
 }
 
 footer {
