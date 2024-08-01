@@ -1,6 +1,7 @@
 package com.lgsk.imgreet.entity;
 
 import com.lgsk.imgreet.base.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -30,16 +30,16 @@ public class Greet extends BaseEntity {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-    @NotNull
+    @Column(nullable = false)
     private String title;
 
     private String url;
 
     private String imageUrl;
 
-    @NotNull
+    @Column(nullable = false)
     private LocalDateTime expireDate;
 
-    @NotNull
+    @Column(nullable = false)
     private boolean allowComments;
 }

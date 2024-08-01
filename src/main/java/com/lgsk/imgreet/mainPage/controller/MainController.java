@@ -38,10 +38,5 @@ public class MainController {
         return "template";
     }
 
-    // 마이페이지 Mapping
-    @GetMapping("/myPage")
-    public String myPage() {
-        return "myPage";
-    }
 
 }

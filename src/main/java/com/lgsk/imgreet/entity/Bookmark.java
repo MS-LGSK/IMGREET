@@ -30,11 +30,11 @@ public class Bookmark implements Serializable {
 
     @ManyToOne
     @MapsId("userId")
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
     @ManyToOne
     @MapsId("templateId")
-    @JoinColumn(name = "TEMPLATE_ID")
+    @JoinColumn(name = "TEMPLATE_ID", nullable = false)
     private Template template;
 }
