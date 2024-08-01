@@ -80,20 +80,28 @@ h2 {
 /* template item */
 .template-item {
     font-size: 18px; /* 기본 폰트 사이즈 */
+    border-radius: 10px;
+    overflow: hidden; /* Ensure content doesn't overflow the container */
+
+    img {
+        width: 350px;
+        height: 200px; /* Fixed height to maintain uniformity */
+        object-fit: cover; /* Ensure image covers the box without distortion */
+        border-radius: 10px;
+    }
 
     .btn {
         text-decoration: none;
         color: #FF9000;
-
     }
 }
 
 .all-templates {
     font-size: 20px;
+
     .btn {
         text-decoration: none;
         color: #FF9000;
-
     }
 }
 
@@ -135,10 +143,4 @@ h2 {
     .template-item {
         font-size: 18px; /* 데스크탑 폰트 사이즈 */
     }
-
-}
-
-.template-item img {
-    width: 100%;
-    border-radius: 10px 10px 0 0;
 }
