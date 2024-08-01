@@ -18,6 +18,8 @@ public class GreetService {
 
     private final GreetRepository greetRepository;
 
+    private final GreetService self;
+
     @Transactional
     public Greet saveGreet(GreetRequestDTO dto) throws LimitExceededException {
         Long userGreetCount = countGreetsByUserId(dto.getUser().getId());
@@ -58,9 +60,13 @@ public class GreetService {
                 .toList();
     }
 
+    private int countGreetsByUserId(Long userId) {
+        return self.getGreetByUserId(userId).size();
+    }
+
     @Transactional(readOnly = true)
-    public Long countGreetsByUserId(Long userId) {
-        return greetRepository.countByUser_Id(userId);
+    public List<Greet> getGreetByUserId(Long userId) {
+        return greetRepository.findByUser_Id(userId);
     }
 
     private boolean isFreeUser(Role userRole) {
