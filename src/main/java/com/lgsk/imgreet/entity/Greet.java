@@ -41,5 +41,5 @@ public class Greet extends BaseEntity {
     private LocalDateTime expireDate;
 
     @Column(nullable = false)
-    private boolean allowComments;
+    private Boolean allowComments;
 }

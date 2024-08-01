@@ -32,7 +32,8 @@
 			<div>
 				<button class="closeBtn">
 					<div class="closeBtn-icon">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: rgb(112, 121, 143)">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+						     style="width: 20px; height: 20px; color: rgb(112, 121, 143)">
 							<path d="M19.784 5.28a.75.75 0 1 0-1.06-1.06l-6.722 6.721L5.28 4.22a.75.75 0 1 0-1.06 1.06l6.721 6.722-6.721 6.721a.75.75 0 0 0 1.06 1.061l6.722-6.721 6.721 6.721a.75.75 0 0 0 1.061-1.06l-6.721-6.722 6.721-6.722Z"></path>
 						</svg>
 					</div>
@@ -54,20 +55,23 @@
 							<div>
 								<div id="link" class="link">
 									<label style="width: 100%">
-										<input id="linkInput" type="text" readonly="" class="linkInput" value="http://192.168.210.94:8080/"/>
+										<input id="linkInput" type="text" readonly="" class="linkInput"
+										       value="http://192.168.210.94:8080/"/>
 									</label>
 								</div>
 							</div>
 						</div>
 						<div class="copyBox">
-							<button id="copyButton" data-name="mds_Button" aria-disabled="false" data-loading="false" class="copyButton">
+							<button id="copyButton" data-name="mds_Button" aria-disabled="false" data-loading="false"
+							        class="copyButton">
 								<span class="copyButtonText">복사</span>
 							</button>
 						</div>
 					</div>
 					<div class="iconBox">
 						<a class="icon kakao-icon" id="kakaoShareBtn">
-							<img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 공유">
+							<img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+							     alt="카카오톡 공유">
 						</a> &emsp;
 						<a class="icon qr-icon" id="qrShareBtn">
 							<img src="https://img.icons8.com/windows/32/qr-code.png" alt="QR"/>
@@ -87,100 +91,74 @@
 				</div>
 			</div>
 		</div>
-		<div class="detailOptionTextContainer">
-			<div class="detailOptionTextBox">
-				<div class="detailOptionTextLayout">
-					<div class="detailOption">상세 옵션</div>
-					<div id="detailButton" class="detailButton close">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="sc-ijMHkb jMACYa" style="width: 20px; height: 20px; color: rgb(67, 72, 86)">
-							<path d="M8.215 3.224a.785.785 0 0 0 0 1.08l7.238 7.517c.096.1.096.26 0 .36l-7.238 7.517a.785.785 0 0 0 0 1.08.716.716 0 0 0 1.04 0l7.238-7.516c.67-.697.67-1.825 0-2.522L9.256 3.224a.716.716 0 0 0-1.04 0Z"></path>
-						</svg>
+		<div class="commentSection">
+			<div>
+				<h3>댓글</h3>
+			</div>
+			<div class="commentDisplay">
+				<!-- 댓글이 여기에 표시됩니다 -->
+			</div>
+			<hr class="underLine2"/>
+			<div class="commentForm">
+				<div>
+					<h4>댓글 작성</h4>
+				</div>
+				<div class="inputGroup">
+					<div class="inputComment">
+						<label for="nickname">닉네임</label>
+						<input type="text" id="nickname" name="nickname" required>
+					</div>
+					<div class="inputComment">
+						<label for="password">비밀번호</label>
+						<input type="password" id="password" name="password" required>
 					</div>
 				</div>
+				<div class="inputGroup">
+
+				</div>
+				<div class="inputGroup">
+					<label id="commentLabel" for="comment">댓글</label>
+					<textarea id="comment" name="comment" rows="4" required></textarea>
+				</div>
+				<button type="button" id="submitComment">댓글 작성</button>
 			</div>
-			<div id="detailOptionContainer" class="detailOptionContainer hidden">
-				<div class="detailOptionBox">
-					<div class="detailOptionLayout">
-						<div class="detailOptionContent">
-							<div class="detailOptionContent-list">
-								<div class="detailOptionContent-list-item">
-									<span class="OptionText">좋아요/댓글 허용</span>
-									<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: rgb(245, 215, 10)">
-										<path d="M10.5 6.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5c0 .53-.273.994-.686 1.261l2.718 4.066a.5.5 0 0 0 .652.147l1.982-1.285A1.498 1.498 0 0 1 19.5 8.5c.83 0 1.5.67 1.5 1.5 0 .707-.487 1.299-1.144 1.458l-1.424 7.013c-.06.31-.31.529-.6.529H6.168c-.29 0-.54-.22-.6-.53l-1.424-7.012A1.498 1.498 0 0 1 3 10c0-.83.67-1.5 1.5-1.5a1.498 1.498 0 0 1 1.333 2.189l1.982 1.285a.5.5 0 0 0 .653-.147l2.718-4.066A1.497 1.497 0 0 1 10.5 6.5Z"></path>
-									</svg>
-								</div>
-							</div>
-							<label for="option1">
-								<input type="checkbox" id="option1" class="detailOptionCheckbox"/>
-							</label>
-						</div>
-						<div class="detailOptionContent">
-							<div class="detailOptionContent-list">
-								<div class="detailOptionContent-list-item">
-									<span class="OptionText">공유 버튼</span>
-									<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: rgb(245, 215, 10)">
-										<path d="M10.5 6.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5c0 .53-.273.994-.686 1.261l2.718 4.066a.5.5 0 0 0 .652.147l1.982-1.285A1.498 1.498 0 0 1 19.5 8.5c.83 0 1.5.67 1.5 1.5 0 .707-.487 1.299-1.144 1.458l-1.424 7.013c-.06.31-.31.529-.6.529H6.168c-.29 0-.54-.22-.6-.53l-1.424-7.012A1.498 1.498 0 0 1 3 10c0-.83.67-1.5 1.5-1.5a1.498 1.498 0 0 1 1.333 2.189l1.982 1.285a.5.5 0 0 0 .653-.147l2.718-4.066A1.497 1.497 0 0 1 10.5 6.5Z"></path>
-									</svg>
-								</div>
-							</div>
-							<label for="option2">
-								<input type="checkbox" id="option2" class="detailOptionCheckbox">
-							</label>
-						</div>
-						<div class="detailOptionContent">
-							<div class="detailOptionContent-list">
-								<div class="detailOptionContent-list-item">
-									<span class="OptionText">슬라이드쇼 보기</span>
-									<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: rgb(245, 215, 10)">
-										<path d="M10.5 6.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5c0 .53-.273.994-.686 1.261l2.718 4.066a.5.5 0 0 0 .652.147l1.982-1.285A1.498 1.498 0 0 1 19.5 8.5c.83 0 1.5.67 1.5 1.5 0 .707-.487 1.299-1.144 1.458l-1.424 7.013c-.06.31-.31.529-.6.529H6.168c-.29 0-.54-.22-.6-.53l-1.424-7.012A1.498 1.498 0 0 1 3 10c0-.83.67-1.5 1.5-1.5a1.498 1.498 0 0 1 1.333 2.189l1.982 1.285a.5.5 0 0 0 .653-.147l2.718-4.066A1.497 1.497 0 0 1 10.5 6.5Z"></path>
-									</svg>
-								</div>
-							</div>
-							<label for="option3">
-								<input type="checkbox" id="option3" class="detailOptionCheckbox">
-							</label>
-						</div>
-						<div class="detailOptionContent">
-							<div class="detailOptionContent-list">
-								<div class="detailOptionContent-list-item">
-									<span class="OptionText">원본 문서 복제 허용</span>
-									<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: rgb(245, 215, 10)">
-										<path d="M10.5 6.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5c0 .53-.273.994-.686 1.261l2.718 4.066a.5.5 0 0 0 .652.147l1.982-1.285A1.498 1.498 0 0 1 19.5 8.5c.83 0 1.5.67 1.5 1.5 0 .707-.487 1.299-1.144 1.458l-1.424 7.013c-.06.31-.31.529-.6.529H6.168c-.29 0-.54-.22-.6-.53l-1.424-7.012A1.498 1.498 0 0 1 3 10c0-.83.67-1.5 1.5-1.5a1.498 1.498 0 0 1 1.333 2.189l1.982 1.285a.5.5 0 0 0 .653-.147l2.718-4.066A1.497 1.497 0 0 1 10.5 6.5Z"></path>
-									</svg>
-								</div>
-							</div>
-							<label for="option4">
-								<input type="checkbox" id="option4" class="detailOptionCheckbox">
-							</label>
-						</div>
-						<div class="sc-bZHSRq hXvTqV">
-							<div class="sc-ilxebA dwyWVc">
-								<div class="sc-kMzELR jPhSCy"></div>
-								<div class="sc-jIBlqr eUMQHV"></div>
-							</div>
-						</div>
-					</div>
+		</div>
+		<!-- 댓글 삭제 비밀번호 입력 폼 -->
+		<div id="delete-password-overlay" style="display: none;">
+			<div id="delete-password-form" class="report-form-container" style="display: none;">
+				<h3>댓글 삭제</h3>
+				<div class="delete-form-box">
+					<label for="delete-password">비밀번호</label>
+					<input type="password" id="delete-password" required>
+				</div>
+				<div class="delete-form-box">
+					<button type="button" id="confirm-delete">확인</button>
+					<button type="button" id="cancel-delete">취소</button>
 				</div>
 			</div>
 		</div>
-		<div class="sc-faxByu gbyvYf">
-			<div class="sc-EFWon jDsPln"></div>
-		</div>
-		<div class="underLine">
-			<div class="underLine2"></div>
-		</div>
+
+
+	</div>
+	<div class="sc-faxByu gbyvYf">
+		<div class="sc-EFWon jDsPln"></div>
+	</div>
+	<div class="underLine">
+		<div class="underLine2"></div>
 	</div>
 </div>
-</body>
-<!--초대장 Title 변수 -->
-<script th:inline="javascript">
-	// const title = [[${title}]];		// 값이 생기는 경우 주석 해제 후 사용
-	// const image = [[${image}]];
-	const title = '초대해요~';
-	const image = 'https://ifh.cc/g/Z2o5s6.jpg';
-</script>
-<script th:src="@{/js/shareKakao.js}"></script>
-<script th:src="@{/js/shareUrlQr.js}"></script>
-<script th:src="@{/js/share.js}"></script>
+
+<!-- 신고 폼 -->
+<div id="report-form-overlay"></div>
+<div class="report-form-container" id="report-form">
+	<h3>신고하기</h3>
+	<label for="report-reason">신고 사유:</label>
+	<textarea id="report-reason" rows="4"></textarea>
+	<button type="button" id="submit-report">제출</button>
+	<button type="button" id="cancel-report">취소</button>
+</div>
+
 <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=721cac60463569317d82faa076edead4"></script>
+<script src="/js/share.js"></script>
+</body>
 </html>
