@@ -1,15 +1,16 @@
+// createGreet.js
 document.getElementById("saveButton").addEventListener("click", function(event) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault();
 
     const container = document.getElementById("container");
-    const title = document.getElementById("title");
+    const title = document.getElementById("title").value; // title 값 가져오기
     const svgElements = Array.from(container.querySelectorAll('svg > *'));
     const nonSvgElements = Array.from(container.querySelectorAll('textarea, img'));
 
     const components = svgElements.map(svgElement => {
         const subTypeId = svgElement.dataset.subtypeId;
         if (!subTypeId || isNaN(Number(subTypeId))) {
-            console.error('SVG 컴포넌트에 올바른 subtypeId가 설정되지 않았습니다:');
+            console.error('SVG 컴포넌트에 올바른 subtypeId가 설정되지 않았습니다:', svgElement);
             return null;
         }
 
@@ -27,7 +28,7 @@ document.getElementById("saveButton").addEventListener("click", function(event) 
     const nonSvgComponents = nonSvgElements.map(nonSvgElement => {
         const subTypeId = nonSvgElement.dataset.subtypeId;
         if (!subTypeId || isNaN(Number(subTypeId)) || Number(subTypeId) === 0) {
-            console.error('비SVG 컴포넌트에 올바른 subtypeId가 설정되지 않았습니다:');
+            console.error('비SVG 컴포넌트에 올바른 subtypeId가 설정되지 않았습니다:', nonSvgElement);
             return null;
         }
 
@@ -56,22 +57,30 @@ document.getElementById("saveButton").addEventListener("click", function(event) 
         return;
     }
 
-    fetch("/template/save", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(allComponents)
-    })
-        .then(response => {
-            if (response.ok) {
-                console.log("템플릿이 성공적으로 저장되었습니다!");
-                window.location.href='http://localhost:8080';
-            } else {
-                return response.text().then(text => { throw new Error(text); });
-            }
+    captureCanvasAsImage().then(thumbnailImage => {
+        fetch("/template/save", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: title,
+                componentList: allComponents,
+                imageUrl: thumbnailImage
+            })
         })
-        .catch(error => {
-            console.error("오류:", error);
-        });
+            .then(response => {
+                if (response.ok) {
+                    console.log("템플릿이 성공적으로 저장되었습니다!");
+                    window.location.href = 'http://localhost:8080';
+                } else {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+            })
+            .catch(error => {
+                console.error("오류:", error);
+            });
+    }).catch(error => {
+        console.error("캔버스 캡처 오류:", error);
+    });
 });

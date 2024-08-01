@@ -25,12 +25,10 @@
             <!-- 템플릿 목록을 반복하여 출력 -->
             <div th:each="template : ${templates}" class="template-item">
                 <div>
-                    <a th:href="@{/template/{templateId}(templateId=${template.id})}">
-                        <<img th:src="@{${template.imageUrl}}" alt="Template" />
-                    </a>
+                    <img th:src="@{${template.imageUrl}}" alt="Template" />
                 </div>
                 <h3 th:text="${template.title}">템플릿 제목</h3>
-                <a th:href="@{/template/{templateId}(templateId=${template.id})}" class="btn">템플릿 보러가기 >></a>
+                <a th:href="@{/template/{templateId}(templateId=${template.id})}" class="btn">템플릿 보러가기</a>
             </div>
         </div>
         <div class="all-templates">
