@@ -139,7 +139,6 @@
     </div>
 </div>
 
-
 <script src="/js/createGreet.js"></script>
 <script src="/js/category.js"></script>
 <script src="/js/textEditor.js"></script>
@@ -149,13 +148,44 @@
 <script src="/js/capture.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
-    $(document).ready(
-        $('#shareButton').click(function () {
-            if (confirm('초대장을 공유하시겠습니까?')) {
-                temporarySave()
+    $(document).ready(function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            const componentHtmlElement = document.getElementById("componentHtml");
+
+            if (componentHtmlElement) {
+                const componentHtml = componentHtmlElement.innerHTML;
+
+                function integrateComponents() {
+                    const container = document.getElementById("container");
+                    if (container) {
+                        container.innerHTML = componentHtml;
+
+                        const svgElements = container.querySelectorAll('svg');
+                        svgElements.forEach(svg => {
+                            svg.style.position = 'absolute';
+                        });
+
+                        const textElements = container.querySelectorAll('textarea, img');
+                        textElements.forEach(textElement => {
+                            textElement.style.position = 'absolute';
+                        });
+                    }
+                }
+
+                integrateComponents();
+            } else {
+                console.warn('componentHtml 요소가 없습니다.');
             }
-        })
-    )
+        });
+
+        // 공유 버튼 클릭 이벤트 핸들러
+        $('#shareButton').click(function (event) {
+            event.preventDefault();
+            if (confirm('초대장을 공유하시겠습니까?')) {
+                temporarySave();
+            }
+        });
+    });
 
     function temporarySave() {
         const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
@@ -171,60 +201,91 @@
                 allowComments: false
             }),
             success: function (data) {
-                console.log('@@@ data @@@\n' + JSON.stringify(data))
-                shareGreet(data)
+                console.log('@@@ data @@@\n' + JSON.stringify(data));
+                shareGreet(data);
             },
             error: function (error) {
-                alert(`데이터 저장 실패. ${JSON.stringify(error)}`)
+                alert(`데이터 저장 실패. ${JSON.stringify(error)}`);
             }
-        })
+        });
     }
 
-    // dev
     function shareGreet(data) {
+        let date = new Date();
+        date.setDate(date.getDate() + 3);
+
         captureCanvasAsImage().then(thumbnailImage => {
-            console.log('thumbnailImage', thumbnailImage);
-            console.log('data', data.greetId);
             $.ajax({
                 url: '/greet/save',
                 method: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    greetId: data.greetId,
+                    id: data.greetId,
                     userId: data.userId,
                     title: $('#title').val(),
+                    allowComments: false,
+                    expireDate: date.toISOString().slice(0, 19),
                     imageUrl: thumbnailImage,
-
+                    componentList: processComponents($('#container')[0])
                 }),
                 success: function (data) {
-                    alert(JSON.stringify(data))
+                    window.location.href = `http://localhost:8080${data.redirectUrl}`;
                 },
                 error: function (error) {
-                    alert(`공유에 실패하였습니다. ${JSON.stringify(error)}`)
+                    alert(`공유에 실패하였습니다. ${JSON.stringify(error)}`);
                 }
-            })
-        // not dev
-        let date = new Date()
-        date.setDate(date.getDate() + 3)
+            });
+        });
+    }
 
-        $.ajax({
-            url: '/greet/save',
-            method: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                id: data.greetId,
-                userId: data.userId,
-                title: $('#title').val(),
-                allowComments: false,
-                expireDate: date.toISOString().slice(0, 19)
-            }),
-            success: function(data) {
-                window.location.href = `http://localhost:8080${data.redirectUrl}`
-            },
-            error: function(error) {
-                alert(`공유에 실패하였습니다. ${JSON.stringify(error)}`)
+    function processComponents(container) {
+        const svgElements = Array.from(container.querySelectorAll('svg *'));
+        const nonSvgElements = Array.from(container.querySelectorAll('textarea, img'));
+
+        const components = svgElements.map(svgElement => {
+            const subTypeId = svgElement.dataset.subtypeId;
+            if (!subTypeId || isNaN(Number(subTypeId))) {
+                console.error('SVG 컴포넌트에 올바른 subtypeId가 설정되지 않았습니다:', svgElement);
+                return null;
             }
-        })
+
+            return {
+                content: svgElement.outerHTML,
+                x: parseInt(svgElement.style.left || 0, 10),
+                y: parseInt(svgElement.style.top || 0, 10),
+                width: parseInt(svgElement.style.width || 100, 10),
+                height: parseInt(svgElement.style.height || 100, 10),
+                rotation: parseFloat(svgElement.style.transform.replace('rotate(', '').replace('deg)', '') || 0),
+                categoryDetailId: Number(subTypeId)
+            };
+        }).filter(component => component !== null);
+
+        const nonSvgComponents = nonSvgElements.map(nonSvgElement => {
+            const subTypeId = nonSvgElement.dataset.subtypeId;
+            if (!subTypeId || isNaN(Number(subTypeId)) || Number(subTypeId) === 0) {
+                console.error('비SVG 컴포넌트에 올바른 subtypeId가 설정되지 않았습니다:', nonSvgElement);
+                return null;
+            }
+
+            let content;
+            if (nonSvgElement.tagName === 'TEXTAREA') {
+                content = `<textarea class="${nonSvgElement.className}" placeholder="${nonSvgElement.placeholder}" data-subtype-id="${subTypeId}">${nonSvgElement.value}</textarea>`;
+            } else {
+                content = nonSvgElement.outerHTML;
+            }
+
+            return {
+                content: content,
+                x: parseInt(nonSvgElement.style.left || 0, 10),
+                y: parseInt(nonSvgElement.style.top || 0, 10),
+                width: parseInt(nonSvgElement.style.width || 100, 10),
+                height: parseInt(nonSvgElement.style.height || 100, 10),
+                rotation: parseFloat(nonSvgElement.style.transform.replace('rotate(', '').replace('deg)', '') || 0),
+                categoryDetailId: Number(subTypeId)
+            };
+        }).filter(component => component !== null);
+
+        return components.concat(nonSvgComponents);
     }
 </script>
 </body>

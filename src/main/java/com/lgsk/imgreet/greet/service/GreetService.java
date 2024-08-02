@@ -11,7 +11,6 @@ import com.lgsk.imgreet.greet.dto.GreetResponseDTO;
 import com.lgsk.imgreet.greet.dto.UpdateGreetRequestDTO;
 import com.lgsk.imgreet.greet.repository.GreetRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +21,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class GreetService {
 
     private final GreetRepository greetRepository;
@@ -39,15 +37,12 @@ public class GreetService {
             throw new UserPrincipalNotFoundException("로그인된 유저 정보가 존재하지 않습니다.");
         }
 
-        log.info("get : " + dto.getGreetId());
-        String encodedToken = jwtUtil.generateGreetToken(dto.getGreetId().toString());
-        dto.setUrl("/share/%s".formatted(encodedToken));
-
+        componentService.saveGreetComponent(dto.getId(), dto.getComponentList());
         String imagePath = componentService.captureCanvasAsImage(dto.getTitle(), dto.getImageUrl());
-        log.info("imagePath : " + imagePath);
 
         String token = jwtUtil.generateGreetToken(dto.getId());
         dto.setUrl("/share/%s".formatted(token));
+
         return greetRepository.save(
                 Greet.builder()
                         .id(dto.getId())
