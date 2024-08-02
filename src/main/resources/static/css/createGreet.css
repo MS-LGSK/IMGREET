@@ -131,6 +131,7 @@ body, html {
     margin-top: 5%;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #container {
@@ -192,4 +193,12 @@ body, html {
 /* Ensure that the inputs are hidden */
 #map-container input[type="text"][style*="display: none;"] {
     display: none;
+}
+
+.resize-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    cursor: nwse-resize;
 }
