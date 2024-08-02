@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     .then(response => {
                         if (response.ok) {
                             console.log("템플릿이 성공적으로 저장되었습니다!");
-                            window.location.href = 'http://localhost:8080';
+                            window.location.href = '/templates';
                         } else {
                             return response.text().then(text => { throw new Error(text); });
                         }
