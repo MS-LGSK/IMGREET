@@ -259,3 +259,34 @@ function deleteComment(commentId, password, commentElement) {
     })
         .catch(error => console.error('Error deleting comment:', error));
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const token = getJwtTokenFromUrl();
+    if (token) {
+        const greetId = getGreetIdFromToken(token);
+        if (greetId) {
+            // 이미지 로드
+            fetchImage(greetId);
+        } else {
+            console.error('Greet ID not found in the token');
+        }
+    } else {
+        console.error('JWT token not found in the URL');
+    }
+});
+
+
+function fetchImage(greetId) {
+    fetch(`/greet/image/${greetId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text(); // URL을 텍스트로 받음
+        })
+        .then(imagePath => {
+            const imageElement = document.getElementById('invitationImage');
+            imageElement.src = imagePath; // 이미지 URL을 src에 설정
+        })
+        .catch(error => console.error('Error fetching image URL:', error));
+}
