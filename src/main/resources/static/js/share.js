@@ -1,16 +1,3 @@
-// document.getElementById("detailButton").addEventListener("click", function () {
-//     this.classList.toggle("close");
-//     this.classList.toggle("open");
-//     const detailOptionContainer = document.getElementById("detailOptionContainer");
-//     if (detailOptionContainer.classList.contains("hidden")) {
-//         detailOptionContainer.classList.remove("hidden");
-//         detailOptionContainer.classList.add("visible");
-//     } else {
-//         detailOptionContainer.classList.remove("visible");
-//         detailOptionContainer.classList.add("hidden");
-//     }
-// });
-
 document.querySelectorAll(".detailOptionCheckbox").forEach((checkbox) => {
     checkbox.addEventListener("change", function () {
         if (this.checked) {
@@ -241,7 +228,7 @@ function displayComment(comment, greetId) {
     newComment.querySelector('.deleteComment').addEventListener('click', function () {
         const password = prompt('Enter password to delete comment:');
         if (password) {
-            deleteComment(greetId, comment.id, password, newComment);
+            deleteComment(comment.id, password, newComment);
         }
     });
 
@@ -252,8 +239,8 @@ function displayComment(comment, greetId) {
 }
 
 
-function deleteComment(greetId, commentId, password, commentElement) {
-    fetch(`/greet/${greetId}/delete`, {
+function deleteComment(commentId, password, commentElement) {
+    fetch(`/greet/comment/delete`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
