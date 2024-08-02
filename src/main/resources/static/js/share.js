@@ -1,16 +1,3 @@
-// document.getElementById("detailButton").addEventListener("click", function () {
-//     this.classList.toggle("close");
-//     this.classList.toggle("open");
-//     const detailOptionContainer = document.getElementById("detailOptionContainer");
-//     if (detailOptionContainer.classList.contains("hidden")) {
-//         detailOptionContainer.classList.remove("hidden");
-//         detailOptionContainer.classList.add("visible");
-//     } else {
-//         detailOptionContainer.classList.remove("visible");
-//         detailOptionContainer.classList.add("hidden");
-//     }
-// });
-
 document.querySelectorAll(".detailOptionCheckbox").forEach((checkbox) => {
     checkbox.addEventListener("change", function () {
         if (this.checked) {
