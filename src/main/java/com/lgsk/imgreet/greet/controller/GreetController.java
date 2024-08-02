@@ -12,7 +12,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,43 +50,6 @@ public class GreetController {
                 new HttpEntity<>(new HttpHeaders()),
                 String.class
         );
-        return ResponseEntity.status(responseEntity.getStatusCode())
-                .body(responseEntity.getBody());
-    }
-
-    @GetMapping("/greet/share/{id}")
-    public String showGreet(@PathVariable Long id, Model model) {
-        GreetResponseDTO responseDTO = greetService.getGreetById(id);
-        model.addAttribute("greet", responseDTO);
-        return "share";
-    }
-
-    @GetMapping("/greet/myGreet")
-    public ResponseEntity<Object> getMyGreet(@Param("id") Long userId) {
-        List<Greet> greetList = greetService.getGreetByUserId(userId);
-        if (greetList.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(greetList);
-    }
-
-    @GetMapping("/share/{token}")
-    public ResponseEntity<String> sharePage(@PathVariable String token, Model model) {
-        Jwt jwt = Jwt.withTokenValue(token).build();
-        Long greetId = (Long) jwt.getClaims().get("greetId");
-        model.addAttribute("greetId", greetId);
-
-        // TODO: remove hard coding
-        String greetUrl = "http://localhost:8080/greet/share" + greetId;
-
-        // TODO: RestTemplate DI 적용
-        ResponseEntity<String> responseEntity = new RestTemplate().exchange(
-                greetUrl,
-                HttpMethod.GET,
-                new HttpEntity<>(new HttpHeaders()),
-                String.class
-        );
-
         return ResponseEntity.status(responseEntity.getStatusCode())
                 .body(responseEntity.getBody());
     }
