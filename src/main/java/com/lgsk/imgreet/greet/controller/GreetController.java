@@ -13,12 +13,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
@@ -26,13 +27,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class GreetController {
 
     private final GreetService greetService;
     private final JwtUtil jwtUtil;
 
+    @ResponseBody
     @GetMapping("/share/{token}")
     public ResponseEntity<String> sharePage(@PathVariable String token, Model model) {
         long greetId = Long.parseLong(jwtUtil.getClaims(token).get("greetId").toString());
@@ -61,6 +63,7 @@ public class GreetController {
         return "share";
     }
 
+    @ResponseBody
     @GetMapping("/greet/myGreet")
     public ResponseEntity<Object> getMyGreet(@Param("id") Long userId) {
         List<Greet> greetList = greetService.getGreetByUserId(userId);
@@ -70,6 +73,7 @@ public class GreetController {
         return ResponseEntity.ok(greetList);
     }
 
+    @ResponseBody
     @PostMapping("/greet/draft")
     @PreAuthorize("hasAnyAuthority()")
     public ResponseEntity<Object> temporarySaveGrit(@RequestBody CreateGreetRequestDTO createGreetRequestDTO) {
@@ -88,6 +92,7 @@ public class GreetController {
         return ResponseEntity.ok(responseMap);
     }
 
+    @ResponseBody
     @PostMapping("/greet/save")
     @PreAuthorize("hasAnyAuthority()")
     public ResponseEntity<Object> saveGrit(@RequestBody UpdateGreetRequestDTO updateGreetRequestDTO) {
