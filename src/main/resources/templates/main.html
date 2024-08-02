@@ -1,98 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-    <head>
-        <meta charset="UTF-8" />
-        <title>ImGreet</title>
-        <!-- Assuming you have a CSS file -->
-    </head>
-    <body>
-        <!-- Navigation -->
-        <nav th:replace="~{navbar :: navbarFragment}"></nav>
-        <!-- Main Content -->
-        <main class="main">
-            <section class="intro">
-                <h1 class="intro-h1">세상의 모든 초대장은 ImGreet로 완성</h1>
-                <p>정말정말 쉽고 편리하게 템플릿으로 쉽게 간편하게 시작해보세요!</p>
-                <div class="intro-buttons">
-                    <a th:href="@{/start}" class="btn yellow-btn">바로 시작하기</a>
-                    <a th:href="@{#templateSection}" class="btn light-yellow-btn">템플릿 보러가기</a>
-                </div>
-            </section>
+<head>
+    <meta charset="UTF-8"/>
+    <title>ImGreet</title>
+    <link rel="stylesheet" href="/css/main.css"/>
+</head>
+<body>
+<!-- Navigation -->
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<!-- Main Content -->
+<main class="main">
+    <section class="intro">
+        <h1 class="intro-h1">세상의 모든 초대장은 ImGreet로 완성</h1>
+        <p>정말정말 쉽고 편리하게 템플릿으로 쉽게 간편하게 시작해보세요!</p>
+        <div class="intro-buttons">
+            <a th:href="@{/start}" class="btn yellow-btn">바로 시작하기</a>
+            <a th:href="@{#templateSection}" class="btn light-yellow-btn">템플릿 보러가기</a>
+        </div>
+    </section> <!-- Closing intro section -->
 
-            <section id="templateSection" class="templates-section">
-                <h2>다양한 종류의 템플릿을 만나보세요</h2>
-                <div class="template">
-                    <div class="template-item">
-                        <div>
-                            <a href="#"> <img class="template-img" src="/images/social.webp" alt="Template 1" /></a>
-                        </div>
-                        <!-- Placeholder image -->
-                        <h3>한마디</h3>
-                        <p>영상을 부담없이따따띠리따</p>
-                        <div class="icon-box">
-                            <form th:action="@{/bookmark/{templateId}(templateId=${templateId})}" method="post" style="display: inline;">
-                                <button type="submit" class="bookmark-icon-button">
-                                    <img class="bookmark-icon"
-                                         src="https://img.icons8.com/fluency-systems-regular/48/document-1.png"
-                                         alt="즐겨찾기" />
-                                </button>
-                            </form>
-                            <a th:href="@{/template/1}" class="btn">템플릿 보러가기 >></a>
-                        </div>
-                    </div>
-                    <div class="template-item">
-                        <div>
-                            <a href="#"> <img src="/images/youtube.webp" alt="Template 1" /></a>
-                        </div>
-                        <!-- Placeholder image -->
-                        <h3>라이브 초대장</h3>
-                        <p>효과음으로초대장을띄웁니다</p>
-                        <a th:href="@{/template/2}" class="btn">템플릿 보러가기 >></a>
-                    </div>
-                    <div class="template-item">
-                        <div>
-                            <a href="#"> <img src="/images/presentation.webp" alt="Template 1" /></a>
-                        </div>
-                        <!-- Placeholder image -->
-                        <h3>청첩장</h3>
-                        <p>꽃처럼피어나리라..</p>
-                        <a th:href="@{/template/3}" class="btn">템플릿 보러가기 >></a>
-                    </div>
-                    <div class="template-item">
-                        <div>
-                            <a href="#"> <img src="/images/social.webp" alt="Template 1" /></a>
-                        </div>
-                        <!-- Placeholder image -->
-                        <h3>한마디</h3>
-                        <p>영상을 부담없이따따띠리따</p>
-                        <a th:href="@{/template/1}" class="btn">템플릿 보러가기 >></a>
-                    </div>
-                    <div class="template-item">
-                        <div>
-                            <a href="#"> <img src="/images/youtube.webp" alt="Template 1" /></a>
-                        </div>
-                        <!-- Placeholder image -->
-                        <h3>라이브 초대장</h3>
-                        <p>효과음으로초대장을띄웁니다</p>
-                        <a th:href="@{/template/2}" class="btn">템플릿 보러가기 >></a>
-                    </div>
-                    <div class="template-item">
-                        <div>
-                            <a href="#"> <img src="/images/presentation.webp" alt="Template 1" /></a>
-                        </div>
-                        <!-- Placeholder image -->
-                        <h3>청첩장</h3>
-                        <p>꽃처럼피어나리라..</p>
-                        <a th:href="@{/template/3}" class="btn">템플릿 보러가기 >></a>
-                    </div>
-                </div>
-            </section>
-        </main>
+    <section id="templateSection" class="templates-section">
+        <h2>다양한 종류의 템플릿을 만나보세요</h2>
 
-        <!-- Footer -->
-        <footer>
-            <p>Copyrights © 2024 LSGK TEAM</p>
-        </footer>
-    </body>
-    <link rel="stylesheet" href="/css/main.css" />
+        <!-- 템플릿 목록을 반복하여 출력 -->
+        <div class="template">
+            <div th:each="template : ${templates}" class="template-item">
+                <div>
+                    <img th:src="@{${template.imageUrl}}" alt="Template"/>
+                </div>
+                <h3 th:text="${template.title}">템플릿 제목</h3>
+                <div class="icon-box">
+                    <form th:action="@{/bookmark/{templateId}(templateId=${template.id})}" method="post"
+                          style="display: inline;">
+                        <button type="submit" class="bookmark-icon-button">
+                            <img class="bookmark-icon"
+                                 src="https://img.icons8.com/fluency-systems-regular/48/document-1.png"
+                                 alt="즐겨찾기"/>
+                        </button>
+                    </form>
+                    <a th:href="@{/template/{templateId}(templateId=${template.id})}" class="btn">템플릿 보러가기</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer>
+    <p>Copyrights © 2024 LSGK TEAM</p>
+</footer>
+</body>
 </html>
+

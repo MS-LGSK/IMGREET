@@ -7,6 +7,7 @@ import lombok.Getter;
 @Builder
 public class SubTypeResponseDTO {
 
+    private Long id;
     private String subType;
     private Long categoryDetailId;
 }

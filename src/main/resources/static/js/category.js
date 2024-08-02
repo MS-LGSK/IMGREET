@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const subTypeMap = {};
     const categoryButtonsContainer = document.getElementById('categoryButtons');
     const sidebarContent = document.getElementById('sidebarContent');
     const sidebar = document.getElementById('sidebar');
@@ -6,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const forbiddenFree = document.getElementById('forbiddenFree');
     const mapContainer = document.getElementById('map-container');
     const commentContainer = document.getElementById('comment-container');
+
+    let currentSubTypeId = null;
 
     function fetchCategoryIds() {
         fetch('/category')
@@ -28,19 +31,24 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // local storage에 category ID 저장
     function storeCategoryIds(data) {
         const categories = data.map(category => ({
             id: category.id,
             type: category.type,
-            free : category.free
+            free: category.free
         }));
         localStorage.setItem('categories', JSON.stringify(categories));
     }
 
-    // sidebar에 카테고리 버튼 표시
+    function storeSubTypeMap(categoryId, subTypes) {
+        subTypeMap[categoryId] = subTypes.reduce((map, subType) => {
+            map[subType.subType] = subType.id;
+            return map;
+        }, {});
+    }
+
     function displayCategoryButtons(categoryIds) {
-        categoryButtonsContainer.innerHTML = ''; // 이전 내용 삭제
+        categoryButtonsContainer.innerHTML = '';
         categoryIds.forEach(category => {
             const button = document.createElement('button');
             button.className = 'category-button';
@@ -56,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // category ID에 대한 subType 표시
     function fetchAndDisplaySubTypes(categoryId) {
         fetch(`/${categoryId}`)
             .then(response => {
@@ -66,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(subTypes => {
+                storeSubTypeMap(categoryId, subTypes);
                 openSidebar(subTypes);
             })
             .catch(error => {
@@ -73,86 +81,81 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // open sidebar
     function openSidebar(subTypes) {
-        sidebarContent.innerHTML = ''; // 이전 내용 삭제
+        sidebarContent.innerHTML = '';
 
         subTypes.forEach(subType => {
             const button = document.createElement('button');
             button.className = 'nav-button';
             button.textContent = subType.subType;
+            button.dataset.subTypeId = subType.id;
 
-            button.addEventListener('click', () => handleSidebarButtonClick(subType.subType));
+            button.addEventListener('click', () => handleSidebarButtonClick(subType.subType, subType.id));
             sidebarContent.appendChild(button);
         });
         sidebar.classList.add('open');
     }
 
-    // close sidebar
     sidebarCloseBtn.addEventListener('click', () => {
         sidebar.classList.remove('open');
     });
 
-    function createTextComponent(item) {
+    function createTextComponent(item, subTypeId) {
         const text = document.createElement('textarea');
-        const orientation = item.includes('가로') ? 'horizontal' : 'vertical';
-        text.className = `${orientation}-text`;
+        text.className = item.includes('가로') ? 'horizontal-text' : 'vertical-text';
         text.placeholder = '텍스트를 입력하세요.';
+        text.dataset.subtypeId = subTypeId;
         return text;
     }
 
-    function createShapeComponent(item) {
+    function createShapeComponent(item, subTypeId) {
+        let shape;
         switch (item) {
             case '원':
-                return window.createCircle();
+                shape = window.createCircle(subTypeId);
+                break;
             case '사각형':
-                return window.createRectangle();
+                shape = window.createRectangle(subTypeId);
+                break;
             case '삼각형':
-                return window.createTriangle();
+                shape = window.createTriangle(subTypeId);
+                break;
             default:
-                console.error('Unknown shape type:', item);
+                console.error('알 수 없는 도형 타입:', item);
                 return null;
         }
+        shape.dataset.subtypeId = subTypeId;
+        return shape;
     }
 
-    function addImage(input) {
-        const file = input.files[0]; // 선택된 파일 가져오기
-
+    function addImage(input, subTypeId) {
+        const file = input.files[0];
         if (file) {
-            // 새로운 이미지 요소 추가
             const newImage = document.createElement("img");
             newImage.classList.add('img');
-
-            // 이미지 소스 설정
             newImage.src = URL.createObjectURL(file);
-
-            // 이미지 스타일 설정
-            newImage.style.position = "absolute"; // 절대 위치로 설정
-            newImage.style.top = "10px"; // 원하는 위치 설정
-            newImage.style.left = "10px"; // 원하는 위치 설정
+            newImage.style.position = "absolute";
+            newImage.style.top = "0px";
+            newImage.style.left = "0px";
             newImage.style.width = "70%";
             newImage.style.height = "70%";
-            newImage.style.visibility = "hidden";
+            newImage.style.visibility = "visible";
             newImage.style.objectFit = "contain";
+            newImage.dataset.subtypeId = subTypeId;
 
-            // 이미지를 container에 추가
             const container = document.getElementById('container');
-            container.style.position = "relative"; // 컨테이너를 relative로 설정
+            container.style.position = "relative";
             container.appendChild(newImage);
-
-            // 이미지 표시
             newImage.onload = () => {
                 newImage.style.visibility = "visible";
-                URL.revokeObjectURL(newImage.src); // 메모리 해제
+                URL.revokeObjectURL(newImage.src);
             };
-
             window.imageDraggable(newImage);
         } else {
-            console.error('No file selected');
+            console.error('선택된 파일이 없습니다');
         }
     }
 
-    // Component factory mapping
     const componentFactory = {
         '가로 텍스트': createTextComponent,
         '세로 텍스트': createTextComponent,
@@ -160,15 +163,18 @@ document.addEventListener('DOMContentLoaded', () => {
         '사각형': createShapeComponent,
         '삼각형': createShapeComponent,
         '이미지 추가': triggerImageUpload
-    }
+    };
 
-    function handleSidebarButtonClick(item) {
+    function handleSidebarButtonClick(item, subTypeId) {
+        currentSubTypeId = subTypeId;
         const createComponent = componentFactory[item];
 
         if (createComponent) {
-            const component = createComponent(item);
+            const component = createComponent(item, subTypeId);
 
             if (component) {
+                component.dataset.subtypeId = subTypeId;
+
                 if (component.tagName === 'TEXTAREA') {
                     if (window.initializeTextEditor) {
                         window.initializeTextEditor(component);
@@ -177,12 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (window.addShape) {
                         window.addShape(component);
                     }
-                } else if (component.tagName === '이미지 추가') {
+                } else if (component.tagName === 'IMG') {
                     triggerImageUpload();
                 }
             }
         } else {
-            console.error('Unknown component type:', item);
+            console.error('알 수 없는 컴포넌트 타입:', item);
         }
     }
 
@@ -193,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         input.style.display = 'none';
 
         input.addEventListener('change', (e) => {
-            addImage(e.target);
+            addImage(e.target, currentSubTypeId);
             e.target.value = '';
         });
 
@@ -203,9 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const categoryFactory = {
-        '지도' : createMapCategory,
-        '댓글' : createCommentCategory
-    }
+        '지도': createMapCategory,
+        '댓글': createCommentCategory
+    };
 
     function checkAndDisplayCategory(category, free) {
         mapContainer.style.display = 'none';

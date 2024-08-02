@@ -1,4 +1,4 @@
-package com.lgsk.imgreet.component.model;
+package com.lgsk.imgreet.component.dto;
 
 import lombok.Builder;
 import lombok.Getter;

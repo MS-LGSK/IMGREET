@@ -394,7 +394,7 @@ gradle-app.setting
 application-secret.properties
 
 ## images
-**/main/resources/images
+**/main/resources/static/images
 
 #img
 *.png

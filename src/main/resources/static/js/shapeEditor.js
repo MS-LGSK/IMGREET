@@ -3,10 +3,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const fillColor = document.getElementById('fillColor');
     const strokeColor = document.getElementById('strokeColor');
     const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('width', '100%');
-    svg.setAttribute('height', '100%');
-    container.appendChild(svg);
+
+    let svg = document.getElementById('svgContainer');
+
+    // SVG 요소가 존재하지 않는 경우 생성
+    if (!svg) {
+        svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('id', 'svgContainer');
+        svg.setAttribute('width', '100%');
+        svg.setAttribute('height', '100%');
+        container.appendChild(svg);
+    }
 
     let currentSelectedShape = null;        // 현재 선택된 도형
     let selectionBox = null;                // 선택된 도형 주위에 표시되는 선택 상자
@@ -172,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateSelectionBox();
     }
-
 
     function stopResize() {
         document.removeEventListener('mousemove', resize);
