@@ -21,8 +21,12 @@
 					<span>cys964@naver.com</span>
 				</div>
 				<div class="user-info-body">
-					<a class="user-info-content" href="/workspace">워크스페이스</a>
-					<a class="user-info-content" href="/myPage/myProfile">나의 정보</a>
+					<a class="user-info-content" href="/workspace"
+					   th:if="${!#authorization.expression('hasAuthority(''ADMIN'')')}">워크스페이스</a>
+					<a class="user-info-content" href="/myPage/myProfile"
+					   th:if="${!#authorization.expression('hasAuthority(''ADMIN'')')}">나의 정보</a>
+					<a class="user-info-content" href="/adminPage"
+					   th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">관리자 페이지</a>
 					<form th:if="${@rq.login}" th:action="@{/logout}" method="post">
 						<button type="submit" class="user-info-content">로그아웃</button>
 					</form>

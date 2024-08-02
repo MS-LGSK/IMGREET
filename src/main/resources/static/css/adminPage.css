@@ -1,0 +1,213 @@
+/* 기본 스타일 설정 */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    overflow: hidden; /* 전체 페이지 스크롤 비활성화 */
+}
+
+/* 전체 컨테이너 */
+.container {
+    display: flex;
+    height: 100vh; /* 전체 화면 높이 */
+    overflow: hidden; /* 전체 컨테이너 스크롤 비활성화 */
+    position: relative;
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+    background-color: #f8f9fa;
+    padding: 20px;
+    height: 100%;
+    width: 15%;
+    /* 상단 테두리 */
+    border: #adadad;
+    top: 0;
+    left: 0;
+    overflow: hidden; /* 사이드바 내부 스크롤 비활성화 */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 20px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+/* 메인 콘텐츠 스타일 */
+.main-content {
+    margin-left: 15%; /* 사이드바 너비만큼 여백을 둡니다 */
+    padding: 40px;
+    padding-top: 100px; /* 상단 패딩 조정 */
+    flex: 1;
+    background-color: #f4f4f4;
+    min-height: 100vh; /* 콘텐츠가 화면 전체 높이를 차지하도록 설정합니다 */
+    box-sizing: border-box; /* 패딩과 보더를 포함하여 너비와 높이를 계산합니다 */
+}
+
+/* 중앙에 배치된 컨텐츠 */
+.content {
+    width: 85%;
+    height: calc(100vh - 80px); /* 전체 화면 높이 */
+    overflow: auto; /* 내부 콘텐츠가 넘칠 경우 스크롤 */
+    padding: 40px;
+    box-sizing: border-box; /* padding과 border가 width에 포함되도록 설정 */
+    position: relative;
+}
+
+/* 제목 스타일 */
+h2 {
+    color: #ff9000; /* 제목 색상 */
+    margin-bottom: 20px;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background-color: #ff9000;
+    color: #fff;
+}
+
+td {
+    background-color: #fafafa;
+}
+
+/* 테이블 열 너비 조정 */
+th:nth-child(1), td:nth-child(1) {
+    width: 10%;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 30%;
+}
+
+th:nth-child(3), td:nth-child(3) {
+    width: 30%;
+}
+
+th:nth-child(4), td:nth-child(4) {
+    width: 10%;
+}
+
+th:nth-child(5), td:nth-child(5) {
+    width: 10%;
+    padding: 5px;
+}
+th:nth-child(5), td:nth-child(5) {
+    width: 10%;
+    padding: 5px;
+}
+
+/* 링크 스타일 */
+.greet-link {
+    color: #000000; /* 링크 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-size: 16px; /* 링크 글자 크기 */
+}
+
+/* 폼 버튼 스타일 */
+button {
+    background-color: #ff9000;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+button:hover {
+    background-color: #e68a00;
+}
+
+.td-btn {
+    padding: 5px;
+}
+
+/* 페이징 스타일 */
+.pagination {
+    position: relative;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #ff9000;
+    padding: 10px 15px;
+    border: 1px solid #ff9000;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.pagination a.active {
+    background-color: #ff9000;
+    color: #fff;
+}
+
+.pagination a:hover {
+    background-color: #e68a00;
+    border-color: #e68a00;
+}
+
+.pagination li.disabled a {
+    color: #ccc;
+    cursor: not-allowed;
+    border-color: #ccc;
+}
+
+/* 화살표 스타일 */
+.pagination .arrow {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.pagination .arrow.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
