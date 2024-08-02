@@ -3,6 +3,7 @@ package com.lgsk.imgreet.greet.service;
 import com.lgsk.imgreet.base.commonUtil.JwtUtil;
 import com.lgsk.imgreet.base.commonUtil.Rq;
 import com.lgsk.imgreet.base.entity.Role;
+import com.lgsk.imgreet.component.service.ComponentService;
 import com.lgsk.imgreet.entity.Greet;
 import com.lgsk.imgreet.entity.User;
 import com.lgsk.imgreet.greet.dto.CreateGreetRequestDTO;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class GreetService {
 
     private final GreetRepository greetRepository;
+    private final ComponentService componentService;
 
     private final JwtUtil jwtUtil;
 
@@ -34,15 +36,20 @@ public class GreetService {
         if (user == null) {
             throw new UserPrincipalNotFoundException("로그인된 유저 정보가 존재하지 않습니다.");
         }
+
+        componentService.saveGreetComponent(dto.getId(), dto.getComponentList());
+        String imagePath = componentService.captureCanvasAsImage(dto.getTitle(), dto.getImageUrl());
+
         String token = jwtUtil.generateGreetToken(dto.getId());
         dto.setUrl("/share/%s".formatted(token));
+
         return greetRepository.save(
                 Greet.builder()
                         .id(dto.getId())
                         .user(user)
                         .title(dto.getTitle())
                         .url(dto.getUrl())
-                        .imageUrl(dto.getImageUrl())
+                        .imageUrl(imagePath)
                         .expireDate(dto.getExpireDate())
                         .allowComments(dto.getAllowComments())
                         .build());

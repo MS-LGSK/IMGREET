@@ -1,12 +1,17 @@
 package com.lgsk.imgreet.greet.dto;
 
+import com.lgsk.imgreet.component.dto.ComponentDTO;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,4 +34,6 @@ public class UpdateGreetRequestDTO {
     private LocalDateTime expireDate;
 
     private Boolean allowComments;
+
+    private List<ComponentDTO> componentList = new ArrayList<>();
 }
