@@ -40,19 +40,26 @@ public class CommentController {
     @ResponseBody
     @PostMapping("/greet/{id}/comment")
     public ResponseEntity<Object> writeComment(@PathVariable("id") Long id, @RequestBody @Valid CreateCommentRequestDTO dto) {
+        Map<String, Object> responseMap = new HashMap<>();
+
         String ipAddress = rq.getClientIpAddress();
         dto.setGreetId(id);
         dto.setIpAddress(ipAddress);
 
         CommentResponseDTO commentResponseDTO = commentService.saveComment(dto);
         if (commentResponseDTO == null) {
-            return ResponseEntity.badRequest().body("댓글 저장에 실패했습니다.");
+            responseMap.put("success", false);
+            responseMap.put("message", "댓글 저장에 실패했습니다.");
+            return ResponseEntity.badRequest().body(responseMap);
         }
-        return ResponseEntity.accepted().body("댓글을 성공적으로 저장했습니다.");
+        responseMap.put("success", true);
+        responseMap.put("message", "댓글을 성공적으로 저장했습니다.");
+
+        return ResponseEntity.accepted().body(responseMap);
     }
 
-    @PostMapping("/greet/{id}/delete")
-    public ResponseEntity<Object> deleteComment(@PathVariable("id") Long id, @RequestBody @Valid DeleteCommentRequestDTO dto) {
+    @PostMapping("/greet/comment/delete")
+    public ResponseEntity<Object> deleteComment(@RequestBody @Valid DeleteCommentRequestDTO dto) {
         Map<String, Object> responseMap = new HashMap<>();
         try {
             commentService.deleteCommentById(dto);

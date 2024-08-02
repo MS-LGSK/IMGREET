@@ -13,7 +13,6 @@ public class CreateCommentRequestDTO {
     @NotNull
     private Long greetId;
 
-    @NotNull
     private String ipAddress;
 
     @NotNull
