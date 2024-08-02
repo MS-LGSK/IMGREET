@@ -4,6 +4,8 @@ import com.lgsk.imgreet.entity.Greet;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 public class CommentResponseDTO {
@@ -16,6 +18,8 @@ public class CommentResponseDTO {
     private String nickname;
 
     private String password;
+
+    private LocalDateTime createdDate;
 
     private String content;
 }
