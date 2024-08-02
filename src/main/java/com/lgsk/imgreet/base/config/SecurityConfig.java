@@ -72,20 +72,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-    @Bean
-    public JwtEncoder jwtEncoder() {
-        SecretKey secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        JWK jwk = new OctetSequenceKey.Builder(secretKeySpec).build();
-        JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(new JWKSet(jwk));
-
-        return new NimbusJwtEncoder(jwkSource);
-    }
-
-    @Bean
-    public JwtDecoder jwtDecoder() {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        return NimbusJwtDecoder.withSecretKey(secretKeySpec).build();
-    }
-
 }
