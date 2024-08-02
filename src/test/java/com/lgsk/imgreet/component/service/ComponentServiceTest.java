@@ -1,8 +1,8 @@
 package com.lgsk.imgreet.component.service;
 
 import com.lgsk.imgreet.base.entity.Role;
-import com.lgsk.imgreet.component.model.ComponentDTO;
-import com.lgsk.imgreet.component.model.ComponentResponseDTO;
+import com.lgsk.imgreet.component.dto.ComponentDTO;
+import com.lgsk.imgreet.component.dto.ComponentResponseDTO;
 import com.lgsk.imgreet.component.repository.ComponentRepository;
 import com.lgsk.imgreet.entity.Component;
 import com.lgsk.imgreet.entity.Greet;

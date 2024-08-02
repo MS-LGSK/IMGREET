@@ -44,6 +44,7 @@ public class CategoryDetailService {
 
         for(CategoryDetail detail : details) {
             SubTypeResponseDTO dto = SubTypeResponseDTO.builder()
+                    .id(detail.getId())
                     .subType(detail.getSubType())
                     .categoryDetailId(detail.getCategory().getId())
                     .build();

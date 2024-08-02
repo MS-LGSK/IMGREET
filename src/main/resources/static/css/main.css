@@ -83,26 +83,26 @@ h2 {
     border-radius: 10px;
     overflow: hidden; /* Ensure content doesn't overflow the container */
 
-    img {
-        width: 350px;
-        height: 200px; /* Fixed height to maintain uniformity */
-        object-fit: cover; /* Ensure image covers the box without distortion */
-        border-radius: 10px;
-    }
+img {
+    width: 350px;
+    height: 200px; /* Fixed height to maintain uniformity */
+    object-fit: cover; /* Ensure image covers the box without distortion */
+    border-radius: 10px;
+}
 
-    .btn {
-        text-decoration: none;
-        color: #FF9000;
-    }
+.btn {
+    text-decoration: none;
+    color: #FF9000;
+}
 }
 
 .all-templates {
     font-size: 20px;
 
-    .btn {
-        text-decoration: none;
-        color: #FF9000;
-    }
+.btn {
+    text-decoration: none;
+    color: #FF9000;
+}
 }
 
 .btn:hover {
