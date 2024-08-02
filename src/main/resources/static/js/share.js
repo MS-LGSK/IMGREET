@@ -241,7 +241,7 @@ function displayComment(comment, greetId) {
     newComment.querySelector('.deleteComment').addEventListener('click', function () {
         const password = prompt('Enter password to delete comment:');
         if (password) {
-            deleteComment(greetId, comment.id, password, newComment);
+            deleteComment(comment.id, password, newComment);
         }
     });
 
@@ -252,8 +252,8 @@ function displayComment(comment, greetId) {
 }
 
 
-function deleteComment(greetId, commentId, password, commentElement) {
-    fetch(`/greet/${greetId}/delete`, {
+function deleteComment(commentId, password, commentElement) {
+    fetch(`/greet/comment/delete`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
