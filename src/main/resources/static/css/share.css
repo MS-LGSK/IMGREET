@@ -34,7 +34,12 @@ body {
     background-color: rgb(255, 255, 255);
     border-radius: 16px;
     transform: translate(-50%, -50%);
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0 2px 8px;
+
+/*    y축 길이 넘어가면 스크롤 */
+    overflow-y: auto;
+    max-height: 70%;
+
 }
 
 /* 닫기 버튼 */
@@ -550,3 +555,15 @@ label .commentLabel {
         font-size: 20px;
     }
 }
+
+
+.shareTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/*#invitationImage {*/
+/*    width: 80%;*/
+/*}*/
