@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.lgsk.imgreet.admin.DTO.CommentReportDTO;
-import com.lgsk.imgreet.admin.DTO.GreetReportDTO;
-import com.lgsk.imgreet.admin.DTO.TemplateReportDTO;
+import com.lgsk.imgreet.admin.dto.CommentReportDTO;
+import com.lgsk.imgreet.admin.dto.GreetReportDTO;
+import com.lgsk.imgreet.admin.dto.TemplateReportDTO;
 import com.lgsk.imgreet.admin.service.AdminService;
 
 import lombok.RequiredArgsConstructor;

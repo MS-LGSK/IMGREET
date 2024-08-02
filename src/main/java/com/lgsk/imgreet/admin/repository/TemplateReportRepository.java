@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lgsk.imgreet.admin.DTO.TemplateReportResponseDTO;
+import com.lgsk.imgreet.admin.dto.TemplateReportResponseDTO;
 import com.lgsk.imgreet.entity.TemplateReport;
 
 public interface TemplateReportRepository extends JpaRepository<TemplateReport, Long> {
 
-	@Query(" SELECT DISTINCT new com.lgsk.imgreet.admin.DTO.TemplateReportResponseDTO(tr.template.id, tr.reason) "
+	@Query(" SELECT DISTINCT new com.lgsk.imgreet.admin.dto.TemplateReportResponseDTO(tr.template.id, tr.reason) "
 		+ "    FROM TemplateReport tr "
 		+ "   WHERE tr.done = false "
 		+ " 	AND (tr.template.id, tr.reason) IN ( SELECT tr2.template.id, tr2.reason "

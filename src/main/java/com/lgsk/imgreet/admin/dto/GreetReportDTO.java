@@ -1,4 +1,4 @@
-package com.lgsk.imgreet.admin.DTO;
+package com.lgsk.imgreet.admin.dto;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -16,12 +16,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lgsk.imgreet.admin.DTO.CommentReportDTO;
-import com.lgsk.imgreet.admin.DTO.CommentReportResponseDTO;
-import com.lgsk.imgreet.admin.DTO.GreetReportDTO;
-import com.lgsk.imgreet.admin.DTO.GreetReportResponseDTO;
-import com.lgsk.imgreet.admin.DTO.TemplateReportDTO;
-import com.lgsk.imgreet.admin.DTO.TemplateReportResponseDTO;
+import com.lgsk.imgreet.admin.dto.CommentReportDTO;
+import com.lgsk.imgreet.admin.dto.CommentReportResponseDTO;
+import com.lgsk.imgreet.admin.dto.GreetReportDTO;
+import com.lgsk.imgreet.admin.dto.GreetReportResponseDTO;
+import com.lgsk.imgreet.admin.dto.TemplateReportDTO;
+import com.lgsk.imgreet.admin.dto.TemplateReportResponseDTO;
 import com.lgsk.imgreet.admin.repository.CommentReportRepository;
 import com.lgsk.imgreet.admin.repository.GreetReportRepository;
 import com.lgsk.imgreet.admin.repository.TemplateReportRepository;
