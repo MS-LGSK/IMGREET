@@ -238,6 +238,7 @@ function displayComment(comment, greetId) {
     });
 }
 
+
 function deleteComment(commentId, password, commentElement) {
     fetch(`/greet/comment/delete`, {
         method: 'POST',
