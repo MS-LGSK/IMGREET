@@ -131,4 +131,11 @@ public class GreetService {
                 .allowComments(responseGreet.getAllowComments())
                 .build();
     }
+
+
+    public String getImageUrlById(Long id) {
+        return greetRepository.findById(id)
+            .map(Greet::getImageUrl) // Get image URL from entity
+            .orElse(null);
+    }
 }

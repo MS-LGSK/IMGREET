@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
@@ -109,5 +110,15 @@ public class GreetController {
         responseMap.put("success", true);
         responseMap.put("message", "초대장을 성공적으로 저장하였습니다.");
         return ResponseEntity.ok(responseMap);
+    }
+
+    @GetMapping("/greet/image/{greetId}")
+    public ResponseEntity<String> getImageUrl(@PathVariable Long greetId) {
+        String imageUrl = greetService.getImageUrlById(greetId); // Fetch image URL from database
+        if (imageUrl != null) {
+            return ResponseEntity.ok(imageUrl);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
