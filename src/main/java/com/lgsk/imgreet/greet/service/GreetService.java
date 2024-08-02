@@ -1,5 +1,6 @@
 package com.lgsk.imgreet.greet.service;
 
+import com.lgsk.imgreet.base.commonUtil.JwtUtil;
 import com.lgsk.imgreet.base.commonUtil.Rq;
 import com.lgsk.imgreet.base.entity.Role;
 import com.lgsk.imgreet.entity.Greet;
@@ -15,12 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.naming.LimitExceededException;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class GreetService {
 
     private final GreetRepository greetRepository;
+
+    private final JwtUtil jwtUtil;
 
     private final Rq rq;
 
@@ -30,6 +34,8 @@ public class GreetService {
         if (user == null) {
             throw new UserPrincipalNotFoundException("로그인된 유저 정보가 존재하지 않습니다.");
         }
+        String token = jwtUtil.generateGreetToken(dto.getId());
+        dto.setUrl("/share/%s".formatted(token));
         return greetRepository.save(
                 Greet.builder()
                         .id(dto.getId())
@@ -97,5 +103,25 @@ public class GreetService {
 
     private boolean isFreeUser(Role userRole) {
         return !userRole.equals(Role.PAID_USER);
+    }
+
+    @Transactional(readOnly = true)
+    public GreetResponseDTO getGreetById(Long id) {
+        Optional<Greet> greet = greetRepository.findById(id);
+        if(greet.isEmpty()) {
+            throw new RuntimeException("초대장이 존재하지 않습니다.");
+        }
+
+        Greet responseGreet = greet.get();
+
+        return GreetResponseDTO.builder()
+                .id(responseGreet.getId())
+                .user(responseGreet.getUser())
+                .title(responseGreet.getTitle())
+                .url(responseGreet.getUrl())
+                .imageUrl(responseGreet.getImageUrl())
+                .expireDate(responseGreet.getExpireDate())
+                .allowComments(responseGreet.getAllowComments())
+                .build();
     }
 }
