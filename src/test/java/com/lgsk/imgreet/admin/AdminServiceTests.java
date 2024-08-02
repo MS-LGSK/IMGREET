@@ -22,7 +22,7 @@ import com.lgsk.imgreet.admin.DTO.GreetReportDTO;
 import com.lgsk.imgreet.admin.DTO.GreetReportResponseDTO;
 import com.lgsk.imgreet.admin.DTO.TemplateReportDTO;
 import com.lgsk.imgreet.admin.DTO.TemplateReportResponseDTO;
-import com.lgsk.imgreet.admin.repository.CommnetReportRepository;
+import com.lgsk.imgreet.admin.repository.CommentReportRepository;
 import com.lgsk.imgreet.admin.repository.GreetReportRepository;
 import com.lgsk.imgreet.admin.repository.TemplateReportRepository;
 import com.lgsk.imgreet.base.entity.Role;
@@ -42,7 +42,7 @@ import com.lgsk.imgreet.template.repository.TemplateRepository;
 public class AdminServiceTests {
 
 	@Autowired private GreetReportRepository greetReportRepository;
-	@Autowired private CommnetReportRepository commnetReportRepository;
+	@Autowired private CommentReportRepository commentReportRepository;
 	@Autowired private TemplateReportRepository templateReportRepository;
 	@Autowired private UserRepository userRepository;
 	@Autowired private GreetRepository greetRepository;
@@ -178,11 +178,13 @@ public class AdminServiceTests {
 			.done(false)
 			.build());
 
+		Pageable pageable = PageRequest.of(0, 10);
+
 		// when
 		List<TemplateReportDTO> templateReportDTOList = new ArrayList<>();
 
-		List<TemplateReportResponseDTO> templateReportList = templateReportRepository.findDistinctByDone();
-		for (TemplateReportResponseDTO templateReport : templateReportList) {
+		Page<TemplateReportResponseDTO> templateReportPage = templateReportRepository.findDistinctByDone(pageable);
+		for (TemplateReportResponseDTO templateReport : templateReportPage) {
 			Template template = templateRepository.findById(templateReport.getTemplateId())
 				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 템플릿입니다."));
 
@@ -208,22 +210,23 @@ public class AdminServiceTests {
 	void getCommentReportList() {
 
 		// given
-		commentReport1 = commnetReportRepository.save(CommentReport.builder()
+		commentReport1 = commentReportRepository.save(CommentReport.builder()
 			.comment(comment)
 			.reason("홍보")
 			.done(false)
 			.build());
 
-		commentReport2 = commnetReportRepository.save(CommentReport.builder()
+		commentReport2 = commentReportRepository.save(CommentReport.builder()
 			.comment(comment)
 			.reason("홍보")
 			.done(false)
 			.build());
 
 		// when
+		Pageable pageable = PageRequest.of(0, 10);
 		List<CommentReportDTO> commentReportDTOList = new ArrayList<>();
 
-		List<CommentReportResponseDTO> commentReportList = commnetReportRepository.findDistinctByDone();
+		Page<CommentReportResponseDTO> commentReportList = commentReportRepository.findDistinctByDone(pageable);
 		for (CommentReportResponseDTO commentReport : commentReportList) {
 			Comment comment = commentRepository.findById(commentReport.getCommentId())
 				.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다."));
