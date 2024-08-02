@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>ImGreet</title>
-    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/main.css"/>
 </head>
 <body>
 <!-- Navigation -->
@@ -15,24 +15,32 @@
         <p>정말정말 쉽고 편리하게 템플릿으로 쉽게 간편하게 시작해보세요!</p>
         <div class="intro-buttons">
             <a th:href="@{/start}" class="btn yellow-btn">바로 시작하기</a>
-            <a th:href="@{/template}" class="btn light-yellow-btn">템플릿 보러가기</a>
+            <a th:href="@{#templateSection}" class="btn light-yellow-btn">템플릿 보러가기</a>
         </div>
-    </section>
+    </section> <!-- Closing intro section -->
 
-    <section class="templates-section">
+    <section id="templateSection" class="templates-section">
         <h2>다양한 종류의 템플릿을 만나보세요</h2>
+
+        <!-- 템플릿 목록을 반복하여 출력 -->
         <div class="template">
-            <!-- 템플릿 목록을 반복하여 출력 -->
             <div th:each="template : ${templates}" class="template-item">
                 <div>
-                    <img th:src="@{${template.imageUrl}}" alt="Template" />
+                    <img th:src="@{${template.imageUrl}}" alt="Template"/>
                 </div>
                 <h3 th:text="${template.title}">템플릿 제목</h3>
-                <a th:href="@{/template/{templateId}(templateId=${template.id})}" class="btn">템플릿 보러가기</a>
+                <div class="icon-box">
+                    <form th:action="@{/bookmark/{templateId}(templateId=${template.id})}" method="post"
+                          style="display: inline;">
+                        <button type="submit" class="bookmark-icon-button">
+                            <img class="bookmark-icon"
+                                 src="https://img.icons8.com/fluency-systems-regular/48/document-1.png"
+                                 alt="즐겨찾기"/>
+                        </button>
+                    </form>
+                    <a th:href="@{/template/{templateId}(templateId=${template.id})}" class="btn">템플릿 보러가기</a>
+                </div>
             </div>
-        </div>
-        <div class="all-templates">
-            <a th:href="@{/templates}" class="btn">모든 템플릿 확인하기</a>
         </div>
     </section>
 </main>
@@ -43,3 +51,4 @@
 </footer>
 </body>
 </html>
+
