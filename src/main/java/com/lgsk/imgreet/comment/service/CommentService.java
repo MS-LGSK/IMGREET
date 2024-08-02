@@ -77,6 +77,7 @@ public class CommentService {
                                 .nickname(e.getNickname())
                                 .password(e.getPassword())
                                 .content(e.getContent())
+                                .createdDate(e.getCreatedDate())
                                 .build())
                 .toList();
     }
