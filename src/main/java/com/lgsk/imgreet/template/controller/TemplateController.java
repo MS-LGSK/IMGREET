@@ -5,6 +5,7 @@ import com.lgsk.imgreet.component.dto.ComponentDTO;
 import com.lgsk.imgreet.component.dto.ComponentResponseDTO;
 import com.lgsk.imgreet.component.service.ComponentService;
 import com.lgsk.imgreet.entity.User;
+import com.lgsk.imgreet.template.dto.GetTemplateComponentDTO;
 import com.lgsk.imgreet.template.dto.TemplateDTO;
 import com.lgsk.imgreet.template.dto.TemplateResponseDTO;
 import com.lgsk.imgreet.template.service.TemplateService;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -51,8 +54,22 @@ public class TemplateController {
     @GetMapping("/template/{template_id}")
     public String getTemplate(@PathVariable("template_id") Long templateId, Model model) {
         List<ComponentResponseDTO> components = templateService.getTemplate(templateId);
-        log.info("component : " + components.get(0).getContent());
-        model.addAttribute("components", components);
+
+        // 분리된 컴포넌트 내용
+        List<String> svgComponents = new ArrayList<>();
+        List<String> containerComponents = new ArrayList<>();
+
+        for (ComponentResponseDTO component : components) {
+            String content = component.getContent();
+            if (content.contains("<rect") || content.contains("<circle") || content.contains("<polygon")) {
+                svgComponents.add(content);
+            } else {
+                containerComponents.add(content);
+            }
+        }
+
+        model.addAttribute("svgComponents", svgComponents);
+        model.addAttribute("containerComponents", containerComponents);
         model.addAttribute("templateId", templateId);
         return "createGreet";
     }
