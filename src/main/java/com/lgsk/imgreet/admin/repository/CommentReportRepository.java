@@ -1,14 +1,16 @@
 package com.lgsk.imgreet.admin.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lgsk.imgreet.admin.DTO.CommentReportResponseDTO;
 import com.lgsk.imgreet.entity.CommentReport;
 
-public interface CommnetReportRepository extends JpaRepository<CommentReport, Long> {
+public interface CommentReportRepository extends JpaRepository<CommentReport, Long> {
 
 	@Query("  SELECT DISTINCT new com.lgsk.imgreet.admin.DTO.CommentReportResponseDTO(cr.comment.id, cr.reason)"
 		+ " 	FROM CommentReport cr "
@@ -17,5 +19,12 @@ public interface CommnetReportRepository extends JpaRepository<CommentReport, Lo
 		+ "												FROM CommentReport cr2"
 		+ "											GROUP BY cr2.comment.id, cr2.reason )"
 		+ "	ORDER BY cr.comment.id")
-	List<CommentReportResponseDTO> findDistinctByDone();
+	Page<CommentReportResponseDTO> findDistinctByDone(Pageable pageable);
+
+	@Modifying
+	@Transactional
+	@Query(" UPDATE CommentReport cr "
+		+ " 	SET cr.done = true "
+		+ "   WHERE cr.comment.id = :commentId ")
+	void commentReportDoneByCommentId(Long commentId);
 }
