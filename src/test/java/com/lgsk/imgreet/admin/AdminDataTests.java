@@ -42,6 +42,7 @@ public class AdminDataTests {
 	User badUser;
 
 	@BeforeEach
+	@Transactional
 	void setup() {
 
 		badUser = userRepository.save(User.builder()

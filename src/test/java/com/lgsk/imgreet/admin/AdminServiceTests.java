@@ -63,6 +63,7 @@ public class AdminServiceTests {
 	TemplateReport templateReport2;
 
 	@BeforeEach
+	@Transactional
 	void setup() {
 
 		reporter1 = userRepository.save(User.builder()
