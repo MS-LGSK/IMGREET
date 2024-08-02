@@ -7,6 +7,9 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d3ed3db1fc1bdaf63dfdafb12b6475b3&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d3ed3db1fc1bdaf63dfdafb12b6475b3&libraries=services"></script>
+    <!--  jQuery  -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/createGreet.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/text.css}"/>
@@ -33,7 +36,7 @@
                 <a class="nav-link" href="#" id="redoButton">되돌리기</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" id="shareButton">공유하기</a>
+                <a class="nav-link" id="shareButton">공유하기</a>
             </li>
             <li class="nav-item">
                 <button type="submit" class="nav-link btn" id="saveButton">템플릿으로 게시하기</button>
@@ -147,5 +150,60 @@
 <script src="/js/address.js"></script>
 <script src="/js/capture.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+    $(document).ready(
+        $('#shareButton').click(function() {
+            if (confirm('초대장을 공유하시겠습니까?')) {
+                temporarySave()
+            }
+        })
+    )
+
+    function temporarySave() {
+        const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
+        const FREE_USER_GREET_EXPIRATION_TIME = 5 * MILLISECONDS_IN_A_DAY;
+
+        $.ajax({
+            url: '/greet/draft',
+            method: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                title: $('#title').val(),
+                expireDate: new Date($.now() + FREE_USER_GREET_EXPIRATION_TIME),
+                allowComments: false
+            }),
+            success: function(data) {
+                shareGreet(data)
+            },
+            error: function(error) {
+                alert(`데이터 저장 실패. ${JSON.stringify(error)}`)
+            }
+        })
+    }
+
+    function shareGreet(data) {
+        let date = new Date()
+        date.setDate(date.getDate() + 3)
+
+        $.ajax({
+            url: '/greet/save',
+            method: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                id: data.greetId,
+                userId: data.userId,
+                title: $('#title').val(),
+                allowComments: false,
+                expireDate: date.toISOString().slice(0, 19)
+            }),
+            success: function(data) {
+                window.location.href = `http://localhost:8080${data.redirectUrl}`
+            },
+            error: function(error) {
+                alert(`공유에 실패하였습니다. ${JSON.stringify(error)}`)
+            }
+        })
+    }
+</script>
 </body>
 </html>
