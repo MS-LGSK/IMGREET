@@ -1,8 +1,10 @@
 package com.lgsk.imgreet.greet.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,10 +13,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateGreetRequestDTO {
 
     @NotNull
-    private Long id;
+    private Long greetId;
 
     @NotNull
     private Long userId;

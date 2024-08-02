@@ -7,9 +7,9 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d3ed3db1fc1bdaf63dfdafb12b6475b3&libraries=services"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d3ed3db1fc1bdaf63dfdafb12b6475b3&libraries=services"></script>
     <!--  jQuery  -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/createGreet.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/text.css}"/>
@@ -42,7 +42,6 @@
                 <button type="submit" class="nav-link btn" id="saveButton">템플릿으로 게시하기</button>
             </li>
         </ul>
-        </form>
     </div>
 </nav>
 
@@ -77,7 +76,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <div class="sidebar-nav" id="sidebar">
@@ -152,7 +150,7 @@
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
     $(document).ready(
-        $('#shareButton').click(function() {
+        $('#shareButton').click(function () {
             if (confirm('초대장을 공유하시겠습니까?')) {
                 temporarySave()
             }
@@ -172,16 +170,40 @@
                 expireDate: new Date($.now() + FREE_USER_GREET_EXPIRATION_TIME),
                 allowComments: false
             }),
-            success: function(data) {
+            success: function (data) {
+                console.log('@@@ data @@@\n' + JSON.stringify(data))
                 shareGreet(data)
             },
-            error: function(error) {
+            error: function (error) {
                 alert(`데이터 저장 실패. ${JSON.stringify(error)}`)
             }
         })
     }
 
+    // dev
     function shareGreet(data) {
+        captureCanvasAsImage().then(thumbnailImage => {
+            console.log('thumbnailImage', thumbnailImage);
+            console.log('data', data.greetId);
+            $.ajax({
+                url: '/greet/save',
+                method: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    greetId: data.greetId,
+                    userId: data.userId,
+                    title: $('#title').val(),
+                    imageUrl: thumbnailImage,
+
+                }),
+                success: function (data) {
+                    alert(JSON.stringify(data))
+                },
+                error: function (error) {
+                    alert(`공유에 실패하였습니다. ${JSON.stringify(error)}`)
+                }
+            })
+        // not dev
         let date = new Date()
         date.setDate(date.getDate() + 3)
 

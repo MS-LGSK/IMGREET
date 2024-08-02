@@ -3,6 +3,7 @@ package com.lgsk.imgreet.greet.service;
 import com.lgsk.imgreet.base.commonUtil.JwtUtil;
 import com.lgsk.imgreet.base.commonUtil.Rq;
 import com.lgsk.imgreet.base.entity.Role;
+import com.lgsk.imgreet.component.service.ComponentService;
 import com.lgsk.imgreet.entity.Greet;
 import com.lgsk.imgreet.entity.User;
 import com.lgsk.imgreet.greet.dto.CreateGreetRequestDTO;
@@ -10,6 +11,7 @@ import com.lgsk.imgreet.greet.dto.GreetResponseDTO;
 import com.lgsk.imgreet.greet.dto.UpdateGreetRequestDTO;
 import com.lgsk.imgreet.greet.repository.GreetRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +22,11 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class GreetService {
 
     private final GreetRepository greetRepository;
+    private final ComponentService componentService;
 
     private final JwtUtil jwtUtil;
 
@@ -34,6 +38,14 @@ public class GreetService {
         if (user == null) {
             throw new UserPrincipalNotFoundException("로그인된 유저 정보가 존재하지 않습니다.");
         }
+
+        log.info("get : " + dto.getGreetId());
+        String encodedToken = jwtUtil.generateGreetToken(dto.getGreetId().toString());
+        dto.setUrl("/share/%s".formatted(encodedToken));
+
+        String imagePath = componentService.captureCanvasAsImage(dto.getTitle(), dto.getImageUrl());
+        log.info("imagePath : " + imagePath);
+
         String token = jwtUtil.generateGreetToken(dto.getId());
         dto.setUrl("/share/%s".formatted(token));
         return greetRepository.save(
@@ -42,7 +54,7 @@ public class GreetService {
                         .user(user)
                         .title(dto.getTitle())
                         .url(dto.getUrl())
-                        .imageUrl(dto.getImageUrl())
+                        .imageUrl(imagePath)
                         .expireDate(dto.getExpireDate())
                         .allowComments(dto.getAllowComments())
                         .build());
