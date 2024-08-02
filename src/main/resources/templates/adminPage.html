@@ -33,28 +33,46 @@
             <th> </th>
           </tr>
           </thead>
-          <tbody>
+        <tbody>
           <tr th:each="report : ${greetReportPage.content}">
             <td th:text="${report.greetId}"></td>
-            <td th:text="${report.greetTitle}"></td>
+            <td>
+              <a th:href="@{'/' + ${report.greetUrl}}" th:text="${report.greetTitle}" class="greet-link"/>
+            </td>
             <td th:text="${report.reason}"></td>
             <td th:text="${report.userId}"></td>
             <td>
               <form th:action="@{/adminPage/updateGreet/{greetId}(greetId=${report.greetId})}" method="post">
-                <button type="submit">수정</button>
+                <button class="td-btn" type="submit">취소</button>
               </form>
             </td>
             <td>
               <form th:action="@{/adminPage/deleteGreet/{greetId}(greetId=${report.greetId})}" method="post">
-                <input type="hidden" name="_method" value="delete" />
-                <button type="submit">삭제</button>
+                <input type="hidden" name="userId" th:value="${report.userId}" />
+                <button class="td-btn" type="submit">삭제</button>
               </form>
             </td>
           </tr>
           </tbody>
         </table>
+
         <div class="pagination">
           <ul>
+<!--            &lt;!&ndash; Previous Group &ndash;&gt;-->
+<!--            <li th:if="${start > 0}">-->
+<!--              <a th:href="@{/adminPage/GreetReport(page=${start - 1})}" class="arrow">Previous 10</a>-->
+<!--            </li>-->
+
+<!--            &lt;!&ndash; Page Buttons &ndash;&gt;-->
+<!--            <li th:each="i : ${#numbers.sequence(start, end)}" th:classappend="${i == greetReportPage.number} ? 'active'">-->
+<!--              <a th:href="@{/adminPage/GreetReport(page=${i})}" th:text="${i + 1}"></a>-->
+<!--            </li>-->
+
+<!--            &lt;!&ndash; Next Group &ndash;&gt;-->
+<!--            <li th:if="${end + 1 < greetReportPage.totalPages}">-->
+<!--              <a th:href="@{/adminPage/GreetReport(page=${start + 1})}" class="arrow">Next 10</a>-->
+<!--            </li>-->
+
             <li th:if="${greetReportPage.hasPrevious()}">
               <a th:href="@{/adminPage/GreetReport(page=${greetReportPage.number - 1})}">Previous</a>
             </li>

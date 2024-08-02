@@ -3,25 +3,48 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    height: 100%;
+    overflow: hidden; /* 전체 페이지 스크롤 비활성화 */
 }
 
 /* 전체 컨테이너 */
 .container {
     display: flex;
-    min-height: 100vh;
+    height: 100vh; /* 전체 화면 높이 */
+    overflow: hidden; /* 전체 컨테이너 스크롤 비활성화 */
+    position: relative;
 }
 
 /* 사이드바 스타일 */
 .sidebar {
-    width: 15%;
     background-color: #f8f9fa;
     padding: 20px;
-    height: 100vh;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    position: fixed; /* 사이드바를 화면에 고정시킵니다 */
+    height: 100%;
+    width: 15%;
+    /* 상단 테두리 */
+    border: #adadad;
     top: 0;
     left: 0;
-    z-index: 100; /* 사이드바가 콘텐츠 위에 표시되도록 설정합니다 */
+    overflow: hidden; /* 사이드바 내부 스크롤 비활성화 */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 20px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
 }
 
 /* 메인 콘텐츠 스타일 */
@@ -37,11 +60,12 @@ body, html {
 
 /* 중앙에 배치된 컨텐츠 */
 .content {
-    padding: 20px;
-    max-width: 100%; /* 최대 너비를 100%로 설정 */
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 85%;
+    height: calc(100vh - 80px); /* 전체 화면 높이 */
+    overflow: auto; /* 내부 콘텐츠가 넘칠 경우 스크롤 */
+    padding: 40px;
+    box-sizing: border-box; /* padding과 border가 width에 포함되도록 설정 */
+    position: relative;
 }
 
 /* 제목 스타일 */
@@ -63,8 +87,8 @@ thead {
 
 th, td {
     padding: 10px;
-    text-align: left;
     border-bottom: 1px solid #ddd;
+    text-align: center;
 }
 
 th {
@@ -82,7 +106,7 @@ th:nth-child(1), td:nth-child(1) {
 }
 
 th:nth-child(2), td:nth-child(2) {
-    width: 25%;
+    width: 30%;
 }
 
 th:nth-child(3), td:nth-child(3) {
@@ -90,11 +114,23 @@ th:nth-child(3), td:nth-child(3) {
 }
 
 th:nth-child(4), td:nth-child(4) {
-    width: 20%;
+    width: 10%;
 }
 
 th:nth-child(5), td:nth-child(5) {
-    width: 15%;
+    width: 10%;
+    padding: 5px;
+}
+th:nth-child(5), td:nth-child(5) {
+    width: 10%;
+    padding: 5px;
+}
+
+/* 링크 스타일 */
+.greet-link {
+    color: #000000; /* 링크 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-size: 16px; /* 링크 글자 크기 */
 }
 
 /* 폼 버튼 스타일 */
@@ -102,7 +138,7 @@ button {
     background-color: #ff9000;
     color: #fff;
     border: none;
-    padding: 8px 16px;
+    font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
     margin-right: 5px;
@@ -112,11 +148,20 @@ button:hover {
     background-color: #e68a00;
 }
 
+.td-btn {
+    padding: 5px;
+}
+
 /* 페이징 스타일 */
 .pagination {
+    position: relative;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    width: 100%;
 }
 
 .pagination ul {
